@@ -1,4 +1,4 @@
-public class Driver
+public class ElementalApp
 {
   public static void main (String[] args)
   {
