@@ -13,6 +13,7 @@ import java.awt.event.*;
  * @version 1.1, May 13 2014. (Completed framework. ActionListener only implemented to close, main menu, and play.)
  * @version 1.2, May 14 2014. (Added background image. Resized frame and specs.)
  * @version 1.3, May 15 2014. (Changed some variable and method names, fixed layout, added padding between buttons and initial JavaDoc notations.)
+ * @version 1.4, May 19 2014. (Added background music.)
  */
 public class MenuFrames extends JFrame
 {
@@ -56,6 +57,10 @@ public class MenuFrames extends JFrame
    * secondPanel - boolean - Represents whether the current panel in use is the menu (first) or difficulties (second) panel.
    */
   private boolean secondPanel;
+  /**
+   * music - reference - Reference variable to the object created by the "Sound" class.
+   */
+  Sound music;
   
   /**
    * The constructor of the "MenuFrames" class. It creates the JFrame by calling the constructor of this class's super
@@ -69,6 +74,8 @@ public class MenuFrames extends JFrame
     menuBars();
     mainMenuPanel();
     frameSpecifications();
+    music = new Sound();
+    music.playSound();
   }
   
   /**
@@ -142,6 +149,7 @@ public class MenuFrames extends JFrame
       public void actionPerformed (ActionEvent e)
       {
         System.exit(0);
+        music.stopSound();
       }
     }); 
   }
