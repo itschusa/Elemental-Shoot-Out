@@ -9,10 +9,13 @@ import java.awt.event.*;
  * the game screen, etc.). 
  * 
  * @author Chusa Nguyen
+ * @author Anqi Wu
  * @version 1.0, May 12 2014. (No functionality. Buttons do not appear.)
  * @version 1.1, May 13 2014. (Completed framework. ActionListener only implemented to close, main menu, and play.)
  * @version 1.2, May 14 2014. (Added background image. Resized frame and specs.)
  * @version 1.3, May 15 2014. (Changed some variable and method names, fixed layout, added padding between buttons and initial JavaDoc notations.)
+ * @version 1.4, May 19 2014. (Added background music.)
+ * @version 1.5, May 20 2014. (Changed background and button graphics.)
  */
 public class MenuFrames extends JFrame
 {
@@ -24,18 +27,6 @@ public class MenuFrames extends JFrame
    * difficultiesPanel - reference - Reference variable to the corresponding JPanel object.
    */
   JPanel difficultiesPanel = new JPanel();
-  /**
-   * playButton - reference - Reference variable to the corresponding JButton object.
-   */
-  JButton playButton = new JButton ("Play");
-  /**
-   * instructionsButton - reference - Reference variable to the corresponding JButton object.
-   */
-  JButton instructionsButton = new JButton ("Instructions");
-  /**
-   * scoresButton - reference - Reference variable to the corresponding JButton object.
-   */
-  JButton scoresButton = new JButton ("High Scores");
   /**
    * easyButton - reference - Reference variable to the corresponding JButton object.
    */
@@ -56,6 +47,10 @@ public class MenuFrames extends JFrame
    * secondPanel - boolean - Represents whether the current panel in use is the menu (first) or difficulties (second) panel.
    */
   private boolean secondPanel;
+  /**
+   * music - reference - Reference variable to the object created by the "Sound" class.
+   */
+  Sound music;
   
   /**
    * The constructor of the "MenuFrames" class. It creates the JFrame by calling the constructor of this class's super
@@ -65,10 +60,12 @@ public class MenuFrames extends JFrame
   public MenuFrames()
   {
     super ("Elemental Shoot-Out: A Chemistry Game");
-    addBackground("Theme 6.png");
+    addBackground("Wallpaper.png");
     menuBars();
     mainMenuPanel();
     frameSpecifications();
+    music = new Sound();
+    music.playSound();
   }
   
   /**
@@ -90,7 +87,7 @@ public class MenuFrames extends JFrame
   {    
     setDefaultCloseOperation (JFrame.DISPOSE_ON_CLOSE);
     setVisible (true);
-    setSize (800,400);
+    setSize (800,800);
     setResizable (false);
   }
   
@@ -142,6 +139,7 @@ public class MenuFrames extends JFrame
       public void actionPerformed (ActionEvent e)
       {
         System.exit(0);
+        music.stopSound();
       }
     }); 
   }
@@ -150,11 +148,37 @@ public class MenuFrames extends JFrame
    * The "mainMenuPanel" method. Sets the current panel to the main menu's panel and adds the appropriate JButton
    * objects. This panel and its components use the GridBagLayout layout manager, and are given constraints. 
    * ActionListener objects are implemented to each button. 
+   * 
+   * @param playButton - reference - Reference variable to the corresponding JButton object.   
+   * @param instructionsButton - reference - Reference variable to the corresponding JButton object.
+   * @param scoresButton - reference - Reference variable to the corresponding JButton object.
    */
   public void mainMenuPanel()
   {
     secondPanel = false;
     menuPanel.setLayout(new GridBagLayout());
+    
+    ImageIcon play = new ImageIcon ("play2.png");
+    ImageIcon playRoll = new ImageIcon ("play3.png");
+    JButton playButton = new JButton(play);
+    playButton.setContentAreaFilled(false);
+    playButton.setBorder (null);
+    playButton.setRolloverIcon(playRoll);
+    
+    ImageIcon instruction = new ImageIcon ("magnifyingglass2.png");
+    ImageIcon instructionRoll = new ImageIcon ("magnifyingglass3.png");
+    System.out.println ("works");
+    JButton instructionsButton = new JButton (instruction);
+    instructionsButton.setContentAreaFilled(false);
+    instructionsButton.setBorder (null);
+    instructionsButton.setRolloverIcon (instructionRoll);
+    
+    ImageIcon highscore = new ImageIcon ("clipboard2.png");
+    ImageIcon highscoreRoll = new ImageIcon ("clipboard3.png");
+    JButton scoresButton = new JButton (highscore);
+    scoresButton.setContentAreaFilled(false);
+    scoresButton.setBorder (null);
+    scoresButton.setRolloverIcon (highscoreRoll);
     
     constraints.fill=constraints.HORIZONTAL;
     constraints.insets = new Insets (10, 0, 0, 0);
@@ -175,8 +199,22 @@ public class MenuFrames extends JFrame
       public void actionPerformed (ActionEvent e)
       { 
         remove(menuPanel);
-        levelsPanel();
         repaint();
+        levelsPanel();
+      }
+    });
+    
+    instructionsButton.addActionListener (new ActionListener ()
+                                            {
+      public void actionPerformed (ActionEvent e)
+      { 
+      }
+    });
+    
+    scoresButton.addActionListener (new ActionListener ()
+                                      {
+      public void actionPerformed (ActionEvent e)
+      { 
       }
     });
   }
@@ -201,6 +239,6 @@ public class MenuFrames extends JFrame
     difficultiesPanel.add(difficultButton, constraints);
     difficultiesPanel.setBackground(new Color(0,0,0,0));
     add(difficultiesPanel);
-    revalidate();
+    validate();
   }
 }
