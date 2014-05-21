@@ -15,7 +15,10 @@ import java.awt.event.*;
  * @version 1.2, May 14 2014. (Added background image. Resized frame and specs.)
  * @version 1.3, May 15 2014. (Changed some variable and method names, fixed layout, added padding between buttons and initial JavaDoc notations.)
  * @version 1.4, May 19 2014. (Added background music.)
+<<<<<<< HEAD
  * @version 1.5, May 20 2014. (Changed background and button graphics.)
+=======
+>>>>>>> 2fb6ff14cc9dee1d258c0b8c7e388d385b525385
  */
 public class MenuFrames extends JFrame
 {
