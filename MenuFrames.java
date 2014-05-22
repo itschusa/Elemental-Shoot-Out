@@ -15,10 +15,8 @@ import java.awt.event.*;
  * @version 1.2, May 14 2014. (Added background image. Resized frame and specs.)
  * @version 1.3, May 15 2014. (Changed some variable and method names, fixed layout, added padding between buttons and initial JavaDoc notations.)
  * @version 1.4, May 19 2014. (Added background music.)
-<<<<<<< HEAD
  * @version 1.5, May 20 2014. (Changed background and button graphics.)
-=======
->>>>>>> 2fb6ff14cc9dee1d258c0b8c7e388d385b525385
+ * @version 1.6, May 21 2014. (Added window listener, key bindings and dialog boxes, actionlistener for easy button.)
  */
 public class MenuFrames extends JFrame
 {
@@ -88,9 +86,14 @@ public class MenuFrames extends JFrame
    */
   public void frameSpecifications ()
   {    
-    setDefaultCloseOperation (JFrame.DISPOSE_ON_CLOSE);
+    addWindowListener(new java.awt.event.WindowAdapter() {
+      public void windowClosing(java.awt.event.WindowEvent windowEvent) 
+      {
+        System.exit(0);
+      }
+    });
     setVisible (true);
-    setSize (800,800);
+    setSize (900,600);
     setResizable (false);
   }
   
@@ -168,9 +171,15 @@ public class MenuFrames extends JFrame
     playButton.setBorder (null);
     playButton.setRolloverIcon(playRoll);
     
+    ImageIcon settings = new ImageIcon ("gear2.png");
+    ImageIcon settingsRoll = new ImageIcon ("gear3.png");
+    JButton settingsButton = new JButton (settings);
+    settingsButton.setContentAreaFilled (false);
+    settingsButton.setBorder (null);
+    settingsButton.setRolloverIcon (settingsRoll);
+    
     ImageIcon instruction = new ImageIcon ("magnifyingglass2.png");
     ImageIcon instructionRoll = new ImageIcon ("magnifyingglass3.png");
-    System.out.println ("works");
     JButton instructionsButton = new JButton (instruction);
     instructionsButton.setContentAreaFilled(false);
     instructionsButton.setBorder (null);
@@ -183,15 +192,18 @@ public class MenuFrames extends JFrame
     scoresButton.setBorder (null);
     scoresButton.setRolloverIcon (highscoreRoll);
     
-    constraints.fill=constraints.HORIZONTAL;
-    constraints.insets = new Insets (10, 0, 0, 0);
-    constraints.gridx = 1;
+    //constraints.fill=constraints.HORIZONTAL;
+    constraints.insets = new Insets (10, 10, 10, 10);
+    constraints.gridx = 2;
     constraints.gridy = 1;
     menuPanel.add(playButton, constraints);
+    constraints.gridx = 1;
     constraints.gridy = 2;
     menuPanel.add(instructionsButton, constraints);
-    constraints.gridy = 3;
-    menuPanel.add(scoresButton, constraints);
+    constraints.gridx = 2;
+    menuPanel.add(settingsButton, constraints);
+    constraints.gridx = 3;
+    menuPanel.add (scoresButton, constraints);
     
     add(menuPanel);
     menuPanel.setBackground(new Color(0,0,0,0));
@@ -202,8 +214,8 @@ public class MenuFrames extends JFrame
       public void actionPerformed (ActionEvent e)
       { 
         remove(menuPanel);
-        repaint();
         levelsPanel();
+        repaint();
       }
     });
     
@@ -219,7 +231,11 @@ public class MenuFrames extends JFrame
       public void actionPerformed (ActionEvent e)
       { 
       }
-    });
+    });   
+    menuPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0, false), "close");
+    menuPanel.getActionMap().put("close", new AbstractAction(){
+      public void actionPerformed (ActionEvent e) {
+        System.exit(0);}});    
   }
   
   /**
@@ -243,5 +259,14 @@ public class MenuFrames extends JFrame
     difficultiesPanel.setBackground(new Color(0,0,0,0));
     add(difficultiesPanel);
     validate();
+    
+    easyButton.addActionListener (new ActionListener ()
+                                    {
+      public void actionPerformed (ActionEvent e)
+      { 
+        new GameWindow("Easy Level",1);
+        dispose();
+      }
+    }); 
   }
 }
