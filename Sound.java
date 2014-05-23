@@ -27,6 +27,9 @@ public class Sound
    */
   private String songName = "Wanderlust.mid";
   
+  /**
+   * The class constructor. It loads an audio clip by looking in the specified path for the specified file name. 
+   */
   public Sound ()
   {
     try

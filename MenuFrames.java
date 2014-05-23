@@ -162,9 +162,11 @@ public class MenuFrames extends JFrame
       }}); 
     aboutItem.addActionListener(new ActionListener(){
       public void actionPerformed (ActionEvent e)      {
+        JOptionPane.showMessageDialog (new JFrame(), "-insert info here-", "About the Programmers", JOptionPane.INFORMATION_MESSAGE);
       }});
     featuresItem.addActionListener(new ActionListener(){
       public void actionPerformed (ActionEvent e)      {
+        JOptionPane.showMessageDialog (new JFrame(), "-insert info here-", "Game Features", JOptionPane.INFORMATION_MESSAGE);
       }});    
   }
   

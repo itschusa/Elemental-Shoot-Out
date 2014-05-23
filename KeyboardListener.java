@@ -1,7 +1,7 @@
 import java.awt.event.*;
 
 /**
- * @author baseball435
+ * @author baseball435 from Youtube
  */
 public class KeyboardListener implements KeyListener
 {
@@ -23,5 +23,10 @@ public class KeyboardListener implements KeyListener
   public boolean isKeyPressed (int key)
   {
     return keys[key];
+  }
+  
+  public boolean isKeyReleased(int key)
+  {
+    return !keys[key];
   }
 }

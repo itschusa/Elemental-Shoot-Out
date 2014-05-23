@@ -1,7 +1,7 @@
 import java.awt.*;
 
 /**
- * @author baseball435
+ * @author baseball435 of Youtube
  * @version 1.0, May 22, 2014.
  */
 public abstract class Screen

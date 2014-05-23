@@ -1,24 +1,72 @@
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * The "MenusPanel" class which creates an instance of JPanel. JButton objects are added to it. 
+ * 
+ * @author Chusa Nguyen
+ * @author Anqi Wu
+ * @version 1.0, May 22 2014. (Created class based on previous code from "MenuFrames.")
+ */
 public class MenusPanel extends JPanel
 {
+  /**
+   * constraints - reference - Refers to the created instance of GridBagConstraints.
+   */
   private GridBagConstraints constraints = new GridBagConstraints();
-  
+  /**
+   * play - reference - References to the specified image.
+   */
   private ImageIcon play = new ImageIcon ("play2.png");
+  /**
+   * playRoll - reference - References to the specified image.
+   */
   private ImageIcon playRoll = new ImageIcon ("play3.png");
+  /**
+   * settings - reference - References to the specified image.
+   */
   private ImageIcon settings = new ImageIcon ("gear2.png");
+  /**
+   * settingsRoll - reference - References to the specified image.
+   */
   private ImageIcon settingsRoll = new ImageIcon ("gear3.png");
+  /**
+   * instruction - reference - References to the specified image.
+   */
   private ImageIcon instruction = new ImageIcon ("magnifyingglass2.png");  
+  /**
+   * instructionRoll - reference - References to the specified image.
+   */
   private ImageIcon instructionRoll = new ImageIcon ("magnifyingglass3.png"); 
+  /**
+   * highscore - reference - References to the specified image.
+   */
   private ImageIcon highscore = new ImageIcon ("clipboard2.png");
+  /**
+   * highscoreRoll - reference - References to the specified image.
+   */
   private ImageIcon highscoreRoll = new ImageIcon ("clipboard3.png");
-  
+  /**
+   * playButton - reference - References to the specified JButton object.
+   */
   protected JButton playButton = new JButton(play);
+  /**
+   * settingsButton - reference - References to the specified JButton object.
+   */
   protected JButton settingsButton = new JButton (settings);
+  /**
+   * instructionsButton - reference - References to the specified JButton object.
+   */
   protected JButton instructionsButton = new JButton (instruction);
+  /**
+   * scoresButton - reference - References to the specified JButton object.
+   */
   protected JButton scoresButton = new JButton (highscore);
   
+  /**
+   * The class constructor. 
+   * It sets the panel's layout manager and background, as well as calling the method to set buttons. 
+   */
   public MenusPanel()
   {
     setLayout (new GridBagLayout());
@@ -26,6 +74,9 @@ public class MenusPanel extends JPanel
     setButtons();
   }
   
+  /**
+   * The "setButtons" method. It adds the buttons to the panel after setting their specifications (border, location, etc.).
+   */
   private void setButtons()
   {   
     playButton.setContentAreaFilled(false);
