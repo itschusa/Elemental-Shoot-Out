@@ -1,22 +1,24 @@
 import java.util.ArrayList;
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 /**
- * The EasyGame class is a panel that draw the easy level.
+ * The EasyGame class is a screen that draws the easy level.
  * 
  * @author Anqi Wu
- * @version 1.0, May 21 2014.
+ * @version 1.0, May 21 2014. (extends panel, uses paintComponent)
+ * @version 1.1, May 22, 2014. (extends levelscreen, updates!)
  */
-public class EasyGame extends LevelMap
-{
-  //constructor, sets dimensions to 600 by 400, randomly creates particles
-  public EasyGame ()
+public class EasyGame extends LevelScreen
+{      
+  KeyboardListener listener;
+  
+  public EasyGame (ScreenFactory screenFactory)
   {
-    setPreferredSize (new Dimension (600,400));
-    ArrayList<Particle> newTargets = new ArrayList<Particle>();
+    super(screenFactory);
+    ArrayList<Element> newTargets = new ArrayList<Element>();
     String name = "Stable";
+    
     for (int row = 1; row<4;row++)
     {
       for (int col=1;col<13;col++)
@@ -27,22 +29,52 @@ public class EasyGame extends LevelMap
         name = "Stable";
       }
     }
+    
+    ArrayList<Element> newInventory = new ArrayList <Element>();
+    for (int col = 1; col<13;col++)
+    {
+      name = "Stable";
+      if (Math.random()<0.5)
+        name = "Neutron";
+      newInventory.add (new EasyParticle(name, new Location (col, 10), super.getGameGrid()));      
+    }
     super.setAllTargets (newTargets);
+    super.setAllInventory (newInventory);
+    
+    //listener = 
   }
   
-  //draws the level
-  @Override
-  public void paintComponent (Graphics g)
+  public void onCreate ()
   {
-    super.paintComponent(g);
-    ImageIcon wallpaper = new ImageIcon ("WallpaperGame.png");
-    g.drawImage (wallpaper.getImage(), 0, 0, wallpaper.getImageObserver()); 
-    
-    ArrayList<Particle> toDraw = getAllTargets();
-    
-    for (int x=0;x<toDraw.size();x++)
+  }
+  
+  public void onUpdate ()
+  {
+    for (int x=0;x<getAllTargets().size();x++)
     {
-      g.drawImage (toDraw.get(x).getIcon().getImage(), toDraw.get(x).getLocation().getXCoord(), toDraw.get(x).getLocation().getYCoord(),toDraw.get(x).getIcon().getImageObserver());
+      if (getAllTargets().get(x).getName().equals("Unstable")&& !getAllTargets().get(x).canMove())
+        getAllTargets().get(x).reverseMove();
+      getAllTargets().get(x).update();
+    }
+    
+    for (int x = 0; x<getAllInventory().size();x++)
+    {
+      getAllInventory().get(x).update();
+    }
+  }
+  
+  public void onDraw (Graphics2D twoDimensional)
+  {
+    twoDimensional.drawImage (getWallpaper().getImage(), 0, 0, getWallpaper().getImageObserver()); 
+    
+    for (int x=0;x<getAllTargets().size();x++)
+    {
+      getAllTargets().get(x).draw(twoDimensional);
+    }
+    
+    for (int x = 0; x<getAllInventory().size();x++)
+    {
+      getAllInventory().get(x).draw(twoDimensional);
     }
   }
 }

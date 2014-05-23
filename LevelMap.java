@@ -1,75 +1,54 @@
 import java.util.ArrayList;
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * The LevelMap class represents the panel. It stores the targets and inventory.
  * 
  * @author Anqi Wu
- * @version 1.0, May 21 2014.
+ * @author baseball435
+ * @version 1.0, May 21 2014. (the game window that stores arraylist of particles)
+ * @version 1.1, May 22, 2014. (now implements Runnable, which updates/paints the current screen)
  */
-public class LevelMap extends JPanel
+public class LevelMap extends JPanel implements Runnable
 {
-  //the target particles
-  private ArrayList <Particle> targets = new ArrayList <Particle>();
-  //the inventory particles
-  private ArrayList <Particle> inventory = new ArrayList <Particle>();
-  //the game grid
-  private GameGrid grid = new GameGrid();
+  private final GameWindow game;
   
   //default constructor
-  public LevelMap ()
+  public LevelMap (GameWindow elemental)
   {
+    game = elemental;
+    setFocusable (true);
   }
   
-  //returns the target at location in parameters, returns null if not found
-  public Particle getTarget (Location location)
+  //baseball345
+  public void run()
   {
-    for (int x = 0;x<targets.size();x++)
+    while (true)
     {
-      if (targets.get(x).getLocation().equals (location))
-        return targets.get(x);
+      try
+      {
+        if (game.getScreenFactory().getCurrentScreen() != null)
+          game.getScreenFactory().getCurrentScreen().onUpdate();
+        Thread.sleep (1000);
+      }
+      catch (Exception e)
+      {
+        System.out.println (e);
+      }
     }
-    return null;
   }
   
-  //returns the inventory particles at location in parameters, returns null if not found
-  public Particle getInventory (Location location)
+  //baseball345
+  public void paintComponent (Graphics g)
   {
-    for (int x=0;x<inventory.size();x++)
-    {
-      if (inventory.get(x).getLocation().equals(location))
-        return inventory.get(x);
-    }
-    return null;
-  }
-  
-  //returns arraylist of all target particles
-  public ArrayList<Particle> getAllTargets ()
-  {
-    return targets;
-  }
-  
-  //returns arraylist of all inventory particles
-  public ArrayList<Particle> getAllInventory ()
-  {
-    return inventory;
-  }
-  
-  //replaces target particles with newTargets
-  public void setAllTargets (ArrayList<Particle> newTargets)
-  {
-    targets = newTargets;
-  }
-  
-  //replaces inventory particles with newInventory
-  public void setAllInventory (ArrayList<Particle> newInventory)
-  {
-    inventory = newInventory;
-  }
-  
-  //returns the grid of the panel
-  public GameGrid getGameGrid()
-  {
-    return grid;
+    super.paintComponent(g);
+    Graphics2D twoDimensional = (Graphics2D) g;
+    twoDimensional.setRenderingHint (RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    
+    if (game.getScreenFactory().getCurrentScreen() != null)
+      game.getScreenFactory().getCurrentScreen().onDraw (twoDimensional);
+    
+    repaint();
   }
 }

@@ -61,12 +61,13 @@ public class MenuFrames extends JFrame
   public MenuFrames()
   {
     super ("Elemental Shoot-Out: A Chemistry Game");
-    addBackground("Wallpaper.png");
+    addBackground("WallpaperGame.png");
     menuBars();
     mainMenuPanel();
     frameSpecifications();
     music = new Sound();
     music.playSound();
+    setVisible (true);
   }
   
   /**
@@ -92,9 +93,10 @@ public class MenuFrames extends JFrame
         System.exit(0);
       }
     });
-    setVisible (true);
+    
     setSize (900,600);
     setResizable (false);
+    setLocationRelativeTo (null);
   }
   
   /**
@@ -247,7 +249,7 @@ public class MenuFrames extends JFrame
     secondPanel = true;
     difficultiesPanel.setLayout(new GridBagLayout());
     
-    constraints.fill=constraints.HORIZONTAL;
+    constraints.fill = GridBagConstraints.HORIZONTAL;
     constraints.weighty = 1;
     constraints.gridx = 1;
     constraints.gridy = 1;
