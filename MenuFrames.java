@@ -16,42 +16,51 @@ import java.awt.event.*;
  * @version 1.3, May 15 2014. (Changed some variable and method names, fixed layout, added padding between buttons and initial JavaDoc notations.)
  * @version 1.4, May 19 2014. (Added background music.)
  * @version 1.5, May 20 2014. (Changed background and button graphics.)
- * @version 1.6, May 21 2014. (Added window listener, key bindings and dialog boxes, actionlistener for easy button.)
+ * @version 1.6, May 21 2014. (Added window listener, key bindings and dialog boxes.)
+ * @version 1.7, May 22 2014. (Reorganized code: split panels into separate classes, listeners given separate methods.)
  */
 public class MenuFrames extends JFrame
 {
   /**
-   * menuPanel - reference - Reference variable to the corresponding JPanel object.
+   * menuPanel - reference - Reference variable to the object created by the MenusPanel class which extends JFrame.
    */
-  JPanel menuPanel = new JPanel();
+  private MenusPanel menuPanel;
   /**
-   * difficultiesPanel - reference - Reference variable to the corresponding JPanel object.
-   */
-  JPanel difficultiesPanel = new JPanel();
-  /**
-   * easyButton - reference - Reference variable to the corresponding JButton object.
-   */
-  JButton easyButton = new JButton ("Easy");
-  /**
-   * mediumButton - reference - Reference variable to the corresponding JButton object.
-   */
-  JButton mediumButton = new JButton ("Medium");
-  /**
-   * difficultButton - reference - Reference variable to the corresponding JButton object.
-   */
-  JButton difficultButton = new JButton ("Difficult");
-  /**
-   * constraints - reference - Reference variable to the corresponding GridBagConstraints object.
-   */
-  GridBagConstraints constraints = new GridBagConstraints();
+   * difficultiesPanel - reference - Reference variable to the object createdy by the LevelsPanel class which extends JFrame.
+   */  
+  private LevelsPanel difficultiesPanel;
   /**
    * secondPanel - boolean - Represents whether the current panel in use is the menu (first) or difficulties (second) panel.
    */
   private boolean secondPanel;
   /**
-   * music - reference - Reference variable to the object created by the "Sound" class.
+   * menus - reference - Reference variable to the correspoding JMenuBar object.
    */
-  Sound music;
+  private JMenuBar menus = new JMenuBar();
+  /**
+   * fileMenu - reference - Reference variable to the corresponding JMenu object.
+   */
+  private JMenu fileMenu = new JMenu ("File");
+  /**
+   * helpMenu - reference - Reference variable to the corresponding JMenu object.
+   */
+  private JMenu helpMenu = new JMenu ("Help");
+  /**
+   * mainMenuItem - reference - Reference varaible to the corresponding JMenuItem object.
+   */
+  protected JMenuItem mainMenuItem = new JMenuItem ("Main Menu   F1");
+  /**
+   * aboutItem - reference - Reference variable to the corresponding JMenuItem object.
+   */
+  protected JMenuItem aboutItem = new JMenuItem("About           F2");
+  /**
+   * featuresItem - reference - Reference variable to the corresponding JMenuItem object.
+   */
+  protected JMenuItem featuresItem = new JMenuItem("Features     F3");
+  /**
+   * closeItem - reference - Reference variable to the corresponding JMenuItem object.
+   */
+  protected JMenuItem closeItem = new JMenuItem("Close            F5");
   
   /**
    * The constructor of the "MenuFrames" class. It creates the JFrame by calling the constructor of this class's super
@@ -61,13 +70,10 @@ public class MenuFrames extends JFrame
   public MenuFrames()
   {
     super ("Elemental Shoot-Out: A Chemistry Game");
-    addBackground("WallpaperGame.png");
+    addBackground("Wallpaper.png");
     menuBars();
     mainMenuPanel();
     frameSpecifications();
-    music = new Sound();
-    music.playSound();
-    setVisible (true);
   }
   
   /**
@@ -75,7 +81,7 @@ public class MenuFrames extends JFrame
    * 
    * @param imageName - String - The name of the image to be retrieved.
    */
-  public void addBackground (String imageName)
+  private void addBackground (String imageName)
   {
     setContentPane(new JLabel(new ImageIcon(imageName)));
     setLayout(new GridBagLayout());
@@ -85,184 +91,166 @@ public class MenuFrames extends JFrame
    * The "frameSpecifications" method. It sets the specifications of the JFrame window by defining its size,
    * visibility, resizability, and what should be done by default should the exit button be clicked.
    */
-  public void frameSpecifications ()
-  {    
+  private void frameSpecifications ()
+  {
+    setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     addWindowListener(new java.awt.event.WindowAdapter() {
       public void windowClosing(java.awt.event.WindowEvent windowEvent) 
       {
-        System.exit(0);
+        closeItem.doClick();
       }
     });
-    
+    setVisible (true);
     setSize (900,600);
     setResizable (false);
-    setLocationRelativeTo (null);
+    setLocationRelativeTo(null);
   }
   
   /**
-   * The "menuBars" method. It creates and sets the window's menu bar and its options by creating the appropriate
-   * components (JMenuBar, JMenu, JMenuItem). It also defines what should be done if each is clicked through
-   * implementing ActionListener items to each applicable component individually. 
-   * 
-   * @param menus - reference - Refers to the corresponding JMenuBar object. 
-   * @param fileMenu - reference - Refers to the corresponding JMenu object. 
-   * @param helpMenu - reference - Refers to the corresponding JMenu object. 
-   * @param mainMenuItem - reference - Refers to the corresponding JMenuItem object. 
-   * @param closeItem - reference - Refers to the corresponding JMenuItem object. 
-   * @param aboutItem - reference - Refers to the corresponding JMenuItem object. 
-   * @param featuresItem - reference - Refers to the corresponding JMenuItem object. 
-   * @param shortcutItem - reference - Refers to the corresponding JMenuItem object. 
+   * The "menuBars" method. It creates and sets the window's menu bar and its options by creating and including
+   * the appropriate components (JMenuBar, JMenu, JMenuItem). This method also calls others in order to add an
+   * ActionListener and handle keyboard input for each menu item. 
    */
-  public void menuBars()
+  private void menuBars()
   {
-    JMenuBar menus = new JMenuBar();
-    JMenu fileMenu = new JMenu ("File");
-    JMenu helpMenu = new JMenu ("Help");
-    JMenuItem mainMenuItem = new JMenuItem ("Main Menu");
-    JMenuItem closeItem = new JMenuItem("Close");
-    JMenuItem aboutItem = new JMenuItem("About");
-    JMenuItem featuresItem = new JMenuItem("Features");
-    JMenuItem shortcutItem = new JMenuItem ("Shortcuts");
-    
+    menus.setFocusable(true);
     menus.add(fileMenu);
     menus.add(helpMenu); 
     fileMenu.add(mainMenuItem);
     fileMenu.add(closeItem);
     helpMenu.add(aboutItem);
     helpMenu.add(featuresItem);
-    helpMenu.add(shortcutItem);
-    setJMenuBar(menus);
-    
+    setJMenuBar(menus); 
+    menuBarActionListeners();
+    keyBindings();
+  }
+  
+  /**
+   * The "verifyClose" method. It shows the user a JOptionPane dialog box to verify whether or not the user would like to 
+   * exit the program before closing all windows. 
+   * 
+   * @param choice - int - Integer representation of the user's choice. 
+   */
+  private void verifyClose()
+  {
+    int choice = JOptionPane.CANCEL_OPTION;
+    choice = JOptionPane.showConfirmDialog (this, "Would you like to exit this game?", "Confirm Quit",
+                                            JOptionPane.YES_NO_OPTION);
+    if (choice == JOptionPane.YES_OPTION)
+      System.exit(0);
+    else
+      validate();
+  }
+  
+  /**
+   * The "menuBarActionListeners" method. It attaches an ActionListener object to each item contained in
+   * the menu bar. 
+   */
+  private void menuBarActionListeners()
+  {
     mainMenuItem.addActionListener (new ActionListener(){
-      public void actionPerformed (ActionEvent e)
-      {
+      public void actionPerformed (ActionEvent e)      {
         if (secondPanel)
         {
           remove(difficultiesPanel);
           mainMenuPanel();
         }
-      }
-    }); 
+      }}); 
     closeItem.addActionListener (new ActionListener(){
-      public void actionPerformed (ActionEvent e)
-      {
-        System.exit(0);
-        music.stopSound();
-      }
-    }); 
+      public void actionPerformed (ActionEvent e)      {
+        verifyClose();
+      }}); 
+    aboutItem.addActionListener(new ActionListener(){
+      public void actionPerformed (ActionEvent e)      {
+      }});
+    featuresItem.addActionListener(new ActionListener(){
+      public void actionPerformed (ActionEvent e)      {
+      }});    
   }
   
   /**
-   * The "mainMenuPanel" method. Sets the current panel to the main menu's panel and adds the appropriate JButton
-   * objects. This panel and its components use the GridBagLayout layout manager, and are given constraints. 
-   * ActionListener objects are implemented to each button. 
-   * 
-   * @param playButton - reference - Reference variable to the corresponding JButton object.   
-   * @param instructionsButton - reference - Reference variable to the corresponding JButton object.
-   * @param scoresButton - reference - Reference variable to the corresponding JButton object.
+   * The "keyBindings" method. It uses input and action maps to attach actions to specified keys.
    */
-  public void mainMenuPanel()
+  private void keyBindings()
   {
-    secondPanel = false;
-    menuPanel.setLayout(new GridBagLayout());
-    
-    ImageIcon play = new ImageIcon ("play2.png");
-    ImageIcon playRoll = new ImageIcon ("play3.png");
-    JButton playButton = new JButton(play);
-    playButton.setContentAreaFilled(false);
-    playButton.setBorder (null);
-    playButton.setRolloverIcon(playRoll);
-    
-    ImageIcon settings = new ImageIcon ("gear2.png");
-    ImageIcon settingsRoll = new ImageIcon ("gear3.png");
-    JButton settingsButton = new JButton (settings);
-    settingsButton.setContentAreaFilled (false);
-    settingsButton.setBorder (null);
-    settingsButton.setRolloverIcon (settingsRoll);
-    
-    ImageIcon instruction = new ImageIcon ("magnifyingglass2.png");
-    ImageIcon instructionRoll = new ImageIcon ("magnifyingglass3.png");
-    JButton instructionsButton = new JButton (instruction);
-    instructionsButton.setContentAreaFilled(false);
-    instructionsButton.setBorder (null);
-    instructionsButton.setRolloverIcon (instructionRoll);
-    
-    ImageIcon highscore = new ImageIcon ("clipboard2.png");
-    ImageIcon highscoreRoll = new ImageIcon ("clipboard3.png");
-    JButton scoresButton = new JButton (highscore);
-    scoresButton.setContentAreaFilled(false);
-    scoresButton.setBorder (null);
-    scoresButton.setRolloverIcon (highscoreRoll);
-    
-    //constraints.fill=constraints.HORIZONTAL;
-    constraints.insets = new Insets (10, 10, 10, 10);
-    constraints.gridx = 2;
-    constraints.gridy = 1;
-    menuPanel.add(playButton, constraints);
-    constraints.gridx = 1;
-    constraints.gridy = 2;
-    menuPanel.add(instructionsButton, constraints);
-    constraints.gridx = 2;
-    menuPanel.add(settingsButton, constraints);
-    constraints.gridx = 3;
-    menuPanel.add (scoresButton, constraints);
-    
+    menus.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0, false), "main menu");
+    menus.getActionMap().put("main menu", new AbstractAction(){
+      public void actionPerformed (ActionEvent e){
+        mainMenuItem.doClick();}});
+    menus.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0, false), "about");
+    menus.getActionMap().put("about", new AbstractAction(){
+      public void actionPerformed (ActionEvent e){
+        aboutItem.doClick();}});
+    menus.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0, false), "features");
+    menus.getActionMap().put("features", new AbstractAction(){
+      public void actionPerformed (ActionEvent e) {
+        featuresItem.doClick();}});
+    menus.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0, false), "close");
+    menus.getActionMap().put("close", new AbstractAction(){
+      public void actionPerformed (ActionEvent e) {
+        closeItem.doClick();}});
+  }
+  
+  /**
+   * The "mainMenuPanel" method. It creates an instance of the JPanel "MenusPanel" and adds it to the frame, as well
+   * as adding ActionListener objects to the components on the panel.
+   */
+  private void mainMenuPanel()
+  {
+    secondPanel = false;  
+    menuPanel = new MenusPanel();
     add(menuPanel);
-    menuPanel.setBackground(new Color(0,0,0,0));
-    repaint();
-    
-    playButton.addActionListener (new ActionListener ()
-                                    {
-      public void actionPerformed (ActionEvent e)
-      { 
+    menuPanelActionListeners();
+    validate();
+    repaint();    
+  }
+  
+  /**
+   * The "menuPanelActionListeners" method. It attaches an ActionListener object to each component (JButton)
+   * on the panel.
+   */
+  private void menuPanelActionListeners()
+  {
+    menuPanel.playButton.addActionListener (new ActionListener ()
+                                              {
+      public void actionPerformed (ActionEvent e)      { 
         remove(menuPanel);
-        levelsPanel();
         repaint();
+        levelsPanel();
+      }});
+    menuPanel.instructionsButton.addActionListener (new ActionListener ()
+                                                      {
+      public void actionPerformed (ActionEvent e)      { 
       }
     });
     
-    instructionsButton.addActionListener (new ActionListener ()
-                                            {
-      public void actionPerformed (ActionEvent e)
-      { 
-      }
-    });
-    
-    scoresButton.addActionListener (new ActionListener ()
-                                      {
-      public void actionPerformed (ActionEvent e)
-      { 
+    menuPanel.scoresButton.addActionListener (new ActionListener ()
+                                                {
+      public void actionPerformed (ActionEvent e)      { 
       }
     });   
-    menuPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0, false), "close");
-    menuPanel.getActionMap().put("close", new AbstractAction(){
-      public void actionPerformed (ActionEvent e) {
-        System.exit(0);}});    
   }
   
   /**
    * The "levelsPanel" method. Sets the current panel to the level selection's panel and adds the appropriate JButton
-   * objects. This panel and its components use the GridBagLayout layout manager, and are given constraints. 
+   * objects. It also adds ActionListener objects to each component (JButton).
    */
-  public void levelsPanel()
+  private void levelsPanel()
   {
     secondPanel = true;
-    difficultiesPanel.setLayout(new GridBagLayout());
-    
-    constraints.fill = GridBagConstraints.HORIZONTAL;
-    constraints.weighty = 1;
-    constraints.gridx = 1;
-    constraints.gridy = 1;
-    difficultiesPanel.add(easyButton, constraints);
-    constraints.gridy = 2;
-    difficultiesPanel.add(mediumButton, constraints);
-    constraints.gridy = 3;
-    difficultiesPanel.add(difficultButton, constraints);
-    difficultiesPanel.setBackground(new Color(0,0,0,0));
-    add(difficultiesPanel);
+    remove(menuPanel);
+    difficultiesPanel = new LevelsPanel();
+    add(difficultiesPanel);   
+    levelsPanelActionListeners();
     validate();
-    
-    easyButton.addActionListener (new ActionListener ()
+  }
+  
+  /**
+   * The "levelsPanelActionListeners" method, which adds an ActionListener object to each component on the panel.
+   */
+  private void levelsPanelActionListeners()
+  {
+    difficultiesPanel.easyButton.addActionListener (new ActionListener ()
                                     {
       public void actionPerformed (ActionEvent e)
       { 
