@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 /**
  * The GameGrid class stores whether there are objects in the location. May be obsolete.
  * 

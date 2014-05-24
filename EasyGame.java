@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.awt.*;
-import javax.swing.*;
 
 /**
  * The EasyGame class is a screen that draws the easy level.
@@ -10,9 +9,8 @@ import javax.swing.*;
  * @version 1.1, May 22, 2014. (extends levelscreen, updates!)
  */
 public class EasyGame extends LevelScreen
-{      
-  KeyboardListener listener;
-  
+{        
+  CurrentPlayer player;
   public EasyGame (ScreenFactory screenFactory)
   {
     super(screenFactory);
@@ -40,8 +38,7 @@ public class EasyGame extends LevelScreen
     }
     super.setAllTargets (newTargets);
     super.setAllInventory (newInventory);
-    
-    //listener = 
+    player = new CurrentPlayer("Launcher", new Location (6, 8), super.getGameGrid());
   }
   
   public void onCreate ()
@@ -76,5 +73,11 @@ public class EasyGame extends LevelScreen
     {
       getAllInventory().get(x).draw(twoDimensional);
     }
+    player.draw(twoDimensional);
   }
+  
+//  public void currentPlayer()
+//  {
+//    CurrentPlayer player = new CurrentPlayer("Launcher", new Location (6, 8), super.getGameGrid());
+//  }
 }

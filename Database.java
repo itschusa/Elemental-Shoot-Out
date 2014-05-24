@@ -13,4 +13,6 @@ public class Database
   //unstable icon
   public static ImageIcon icon2 = new ImageIcon ("Unstable.png");
   public static ImageIcon icon3 = new ImageIcon ("Neutron2.png");
+  //other icons
+  public static ImageIcon icon4 = new ImageIcon ("Launcher.png");
 }

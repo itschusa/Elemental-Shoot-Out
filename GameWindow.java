@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.event.*;
-import java.awt.*;
 
 /**
  * The GameWindow creates the window, and creates the level panel.

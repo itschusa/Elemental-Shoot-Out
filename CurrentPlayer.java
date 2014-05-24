@@ -14,10 +14,12 @@ public class CurrentPlayer extends Element
   //user points
   private int points;
   private boolean canMove;
+  private KeyboardListener keyListen;
   
   public CurrentPlayer (String newName, Location newLocation, GameGrid newGrid)
   {
     super (newName, newLocation, newGrid);
+    myIcon = Database.icon4;
   }
   
   public void reverseMove ()
@@ -33,12 +35,47 @@ public class CurrentPlayer extends Element
     return canMove;
   }
   
+  public boolean canMove (int direction)
+  {
+    if (direction == 37)//left
+    {
+      if (getLocation().getRow() == 1)
+        canMove = false;
+      else
+        canMove = true;
+    }
+    else
+    {
+      if (direction == 39)
+      {
+        if (getLocation().getRow() == 12)
+          canMove = false;
+        else
+          canMove = true;
+      }
+    }
+    return canMove;
+  }
+  
+  public void move (int direction)
+  {
+    if (direction == 37)//left
+      getLocation().setRow(getLocation().getRow()-1);
+    else
+    {
+      if (direction == 39)//right
+        getLocation().setRow(getLocation().getRow()+1);
+    }
+  }
+  
   public void update ()
   {
+    
   }
   
   public void draw (Graphics2D graphics)
   {
+    graphics.drawImage (getIcon().getImage(), getLocation().getXCoord(), getLocation().getYCoord(),getIcon().getImageObserver());
   }
   
   //returns the icon

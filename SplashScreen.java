@@ -1,6 +1,5 @@
 //import files
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 /**
@@ -74,6 +73,7 @@ public class SplashScreen extends JWindow
     setVisible(true); //makes window visible
     Thread splashThread = new Thread(waitRunner, "Splash"); //creates a new thread for waitRunner
     splashThread.start(); //starts thread
+    requestFocus();
   }
   
   //create menu frames window
@@ -83,6 +83,6 @@ public class SplashScreen extends JWindow
    */
   private void createWindow ()
   {
-     MenuFrames showFrames = new MenuFrames();
+     new MenuFrames();
   }
 }
