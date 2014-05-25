@@ -17,22 +17,27 @@ import java.awt.event.*;
  * @version 1.4, May 19 2014. (Added background music.)
  * @version 1.5, May 20 2014. (Changed background and button graphics.)
  * @version 1.6, May 21 2014. (Added window listener, key bindings and dialog boxes.)
- * @version 1.7, May 22 2014. (Reorganized code: split panels into separate classes, listeners given separate methods.)
+ * @version 2.0, May 22 2014. (Reorganized code: split panels into separate classes, listeners given separate methods.)
+ * @version 2.1, May 24 2014. (Added instructions panel, replaced boolean secondPanel with int panelNum, made corrections to some comments.)
  */
 public class MenuFrames extends JFrame
 {
   /**
-   * menuPanel - reference - Reference variable to the object created by the MenusPanel class which extends JFrame.
+   * menuPanel - reference - Reference variable to the object created by the MenusPanel class which extends JPanel.
    */
   private MenusPanel menuPanel;
   /**
-   * difficultiesPanel - reference - Reference variable to the object createdy by the LevelsPanel class which extends JFrame.
-   */  
+   * difficultiesPanel - reference - Reference variable to the object created by the LevelsPanel class which extends JPanel.
+   */
   private LevelsPanel difficultiesPanel;
   /**
-   * secondPanel - boolean - Represents whether the current panel in use is the menu (first) or difficulties (second) panel.
+   * instructionsPanel - reference - Reference variable to the object created by the InstructionsPanel class which extends JPanel. 
    */
-  private boolean secondPanel;
+  private InstructionsPanel instructionsPanel;
+  /**
+   * panelNum - int - Represents the current panel (1 = main, 2 = level selection, 3 = instructions, 4 = settings, 5 = highscores).
+   */
+  private int panelNum;
   /**
    * menus - reference - Reference variable to the correspoding JMenuBar object.
    */
@@ -150,9 +155,16 @@ public class MenuFrames extends JFrame
   {
     mainMenuItem.addActionListener (new ActionListener(){
       public void actionPerformed (ActionEvent e)      {
-        if (secondPanel)
+        if (panelNum != 1)
         {
-          remove(difficultiesPanel);
+          if (panelNum == 2)
+            remove(difficultiesPanel);
+          else if (panelNum == 3)
+            remove (instructionsPanel);
+          //else if (panel == 4)
+          //remove (settingsPanel);
+          //else 
+          //remove (highscoresPanel);
           mainMenuPanel();
         }
       }}); 
@@ -199,7 +211,7 @@ public class MenuFrames extends JFrame
    */
   private void mainMenuPanel()
   {
-    secondPanel = false;  
+    panelNum = 1;  
     menuPanel = new MenusPanel();
     add(menuPanel);
     menuPanelActionListeners();
@@ -223,9 +235,16 @@ public class MenuFrames extends JFrame
     menuPanel.instructionsButton.addActionListener (new ActionListener ()
                                                       {
       public void actionPerformed (ActionEvent e)      { 
+        remove (menuPanel);
+        instructions();
+        repaint();
       }
     });
-    
+    menuPanel.settingsButton.addActionListener (new ActionListener ()
+                                                {
+      public void actionPerformed (ActionEvent e)      { 
+      }
+    });   
     menuPanel.scoresButton.addActionListener (new ActionListener ()
                                                 {
       public void actionPerformed (ActionEvent e)      { 
@@ -239,7 +258,7 @@ public class MenuFrames extends JFrame
    */
   private void levelsPanel()
   {
-    secondPanel = true;
+    panelNum = 2;
     remove(menuPanel);
     difficultiesPanel = new LevelsPanel();
     add(difficultiesPanel);   
@@ -253,12 +272,21 @@ public class MenuFrames extends JFrame
   private void levelsPanelActionListeners()
   {
     difficultiesPanel.easyButton.addActionListener (new ActionListener ()
-                                    {
+                                                      {
       public void actionPerformed (ActionEvent e)
       { 
         new GameWindow("Easy Level",1);
         dispose();
       }
     }); 
+  }
+  
+  private void instructions()
+  {
+    panelNum = 3;
+    remove (menuPanel);
+    instructionsPanel = new InstructionsPanel();
+    add (instructionsPanel);
+    validate();
   }
 }
