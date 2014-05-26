@@ -35,6 +35,10 @@ public class MenuFrames extends JFrame
    */
   private InstructionsPanel instructionsPanel;
   /**
+   * settingsPanel - reference - Reference variable to the object created by the SettingsPanel class which extends JPanel. 
+   */
+  private SettingsPanel settingsPanel;
+  /**
    * panelNum - int - Represents the current panel (1 = main, 2 = level selection, 3 = instructions, 4 = settings, 5 = highscores).
    */
   private int panelNum;
@@ -161,8 +165,8 @@ public class MenuFrames extends JFrame
             remove(difficultiesPanel);
           else if (panelNum == 3)
             remove (instructionsPanel);
-          //else if (panel == 4)
-          //remove (settingsPanel);
+          else if (panelNum == 4)
+            remove (settingsPanel);
           //else 
           //remove (highscoresPanel);
           mainMenuPanel();
@@ -241,8 +245,11 @@ public class MenuFrames extends JFrame
       }
     });
     menuPanel.settingsButton.addActionListener (new ActionListener ()
-                                                {
+                                                  {
       public void actionPerformed (ActionEvent e)      { 
+        remove (menuPanel);
+        settings();
+        repaint();
       }
     });   
     menuPanel.scoresButton.addActionListener (new ActionListener ()
@@ -279,8 +286,27 @@ public class MenuFrames extends JFrame
         dispose();
       }
     }); 
+    difficultiesPanel.mediumButton.addActionListener (new ActionListener ()
+                                                        {
+      public void actionPerformed (ActionEvent e)
+      { 
+        new GameWindow("Easy Level",1);
+        dispose();
+      }
+    }); 
+    difficultiesPanel.difficultButton.addActionListener (new ActionListener ()
+                                                           {
+      public void actionPerformed (ActionEvent e)
+      { 
+        new GameWindow("Easy Level",1);
+        dispose();
+      }
+    }); 
   }
   
+  /**
+   * The "instructions" method. It removes the current panel and replaces it with the instructions panel.
+   */
   private void instructions()
   {
     panelNum = 3;
@@ -289,4 +315,22 @@ public class MenuFrames extends JFrame
     add (instructionsPanel);
     validate();
   }
+  
+  /**
+   * 
+   */
+  private void settings()
+  {
+    panelNum = 4;
+    remove (menuPanel);
+    settingsPanel = new SettingsPanel();
+    add (settingsPanel);
+    validate();
+    
+    settingsPanel.musicToggle.addActionListener (new ActionListener ()
+                                                   {
+      public void actionPerformed (ActionEvent e) {
+        settingsPanel.toggle();
+      }});
+  } 
 }
