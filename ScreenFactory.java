@@ -1,3 +1,4 @@
+import java.awt.event.KeyListener;
 /**
  * @author baseball435
  * @version 1.0, May 22, 2014.
@@ -28,4 +29,9 @@ public class ScreenFactory
   {
     this.screen = screen;
   }
+  
+//  public KeyboardListener getListener()
+//  {
+//    return game.getKeyboardListener();
+//  }
 }

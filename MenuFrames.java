@@ -19,6 +19,8 @@ import java.awt.event.*;
  * @version 1.6, May 21 2014. (Added window listener, key bindings and dialog boxes.)
  * @version 2.0, May 22 2014. (Reorganized code: split panels into separate classes, listeners given separate methods.)
  * @version 2.1, May 24 2014. (Added instructions panel, replaced boolean secondPanel with int panelNum, made corrections to some comments.)
+ * @version 2.2, May 25 2014. (Added settings panel and option to start/stop music.)
+ * @version 2.3, May 26 2014. (Fixed glitches with music.)
  */
 public class MenuFrames extends JFrame
 {
@@ -70,6 +72,8 @@ public class MenuFrames extends JFrame
    * closeItem - reference - Reference variable to the corresponding JMenuItem object.
    */
   protected JMenuItem closeItem = new JMenuItem("Close            F5");
+  
+  private boolean musicUncreated = true;
   
   /**
    * The constructor of the "MenuFrames" class. It creates the JFrame by calling the constructor of this class's super
@@ -323,14 +327,22 @@ public class MenuFrames extends JFrame
   {
     panelNum = 4;
     remove (menuPanel);
-    settingsPanel = new SettingsPanel();
+    if (musicUncreated)
+      settingsPanel = new SettingsPanel();
     add (settingsPanel);
     validate();
+    musicUncreated = false;
     
-    settingsPanel.musicToggle.addActionListener (new ActionListener ()
+    settingsPanel.musicOn.addActionListener (new ActionListener ()
                                                    {
       public void actionPerformed (ActionEvent e) {
-        settingsPanel.toggle();
+        settingsPanel.toggleOn();
       }});
+    settingsPanel.musicOff.addActionListener (new ActionListener ()
+                                               {
+      public void actionPerformed (ActionEvent e) {
+        settingsPanel.toggleOff();
+      }});
+    
   } 
 }

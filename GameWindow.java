@@ -5,9 +5,11 @@ import java.awt.event.*;
  * The GameWindow creates the window, and creates the level panel.
  * 
  * @author Anqi Wu
+ * @author Chusa Nguyen
  * @author baseball435 (ScreenFactory class)
  * @version 1.0, May 21 2014. (creates game window)
  * @version 1.1, May 22, 2014. (added keyboard listener, instantiates vs extends JFrame)
+ * @version 1.2, May 26 2014. (Coded keyboard listener, modified window listener.)
  */
 public class GameWindow
 {
@@ -16,17 +18,18 @@ public class GameWindow
   private final ScreenFactory screenFactory;
   private final LevelMap game;
   private final KeyboardListener keyboardListener;
+  protected static int movement = 0;
   
   //constructor, sets title, panel
   public GameWindow(String description, int level)
   {
     gameWindow.setTitle ("Elemental Shoot-Out: " + description);
     gameWindow.setSize (900,600);
-    
+    gameWindow.setDefaultCloseOperation(gameWindow.DO_NOTHING_ON_CLOSE);
     gameWindow.addWindowListener(new java.awt.event.WindowAdapter() {
       public void windowClosing(java.awt.event.WindowEvent windowEvent) 
       {
-        System.exit(0);
+        verifyClose();
       }
     });
     
@@ -36,7 +39,23 @@ public class GameWindow
     
     screenFactory = new ScreenFactory (this);
     game = new LevelMap (this);
-    keyboardListener = new KeyboardListener ();
+    keyboardListener = new KeyboardListener(){
+      public void keyPressed (KeyEvent event)
+      {
+        keys[event.getKeyCode()] = true;
+        act();
+      }
+      public void act()
+      {
+        if (isKeyPressed(37))
+          movement = 37;
+        else if (isKeyPressed (39))
+          movement = 39;
+        else
+          if (isKeyPressed(38))
+          movement = 39;
+      }
+    };
     gameWindow.addKeyListener (keyboardListener);
     gameWindow.add (game);
     
@@ -56,7 +75,7 @@ public class GameWindow
     gameWindow.setContentPane (game);
   }
   
-  public KeyListener getKeyboardListener ()
+  public KeyboardListener getKeyboardListener ()
   {
     return keyboardListener;
   }
@@ -70,4 +89,18 @@ public class GameWindow
   {
     return gameWindow;
   } 
+  
+  public int getMove()
+  {
+    return movement;
+  }
+  
+  private void verifyClose()
+  {
+    int choice = JOptionPane.CANCEL_OPTION;
+    choice = JOptionPane.showConfirmDialog (new JOptionPane(), "Would you like to exit this game?", "Confirm Quit",
+                                            JOptionPane.YES_NO_OPTION);
+    if (choice == JOptionPane.YES_OPTION)
+      System.exit(0);
+  }
 }

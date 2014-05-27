@@ -4,9 +4,11 @@ import java.awt.*;
 
 /**
  * @author Anqi Wu
+ * @author Chusa Nguyen
  * @author baseball435
  * @version 1.0, May 21, 2014. (Methods of the LevelMap class)
- * @version 1.0, May 22, 2014. (Moved all methods over to this class, added getWallpaper method, extends Screen)
+ * @version 1.1, May 22, 2014. (Moved all methods over to this class, added getWallpaper method, extends Screen)
+ * @version 1.2, May 26 2014. (Instantiates CurrentPlayer, added related methods.)
  */
 public class LevelScreen extends Screen
 {
@@ -17,6 +19,7 @@ public class LevelScreen extends Screen
   //the game grid
   private GameGrid grid = new GameGrid();
   private ImageIcon wallpaper = new ImageIcon ("WallpaperGame.png");
+  private CurrentPlayer player = new CurrentPlayer("Launcher", new Location (6, 9), grid);
   
   public LevelScreen (ScreenFactory screenFactory)
   {
@@ -90,5 +93,10 @@ public class LevelScreen extends Screen
   public ImageIcon getWallpaper()
   {
     return wallpaper;
+  }
+  
+  public CurrentPlayer getPlayer()
+  {
+    return player;
   }
 }

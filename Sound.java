@@ -8,6 +8,7 @@ import java.net.*;
  * TO BE INTEGRATED INTO PROGRAM (WIP)
  * 
  * @author WolfCoder of dreamincode.net
+ * @author Anita Huynh ("Wanderlust.midi")
  * @author Chusa Nguyen (Modifications)
  * @version 1.0, January 07 2006. (Original)
  * @version 2.0, May 19 2014. (Removed outer class, removed creation of Applet window.)

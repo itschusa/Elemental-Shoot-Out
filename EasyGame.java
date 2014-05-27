@@ -1,21 +1,26 @@
 import java.util.ArrayList;
 import java.awt.*;
+import java.awt.event.*;
 
 /**
  * The EasyGame class is a screen that draws the easy level.
  * 
  * @author Anqi Wu
+ * @author Chusa Nguyen
  * @version 1.0, May 21 2014. (extends panel, uses paintComponent)
  * @version 1.1, May 22, 2014. (extends levelscreen, updates!)
+ * @version 1.2, May 26 2014. (Modified all code involving 'player' to fit changes to LevelScreen.)
  */
 public class EasyGame extends LevelScreen
 {        
-  CurrentPlayer player;
+  KeyboardListener keyListen;
+  
   public EasyGame (ScreenFactory screenFactory)
   {
     super(screenFactory);
     ArrayList<Element> newTargets = new ArrayList<Element>();
     String name = "Stable";
+  //  keyListen = getScreenFactory().getListener();
     
     for (int row = 1; row<4;row++)
     {
@@ -38,7 +43,7 @@ public class EasyGame extends LevelScreen
     }
     super.setAllTargets (newTargets);
     super.setAllInventory (newInventory);
-    player = new CurrentPlayer("Launcher", new Location (6, 8), super.getGameGrid());
+    //player = new CurrentPlayer("Launcher", new Location (6, 9), super.getGameGrid());
   }
   
   public void onCreate ()
@@ -58,6 +63,8 @@ public class EasyGame extends LevelScreen
     {
       getAllInventory().get(x).update();
     }
+    if (GameWindow.movement != 0)
+      getPlayer().update(GameWindow.movement);
   }
   
   public void onDraw (Graphics2D twoDimensional)
@@ -73,11 +80,10 @@ public class EasyGame extends LevelScreen
     {
       getAllInventory().get(x).draw(twoDimensional);
     }
-    player.draw(twoDimensional);
+    getPlayer().draw(twoDimensional);
   }
-  
-//  public void currentPlayer()
-//  {
-//    CurrentPlayer player = new CurrentPlayer("Launcher", new Location (6, 8), super.getGameGrid());
-//  }
+  protected class KeyOverrides
+  {
+    
+  }
 }

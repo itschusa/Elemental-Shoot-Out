@@ -5,8 +5,11 @@ import java.awt.*;
  * The CurrentPlayer class stores the score of the player.
  * 
  * @author Anqi Wu
+ * @author Chusa Nguyen 
  * @version 1.0, May 21 2014. (point system)
  * @version 1.1, May 22, 2014. (now extends Element, with location, name, etc.)
+ * @version 1.2, May 24 2014. (Coded basic logic for keyboard determined movement.)
+ * @version 1.3, May 26 2014. (Overloaded Element's empty "update" override.)
  */
 public class CurrentPlayer extends Element
 {
@@ -39,7 +42,7 @@ public class CurrentPlayer extends Element
   {
     if (direction == 37)//left
     {
-      if (getLocation().getRow() == 1)
+      if (getLocation().getColumn() == 1)
         canMove = false;
       else
         canMove = true;
@@ -48,7 +51,7 @@ public class CurrentPlayer extends Element
     {
       if (direction == 39)
       {
-        if (getLocation().getRow() == 12)
+        if (getLocation().getColumn() == 12)
           canMove = false;
         else
           canMove = true;
@@ -60,17 +63,24 @@ public class CurrentPlayer extends Element
   public void move (int direction)
   {
     if (direction == 37)//left
-      getLocation().setRow(getLocation().getRow()-1);
+      getLocation().setColumn(getLocation().getColumn()-1);
     else
     {
       if (direction == 39)//right
-        getLocation().setRow(getLocation().getRow()+1);
+        getLocation().setColumn(getLocation().getColumn()+1);
     }
+    GameWindow.movement = 0;
   }
   
-  public void update ()
+  //Empty override
+  public void update()
   {
-    
+  }
+  
+  public void update (int movement)
+  {
+    if (canMove(movement))
+      move(movement);
   }
   
   public void draw (Graphics2D graphics)
