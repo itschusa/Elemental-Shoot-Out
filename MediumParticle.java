@@ -2,34 +2,44 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * The EasyParticle class represents the unstable and stable particles of the easy level.
- * It stores the icon.
+ * The MediumParticle class represents the elements for the medium level.
+ * It stores the charge, to separate alkali from alkaline metals.
  * 
  * @author Anqi Wu
- * @version 1.0, May 21 2014. (added icon, name, etc.)
- * @version 1.2, May 22, 2014. (added canMove, now draws and moves itself!)
- * @version 1.3, May 27, 2014. (added setCanMove, setCurrentStep, setShift. particles now shift themselves left(inventory))
- * @version 1.4, May 28, 2014. (added getCharge (empty))
+ * @version 1.0, May 28, 2014. (everything except the icon storing works)
  */
-public class EasyParticle extends Element
+public class MediumParticle extends Element
 {
   //icon
   private ImageIcon myIcon;
   private boolean canMove;
   private int currentStep=0;
   private boolean shift;
+  private int charge;
   
   //constructor, sets name, location and grid
-  public EasyParticle (String newName, Location newLocation)
+  public MediumParticle (String newName, Location newLocation, int charge)
   {
     super (newName, newLocation);
     
-    if (newName.equals ("Stable"))
+    if (newName.equals ("Lithium"))
       myIcon = Database.icon;
-    else if (newName.equals ("Unstable"))
+    else if (newName.equals ("Sodium"))
       myIcon = Database.icon2;
+    else if (newName.equals ("Potassium"))
+      myIcon = Database.icon3;
+    else if (newName.equals ("Rubidium"))
+      myIcon = Database.icon3;
+    else if (newName.equals ("Cesium"))
+      myIcon = Database.icon3;
+    //francium
     else
       myIcon = Database.icon3;
+  }
+  
+  public int getCharge ()
+  {
+    return charge;
   }
   
   public void setCanMove (boolean move)
@@ -57,11 +67,6 @@ public class EasyParticle extends Element
     if (getLocation().getRow() <= 0)
       removeFromGrid();
     //setLocation(new Location (getColumn(), 1));
-  }
-  
-  public int getCharge()
-  {
-    return 0;
   }
   
   public void update ()

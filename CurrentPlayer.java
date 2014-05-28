@@ -11,6 +11,7 @@ import java.awt.*;
  * @version 1.2, May 24 2014. (Coded basic logic for keyboard determined movement.)
  * @version 1.3, May 26 2014. (Overloaded Element's empty "update" override.)
  * @version 1.4, May 27, 2014. (added setCanMove, and setCurrentStep(empty))
+ * @version 1.5, May 28, 2014. (added getCharge (empty))
  */
 public class CurrentPlayer extends Element
 {
@@ -117,5 +118,10 @@ public class CurrentPlayer extends Element
   //empty override
   public void setCurrentStep(int steps)
   {
+  }
+  
+  public int getCharge ()
+  {
+    return 0;
   }
 }

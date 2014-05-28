@@ -5,6 +5,7 @@ import javax.swing.*;
  * 
  * @author Anqi Wu
  * @version 1.0, May 21 2014.
+ * @version 1.1, May 28 2014. (Added the alkaliMetals array to store the names.)
  */
 public class Database
 {
@@ -15,4 +16,6 @@ public class Database
   public static ImageIcon icon3 = new ImageIcon ("Neutron2.png");
   //other icons
   public static ImageIcon icon4 = new ImageIcon ("Launcher.png");
+  public static String[] alkaliMetals = new String[]{"Lithium","Sodium","Potassium","Rubidium","Cesium","Francium"};
+  
 }

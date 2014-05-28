@@ -10,6 +10,7 @@ import java.awt.event.*;
  * @version 1.0, May 21 2014. (the game window that stores arraylist of particles)
  * @version 1.1, May 22, 2014. (now implements Runnable, which updates/paints the current screen)
  * @version 1.2, May 27, 2014. (added temporary main menu button - can close the current window and create the main menu, stacktrace errors vs print errors)
+ * @version 1.3, May 28, 2014. (prints total user points)
  */
 public class LevelMap extends JPanel implements Runnable
 {
@@ -21,15 +22,6 @@ public class LevelMap extends JPanel implements Runnable
   {
     game = elemental;
     setFocusable (true);
-    JButton mainMenu = new JButton ("Main Menu");
-    add (mainMenu);
-    
-    mainMenu.addActionListener (new ActionListener ()
-                                  {
-      public void actionPerformed (ActionEvent e)      { 
-        new MenuFrames();
-        game.closeWindow();
-      }});
   }
   
   public void stop()
@@ -59,12 +51,14 @@ public class LevelMap extends JPanel implements Runnable
   public void paintComponent (Graphics g)
   {
     super.paintComponent(g);
+    
     Graphics2D twoDimensional = (Graphics2D) g;
     twoDimensional.setRenderingHint (RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     
     if (game.getScreenFactory().getCurrentScreen() != null)
       game.getScreenFactory().getCurrentScreen().onDraw (twoDimensional);
     
+    twoDimensional.drawString("Total Points: "+game.getScreenFactory().getCurrentScreen().getPlayer().getCurrentPoints(), 10,20);
     repaint();
   }
 }

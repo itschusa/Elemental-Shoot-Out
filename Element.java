@@ -9,6 +9,7 @@ import java.awt.*;
  * @version 1.0, May 21 2014. (removeFromGrid method not functional)
  * @version 1.1, May 22, 2014. (still not functional, allows all subclasses to update themselves)
  * @version 1.2, May 27, 2014. (added more abstract methods that easyparticle uses. removeFromGrid now works!)
+ * @version 1.3, May 28, 2014. (added abstract method getCharge)
  */
 public abstract class Element
 {
@@ -54,9 +55,11 @@ public abstract class Element
     location = null;
   }
   
+  public abstract int getCharge();
+  
   public abstract void setCanMove (boolean steps);
   
-    public abstract void setShift (boolean set);
+  public abstract void setShift (boolean set);
   
   public abstract boolean canMove ();
   

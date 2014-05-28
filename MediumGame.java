@@ -2,45 +2,36 @@ import java.util.ArrayList;
 import java.awt.*;
 
 /**
- * The EasyGame class is a screen that draws the easy level.
+ * The MediumGame class represents the screen for the medium level.
+ * It involves acid-base neutralization.
  * 
  * @author Anqi Wu
- * @author Chusa Nguyen
- * @version 1.0, May 21 2014. (extends panel, uses paintComponent)
- * @version 1.1, May 22, 2014. (extends levelscreen, updates!)
- * @version 1.2, May 26 2014. (Modified all code involving 'player' to fit changes to LevelScreen.)
- * @version 1.3, May 27, 2014. (Modified code for updating the inventory and targets. Actually shoots and interacts! + comment lines)
- * @version 1.4, May 28, 2014. (Temporary code to print points in the interactions pane.)
+ * @version 1.0, May 28, 2014. (alkali metals and hydroxide elements update - repeat of EasyGame)
  */
-public class EasyGame extends LevelScreen
+public class MediumGame extends LevelScreen
 {        
-  public EasyGame (ScreenFactory screenFactory)
+  public MediumGame (ScreenFactory screenFactory)
   {
     super(screenFactory);
     
     ArrayList<Element> newTargets = new ArrayList<Element>();
-    String name = "Stable";
+    String name = "";
     
     //set targets randomly
     for (int row = 1; row<4;row++)
     {
       for (int col=1;col<13;col++)
       {
-        if (Math.random()<0.5)
-          name = "Unstable";
-        newTargets.add (new EasyParticle(name, new Location(col, row)));
-        name = "Stable";
+        int element = (int) Math.random()*6;
+        name = Database.alkaliMetals[element];
+        newTargets.add (new MediumParticle(name, new Location(col, row),1));
       }
     }
     
-    //set inventory randomly
     ArrayList<Element> newInventory = new ArrayList <Element>();
     for (int col = 1; col<13;col++)
     {
-      name = "Stable";
-      if (Math.random()<0.5)
-        name = "Neutron";
-      newInventory.add (new EasyParticle(name, new Location (col, 10)));      
+      newInventory.add (new MediumParticle("Hydroxide", new Location (col, 10),-1));      
     }
     
     //save changes
@@ -109,7 +100,7 @@ public class EasyGame extends LevelScreen
           //get targer
           Element tar = getAllTargets().get(index);
           //stable and stable || unstable and neutron <-- remove both inventory and target
-          if (inv.getName().equals(tar.getName())||inv.getName().equals("Neutron") && tar.getName().equals("Unstable"))
+          if (inv.getCharge() + tar.getCharge() == 0)
           {
             System.out.println ("+10");
             inv.removeFromGrid();
