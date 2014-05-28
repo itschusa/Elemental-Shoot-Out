@@ -21,6 +21,7 @@ import java.awt.event.*;
  * @version 2.1, May 24 2014. (Added instructions panel, replaced boolean secondPanel with int panelNum, made corrections to some comments.)
  * @version 2.2, May 25 2014. (Added settings panel and option to start/stop music.)
  * @version 2.3, May 26 2014. (Fixed glitches with music.)
+ * @version 2.4, May 27 2014. (Difficulty buttons now go to separate windows.)
  */
 public class MenuFrames extends JFrame
 {
@@ -294,7 +295,7 @@ public class MenuFrames extends JFrame
                                                         {
       public void actionPerformed (ActionEvent e)
       { 
-        new GameWindow("Easy Level",1);
+        new GameWindow("Medium Level",2);
         dispose();
       }
     }); 
@@ -302,7 +303,7 @@ public class MenuFrames extends JFrame
                                                            {
       public void actionPerformed (ActionEvent e)
       { 
-        new GameWindow("Easy Level",1);
+        new GameWindow("Difficult Level",3);
         dispose();
       }
     }); 

@@ -10,6 +10,7 @@ import java.awt.event.*;
  * @version 1.0, May 21 2014. (creates game window)
  * @version 1.1, May 22, 2014. (added keyboard listener, instantiates vs extends JFrame)
  * @version 1.2, May 26 2014. (Coded keyboard listener, modified window listener.)
+ * @version 1.3, May 27, 2014. (bug fix with up key, added closeWindow method)
  */
 public class GameWindow
 {
@@ -19,13 +20,14 @@ public class GameWindow
   private final LevelMap game;
   private final KeyboardListener keyboardListener;
   protected static int movement = 0;
+  private Thread thread;
   
   //constructor, sets title, panel
   public GameWindow(String description, int level)
   {
     gameWindow.setTitle ("Elemental Shoot-Out: " + description);
     gameWindow.setSize (900,600);
-    gameWindow.setDefaultCloseOperation(gameWindow.DO_NOTHING_ON_CLOSE);
+    gameWindow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     gameWindow.addWindowListener(new java.awt.event.WindowAdapter() {
       public void windowClosing(java.awt.event.WindowEvent windowEvent) 
       {
@@ -39,6 +41,7 @@ public class GameWindow
     
     screenFactory = new ScreenFactory (this);
     game = new LevelMap (this);
+    
     keyboardListener = new KeyboardListener(){
       public void keyPressed (KeyEvent event)
       {
@@ -52,10 +55,13 @@ public class GameWindow
         else if (isKeyPressed (39))
           movement = 39;
         else
+        {
           if (isKeyPressed(38))
-          movement = 39;
+          movement = 38;
+        }
       }
     };
+    
     gameWindow.addKeyListener (keyboardListener);
     gameWindow.add (game);
     
@@ -67,12 +73,19 @@ public class GameWindow
     else
       System.out.println ("Not Available Yet");
     
-    new Thread (game).start();
+    thread = new Thread (game);
+    thread.start();
     
     gameWindow.setVisible (true);
     
     gameWindow.setBackground (new java.awt.Color (255,255,255));
     gameWindow.setContentPane (game);
+  }
+  
+  public void closeWindow()
+  {
+    gameWindow.dispose();
+    game.stop();
   }
   
   public KeyboardListener getKeyboardListener ()

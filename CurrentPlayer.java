@@ -10,6 +10,7 @@ import java.awt.*;
  * @version 1.1, May 22, 2014. (now extends Element, with location, name, etc.)
  * @version 1.2, May 24 2014. (Coded basic logic for keyboard determined movement.)
  * @version 1.3, May 26 2014. (Overloaded Element's empty "update" override.)
+ * @version 1.4, May 27, 2014. (added setCanMove, and setCurrentStep(empty))
  */
 public class CurrentPlayer extends Element
 {
@@ -17,20 +18,16 @@ public class CurrentPlayer extends Element
   //user points
   private int points;
   private boolean canMove;
-  private KeyboardListener keyListen;
   
-  public CurrentPlayer (String newName, Location newLocation, GameGrid newGrid)
+  public CurrentPlayer (String newName, Location newLocation)
   {
-    super (newName, newLocation, newGrid);
+    super (newName, newLocation);
     myIcon = Database.icon4;
   }
   
-  public void reverseMove ()
+  public void setCanMove (boolean move)
   {
-    if (canMove == true)
-      canMove = false;
-    else
-      canMove = true;
+    canMove=move;
   }
   
   public boolean canMove ()
@@ -38,6 +35,10 @@ public class CurrentPlayer extends Element
     return canMove;
   }
   
+    public void setShift (boolean set)
+  {
+  }
+    
   public boolean canMove (int direction)
   {
     if (direction == 37)//left
@@ -69,7 +70,6 @@ public class CurrentPlayer extends Element
       if (direction == 39)//right
         getLocation().setColumn(getLocation().getColumn()+1);
     }
-    GameWindow.movement = 0;
   }
   
   //Empty override
@@ -112,5 +112,10 @@ public class CurrentPlayer extends Element
   public int getCurrentPoints ()
   {
     return points;
+  }
+  
+  //empty override
+  public void setCurrentStep(int steps)
+  {
   }
 }

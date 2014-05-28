@@ -9,6 +9,7 @@ import java.awt.*;
  * @version 1.0, May 21, 2014. (Methods of the LevelMap class)
  * @version 1.1, May 22, 2014. (Moved all methods over to this class, added getWallpaper method, extends Screen)
  * @version 1.2, May 26 2014. (Instantiates CurrentPlayer, added related methods.)
+ * @version 1.3, May 27, 2013. (getInventoryIndex works! +changed from get element to get index)
  */
 public class LevelScreen extends Screen
 {
@@ -16,10 +17,8 @@ public class LevelScreen extends Screen
   private ArrayList <Element> targets = new ArrayList <Element>();
   //the inventory particles
   private ArrayList <Element> inventory = new ArrayList <Element>();
-  //the game grid
-  private GameGrid grid = new GameGrid();
   private ImageIcon wallpaper = new ImageIcon ("WallpaperGame.png");
-  private CurrentPlayer player = new CurrentPlayer("Launcher", new Location (6, 9), grid);
+  private CurrentPlayer player = new CurrentPlayer("Launcher", new Location (6, 9));
   
   public LevelScreen (ScreenFactory screenFactory)
   {
@@ -39,25 +38,34 @@ public class LevelScreen extends Screen
   }
   
   //returns the target at location in parameters, returns null if not found
-  public Element getTarget (Location location)
+  public int getTargetIndex (Location location)
   {
     for (int x = 0;x<targets.size();x++)
-    {
-      if (targets.get(x).getLocation().equals (location))
-        return targets.get(x);
-    }
-    return null;
+      if (targets.get(x).getLocation()!=null && targets.get(x).getLocation().getRow() == location.getRow() && targets.get(x).getLocation().getColumn() == location.getColumn())
+        return x;
+    return -1;
+  }
+  
+  public void setTarget (Element newElement, int index)
+  {
+    targets.set(index, newElement);
   }
   
   //returns the inventory particles at location in parameters, returns null if not found
-  public Element getInventory (Location location)
+  public int getInventoryIndex (Location location)
   {
     for (int x=0;x<inventory.size();x++)
     {
-      if (inventory.get(x).getLocation().equals(location))
-        return inventory.get(x);
+      if (inventory.get(x).getLocation()!=null && inventory.get(x).getLocation().getRow() == location.getRow() && inventory.get(x).getLocation().getColumn() ==location.getColumn())
+        return x;
     }
-    return null;
+    return -1;
+  }
+  
+  
+  public void setInventory (Element newElement, int index)
+  {
+    inventory.set(index, newElement);
   }
   
   //returns arraylist of all target particles
@@ -82,12 +90,6 @@ public class LevelScreen extends Screen
   public void setAllInventory (ArrayList<Element> newInventory)
   {
     inventory = newInventory;
-  }
-  
-  //returns the grid of the panel
-  public GameGrid getGameGrid()
-  {
-    return grid;
   }
   
   public ImageIcon getWallpaper()

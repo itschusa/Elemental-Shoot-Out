@@ -8,6 +8,7 @@ import java.awt.*;
  * @author baseball435 (update and draw methods)
  * @version 1.0, May 21 2014. (removeFromGrid method not functional)
  * @version 1.1, May 22, 2014. (still not functional, allows all subclasses to update themselves)
+ * @version 1.2, May 27, 2014. (added more abstract methods that easyparticle uses. removeFromGrid now works!)
  */
 public abstract class Element
 {
@@ -15,15 +16,12 @@ public abstract class Element
   private String name;
   //the location
   private Location location;
-  //the grid
-  //private GameGrid myGrid;
   
   //constructor, sets the name, location and grid
-  public Element (String newName, Location newLocation, GameGrid newGrid)
+  public Element (String newName, Location newLocation)
   {
     name = newName;
     location = newLocation;
-    //myGrid = newGrid;
   }
   
   //returns name
@@ -50,16 +48,19 @@ public abstract class Element
     location = newLocation;
   }
   
-  //remove particle, not functional
+  //remove particle
   public void removeFromGrid ()
   {
     location = null;
-    //myGrid = null;
   }
   
-  public abstract void reverseMove ();
+  public abstract void setCanMove (boolean steps);
+  
+    public abstract void setShift (boolean set);
   
   public abstract boolean canMove ();
+  
+  public abstract void setCurrentStep(int steps);
   
   //override to return icon
   public abstract ImageIcon getIcon ();

@@ -6,6 +6,7 @@ import java.awt.event.*;
 public class KeyboardListener implements KeyListener
 {
   protected boolean[] keys = new boolean[256];
+  
   public void keyPressed (KeyEvent event)
   {
     keys[event.getKeyCode()] = true;
