@@ -21,7 +21,7 @@ import java.awt.event.*;
  * @version 2.1, May 24 2014. (Added instructions panel, replaced boolean secondPanel with int panelNum, made corrections to some comments.)
  * @version 2.2, May 25 2014. (Added settings panel and option to start/stop music.)
  * @version 2.3, May 26 2014. (Fixed glitches with music.)
- * @version 2.4, May 27 2014. (Difficulty buttons now go to separate windows.)
+ * @version 2.4, May 29 2014. (Replaced features menu item with instructions menu item.)
  */
 public class MenuFrames extends JFrame
 {
@@ -41,6 +41,10 @@ public class MenuFrames extends JFrame
    * settingsPanel - reference - Reference variable to the object created by the SettingsPanel class which extends JPanel. 
    */
   private SettingsPanel settingsPanel;
+  /**
+   * scoresPanel - reference - Reference variable to the object created by the HighscorePanel which extends JPanel. 
+   */
+  private HighscorePanel scoresPanel;
   /**
    * panelNum - int - Represents the current panel (1 = main, 2 = level selection, 3 = instructions, 4 = settings, 5 = highscores).
    */
@@ -62,18 +66,24 @@ public class MenuFrames extends JFrame
    */
   protected JMenuItem mainMenuItem = new JMenuItem ("Main Menu   F1");
   /**
+   * helpItem - reference - Reference variable to the corresponding JMenuItem object.
+   */
+  protected JMenuItem helpItem = new JMenuItem("Help                      F2");
+  /**
    * aboutItem - reference - Reference variable to the corresponding JMenuItem object.
    */
-  protected JMenuItem aboutItem = new JMenuItem("About           F2");
-  /**
-   * featuresItem - reference - Reference variable to the corresponding JMenuItem object.
+  protected JMenuItem aboutItem = new JMenuItem("About                   F3");
+  /**  
+   * instructionsItem - reference - Reference variable to the corresponding JMenuItem object. 
    */
-  protected JMenuItem featuresItem = new JMenuItem("Features     F3");
+  protected JMenuItem instructionsItem = new JMenuItem ("Instructions       F4");
   /**
    * closeItem - reference - Reference variable to the corresponding JMenuItem object.
    */
   protected JMenuItem closeItem = new JMenuItem("Close            F5");
-  
+  /**
+   * musicUncreated - boolean - Represents whether or not the Sound class has been called to create an instance of AudioClip.
+   */
   private boolean musicUncreated = true;
   
   /**
@@ -132,8 +142,9 @@ public class MenuFrames extends JFrame
     menus.add(helpMenu); 
     fileMenu.add(mainMenuItem);
     fileMenu.add(closeItem);
+    helpMenu.add(helpItem);
     helpMenu.add(aboutItem);
-    helpMenu.add(featuresItem);
+    helpMenu.add(instructionsItem);
     setJMenuBar(menus); 
     menuBarActionListeners();
     keyBindings();
@@ -172,8 +183,8 @@ public class MenuFrames extends JFrame
             remove (instructionsPanel);
           else if (panelNum == 4)
             remove (settingsPanel);
-          //else 
-          //remove (highscoresPanel);
+          else 
+            remove (scoresPanel);
           mainMenuPanel();
         }
       }}); 
@@ -183,12 +194,16 @@ public class MenuFrames extends JFrame
       }}); 
     aboutItem.addActionListener(new ActionListener(){
       public void actionPerformed (ActionEvent e)      {
-        JOptionPane.showMessageDialog (new JFrame(), "-insert info here-", "About the Programmers", JOptionPane.INFORMATION_MESSAGE);
+        new SplashScreen ("SplashSMALLER.png", 5000, false);
       }});
-    featuresItem.addActionListener(new ActionListener(){
+    helpItem.addActionListener(new ActionListener(){
       public void actionPerformed (ActionEvent e)      {
         JOptionPane.showMessageDialog (new JFrame(), "-insert info here-", "Game Features", JOptionPane.INFORMATION_MESSAGE);
       }});    
+    instructionsItem.addActionListener(new ActionListener(){
+      public void actionPerformed (ActionEvent e) {
+        instructions();
+      }});
   }
   
   /**
@@ -200,15 +215,19 @@ public class MenuFrames extends JFrame
     menus.getActionMap().put("main menu", new AbstractAction(){
       public void actionPerformed (ActionEvent e){
         mainMenuItem.doClick();}});
-    menus.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0, false), "about");
-    menus.getActionMap().put("about", new AbstractAction(){
+    menus.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0, false), "help");
+    menus.getActionMap().put("help", new AbstractAction(){
       public void actionPerformed (ActionEvent e){
-        aboutItem.doClick();}});
-    menus.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0, false), "features");
-    menus.getActionMap().put("features", new AbstractAction(){
+        helpItem.doClick();}});
+    menus.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0, false), "about");
+    menus.getActionMap().put("about", new AbstractAction(){
       public void actionPerformed (ActionEvent e) {
-        featuresItem.doClick();}});
-    menus.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0, false), "close");
+        aboutItem.doClick();}});
+    menus.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 0, false), "instructions");
+    menus.getActionMap().put("instructions", new AbstractAction(){
+      public void actionPerformed (ActionEvent e) {
+        instructionsItem.doClick();}});
+        menus.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0, false), "close");
     menus.getActionMap().put("close", new AbstractAction(){
       public void actionPerformed (ActionEvent e) {
         closeItem.doClick();}});
@@ -246,7 +265,6 @@ public class MenuFrames extends JFrame
       public void actionPerformed (ActionEvent e)      { 
         remove (menuPanel);
         instructions();
-        repaint();
       }
     });
     menuPanel.settingsButton.addActionListener (new ActionListener ()
@@ -295,7 +313,7 @@ public class MenuFrames extends JFrame
                                                         {
       public void actionPerformed (ActionEvent e)
       { 
-        new GameWindow("Medium Level",2);
+        new GameWindow("Easy Level",1);
         dispose();
       }
     }); 
@@ -303,7 +321,7 @@ public class MenuFrames extends JFrame
                                                            {
       public void actionPerformed (ActionEvent e)
       { 
-        new GameWindow("Difficult Level",3);
+        new GameWindow("Easy Level",1);
         dispose();
       }
     }); 
@@ -314,11 +332,22 @@ public class MenuFrames extends JFrame
    */
   private void instructions()
   {
-    panelNum = 3;
-    remove (menuPanel);
-    instructionsPanel = new InstructionsPanel();
-    add (instructionsPanel);
-    validate();
+    if (panelNum != 3)
+    {
+      if (panelNum == 1)
+        remove (menuPanel);
+      else if (panelNum == 2)
+        remove(difficultiesPanel);
+      else if (panelNum == 4)
+        remove (settingsPanel);
+      else 
+        remove (scoresPanel);
+      panelNum = 3;
+      instructionsPanel = new InstructionsPanel();
+      add (instructionsPanel);
+      validate();
+    }
+    repaint();
   }
   
   /**
@@ -344,6 +373,5 @@ public class MenuFrames extends JFrame
       public void actionPerformed (ActionEvent e) {
         settingsPanel.toggleOff();
       }});
-    
   } 
 }

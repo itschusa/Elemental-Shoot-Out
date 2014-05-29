@@ -14,6 +14,7 @@ import javax.swing.*;
  */
 public class SplashScreen extends JWindow
 {
+  protected static boolean firstRun;
   /**
    * This constructor creates an instance of SplashScreen with the image set by the string parameter and the time in
    * milliseconds before the splash screen closes set by the int parameter. The window is centred on the screen. This
@@ -30,9 +31,10 @@ public class SplashScreen extends JWindow
    * @param e: Exception - Catches errors regarding thread sleep, etc.
    * @param splashThread: Thread - The Thread that stores the Runnable object that is started.
    */
-  public SplashScreen(String filename, final int waitTime)
+  public SplashScreen(String filename, final int waitTime, boolean firstRun)
   {
     super(); //create JWindow
+    this.firstRun = firstRun;
     
     JLabel label = new JLabel(new ImageIcon(filename)); //create image label
     getContentPane().add(label); //add label to the container
@@ -49,7 +51,8 @@ public class SplashScreen extends JWindow
       {
         setVisible(false);
         dispose();
-        createWindow();
+        if (SplashScreen.firstRun)
+          createWindow();
       }
     };
     
@@ -74,6 +77,8 @@ public class SplashScreen extends JWindow
     Thread splashThread = new Thread(waitRunner, "Splash"); //creates a new thread for waitRunner
     splashThread.start(); //starts thread
     this.requestFocus();
+    super.requestFocus();
+    requestFocus();
   }
   
   //create menu frames window
