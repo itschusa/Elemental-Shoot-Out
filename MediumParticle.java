@@ -7,7 +7,6 @@ import java.awt.*;
  * 
  * @author Anqi Wu
  * @version 1.0, May 28, 2014. (everything except the icon storing works)
- * @version 1.1, May 29, 2014. (The icons work!)
  */
 public class MediumParticle extends Element
 {
@@ -35,8 +34,10 @@ public class MediumParticle extends Element
       myIcon = Database.icon9;
     else if (newName.equals ("Francium"))
       myIcon = Database.icon10;
-    else
+    else if (newName.equals("Hydroxide"))
       myIcon = Database.icon11;
+    else 
+      myIcon = Database.icon12;
   }
   
   public int getCharge ()

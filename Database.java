@@ -4,8 +4,11 @@ import javax.swing.*;
  * The Database class stores all the icons (currently).
  * 
  * @author Anqi Wu
+ * @author Chusa Nguyen
  * @version 1.0, May 21 2014.
- * @version 1.1, May 28 2014. (Added the alkaliMetals array to store the names.)
+ * @version 1.1, May 24 2014. (Added launcher)
+ * @version 1.2, May 28 2014. (Added the alkaliMetals array to store the names.)
+ * @version 1.3, May 30 2014. (Added acid cloud obstacle.)
  */
 public class Database
 {
@@ -24,4 +27,5 @@ public class Database
   public static ImageIcon icon9 = new ImageIcon ("Cesium2.png");
   public static ImageIcon icon10 = new ImageIcon ("Francium2.png");
   public static ImageIcon icon11 = new ImageIcon ("Hydroxide.png");
+  public static ImageIcon icon12 = new ImageIcon ("cloud.png");
 }
