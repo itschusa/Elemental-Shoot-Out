@@ -367,11 +367,14 @@ public class MenuFrames extends JFrame
                                                    {
       public void actionPerformed (ActionEvent e) {
         settingsPanel.toggleOn();
+        repaint();
       }});
     settingsPanel.musicOff.addActionListener (new ActionListener ()
                                                {
       public void actionPerformed (ActionEvent e) {
         settingsPanel.toggleOff();
+        repaint();
+        validate();
       }});
   } 
 }

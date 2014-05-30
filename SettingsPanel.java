@@ -20,11 +20,11 @@ public class SettingsPanel extends JPanel
   /**
    * musicOn - reference - Reference variable to the specified JButton. 
    */
-  protected JButton musicOn = new JButton ("Turn Music On");
+  protected JButton musicOn = new JButton (new ImageIcon ("volume_2.png"));
   /**
    * musicOff - JButton - Reference variable to the specified JButton. 
    */
-  protected JButton musicOff = new JButton ("Turn Music Off");
+  protected JButton musicOff = new JButton (new ImageIcon ("volume_off.png"));
   
   /**
    * The constructors. It sets the properties of this JPanel and adds components to it. 
@@ -42,6 +42,12 @@ public class SettingsPanel extends JPanel
    */
   private void setInitialStates()
   {
+    musicOn.setContentAreaFilled(false);
+    musicOn.setBorder (null);    
+    musicOn.setRolloverIcon(new ImageIcon ("volume_2Roll.png"));
+    musicOff.setContentAreaFilled(false);
+    musicOff.setBorder (null);
+    musicOff.setRolloverIcon(new ImageIcon ("volume_OffRoll.png"));
     add(musicOn);
     add(musicOff);
     musicOff.setEnabled(false);
