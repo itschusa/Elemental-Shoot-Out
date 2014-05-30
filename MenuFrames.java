@@ -99,6 +99,7 @@ public class MenuFrames extends JFrame
     menuBars();
     mainMenuPanel();
     frameSpecifications();
+    requestFocus();
   }
   
   /**
