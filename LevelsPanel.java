@@ -16,27 +16,27 @@ public class LevelsPanel extends JPanel
   /**
    * easy - reference - Reference variable to the image of the same name.
    */
-  private ImageIcon easy = new ImageIcon ("Easy.png");
+  private ImageIcon easy = new ImageIcon ("Images/Easy.png");
    /**
    * easyRoll - reference - References to the image used for the roll-over mouse action of the easy button.
    */
-  private ImageIcon easyRoll = new ImageIcon ("Easy2.png");
+  private ImageIcon easyRoll = new ImageIcon ("Images/Easy2.png");
    /**
    * medium - reference - Reference variable to the image of the same name. 
    */
-  private ImageIcon medium = new ImageIcon ("Medium.png");
+  private ImageIcon medium = new ImageIcon ("Images/Medium.png");
    /**
    * mediumRoll - reference - References to the image used for the roll-over mouse action of the medium button.
    */
-  private ImageIcon mediumRoll = new ImageIcon ("Medium2.png");
+  private ImageIcon mediumRoll = new ImageIcon ("Images/Medium2.png");
    /**
    * hard - reference - Reference variable to the image of the same name. 
    */
-  private ImageIcon hard = new ImageIcon ("Hard.png");
+  private ImageIcon hard = new ImageIcon ("Images/Hard.png");
    /**
    * hardRoll - reference - References to the image used for the roll-over mouse action of the difficult button.
    */
-  private ImageIcon hardRoll = new ImageIcon ("Hard2.png");
+  private ImageIcon hardRoll = new ImageIcon ("Images/Hard2.png");
   /**
    * easyButton - reference - Reference variable to the corresponding JButton object.
    */

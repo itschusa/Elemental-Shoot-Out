@@ -22,8 +22,8 @@ public class PausePanel extends JPanel
     setBackground(new Color(0,0,0,0));
     setVisible(true);
     
-    pauseImage = new ImageIcon("Paused4.png");
-    clearImage = new ImageIcon ("ClearImage.png");
+    pauseImage = new ImageIcon("Images/Paused4.png");
+    clearImage = new ImageIcon ("Images/ClearImage.png");
   }
   
   public void pause ()

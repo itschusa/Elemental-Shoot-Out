@@ -1,6 +1,7 @@
 //import files
 import java.awt.*;
 import javax.swing.*;
+import java.awt.event.*;
 
 /**
  * The SplashScreen class creates the a splash screen, which displays the game logo, name, company name and logo, and
@@ -11,6 +12,8 @@ import javax.swing.*;
  * @author Tony Colston (http://www.javaworld.com/article/2077467/core-java/java-tip-104--make-a-splash-with-swing.html)
  * @version 1.0, May 14, 2014.
  * @version 1.1, May 15, 2014.
+ * @version 1.2, May 29, 2014. (Added another argument to constructor argument list and boolean firstRun).
+ * @version 1.3, May 30, 2014. (Added mouse input.)
  */
 public class SplashScreen extends JWindow
 {
@@ -43,6 +46,18 @@ public class SplashScreen extends JWindow
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); //returns screen size
     Dimension labelSize = label.getPreferredSize(); //returns size of splashscreen imagesetlocatii
     setLocation(screenSize.width/2 - (labelSize.width/2), screenSize.height/2 - (labelSize.height/2)); //centers window
+    
+    if (!firstRun)
+    {
+      addMouseListener(new MouseAdapter()
+                         {
+        public void mousePressed(MouseEvent e)
+        {
+          setVisible(false);
+          dispose();
+        }
+      });
+    }
     
     //anonymous class - closes splashscreen and opens menu frames class
     final Runnable closerRunner = new Runnable()

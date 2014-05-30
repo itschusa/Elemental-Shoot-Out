@@ -17,7 +17,7 @@ public class LevelScreen extends Screen
   private ArrayList <Element> targets = new ArrayList <Element>();
   //the inventory particles
   private ArrayList <Element> inventory = new ArrayList <Element>();
-  private ImageIcon wallpaper = new ImageIcon ("WallpaperGame.png");
+  private ImageIcon wallpaper = new ImageIcon ("Images/WallpaperGame.png");
   private CurrentPlayer player = new CurrentPlayer("Launcher", new Location (6, 9));
   
   public LevelScreen (ScreenFactory screenFactory)

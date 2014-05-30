@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
 /**
  * The LevelMap class represents the panel. It stores the targets and inventory.

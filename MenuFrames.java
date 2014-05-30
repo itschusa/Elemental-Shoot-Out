@@ -24,7 +24,7 @@ import java.io.IOException;
  * @version 2.3, May 26 2014. (Fixed glitches with music.)
  * @version 2.4, May 27 2014. (Difficulty buttons now go to separate windows.)
  * @version 2.5, May 29 2014. (Replaced features menu item with instructions menu item.)
- * @version 2.6, May 30 2014. (Fixed: settings --> main --> play --> main --> settings --> null pointer exception.)
+ * @version 2.6, May 30 2014. (Fixed: settings --> main --> play --> main --> settings --> null pointer exception. Rearranged some code and added 4 new methods.)
  */
 public class MenuFrames extends JFrame
 {
@@ -85,7 +85,7 @@ public class MenuFrames extends JFrame
    */
   protected JMenuItem closeItem = new JMenuItem("Close            F5");
   /**
-   * musicPanelUncreated - boolean - Represents whether or not the Sound class has been called to create an instance of AudioClip.
+   * musicPanelUncreated - static boolean - Represents whether or not the Sound class has been called to create an instance of AudioClip.
    */
   protected static boolean musicPanelUncreated = true;
   
@@ -97,7 +97,7 @@ public class MenuFrames extends JFrame
   public MenuFrames()
   {
     super ("Elemental Shoot-Out: A Chemistry Game");
-    addBackground("Wallpaper.png");
+    addBackground("Images/Wallpaper.png");
     menuBars();
     mainMenuPanel();
     frameSpecifications();
@@ -181,14 +181,6 @@ public class MenuFrames extends JFrame
       public void actionPerformed (ActionEvent e)      {
         if (panelNum != 1)
         {
-          if (panelNum == 2)
-            remove(difficultiesPanel);
-          else if (panelNum == 3)
-            remove (instructionsPanel);
-          else if (panelNum == 4)
-            remove (settingsPanel);
-          else 
-            remove (scoresPanel);
           mainMenuPanel();
         }
       }}); 
@@ -198,7 +190,7 @@ public class MenuFrames extends JFrame
       }}); 
     aboutItem.addActionListener(new ActionListener(){
       public void actionPerformed (ActionEvent e)      {
-        new SplashScreen ("SplashSMALLER.png", 5000, false);
+        new SplashScreen ("Images/SplashSMALLER.png", 5000, false);
       }});
     helpItem.addActionListener(new ActionListener(){
       public void actionPerformed (ActionEvent e)      {
@@ -250,6 +242,15 @@ public class MenuFrames extends JFrame
    */
   private void mainMenuPanel()
   {
+    if (panelNum == 2)
+      remove(difficultiesPanel);
+    else if (panelNum == 3)
+      remove (instructionsPanel);
+    else if (panelNum == 4)
+      remove (settingsPanel);
+    else 
+      if (scoresPanel != null)
+      remove (scoresPanel);
     panelNum = 1;  
     menuPanel = new MenusPanel();
     add(menuPanel);
@@ -300,7 +301,6 @@ public class MenuFrames extends JFrame
   private void levelsPanel()
   {
     panelNum = 2;
-    remove(menuPanel);
     difficultiesPanel = new LevelsPanel();
     add(difficultiesPanel);   
     levelsPanelActionListeners();
@@ -317,6 +317,7 @@ public class MenuFrames extends JFrame
       public void actionPerformed (ActionEvent e)
       { 
         setVisible(false);
+        mainMenuPanel();
         new GameWindow("Easy Level",1, getMenuFrame());
       }
     }); 
@@ -325,6 +326,7 @@ public class MenuFrames extends JFrame
       public void actionPerformed (ActionEvent e)
       { 
         setVisible(false);
+        mainMenuPanel();
         new GameWindow("Medium Level",2,getMenuFrame());
       }
     }); 
@@ -333,6 +335,7 @@ public class MenuFrames extends JFrame
       public void actionPerformed (ActionEvent e)
       { 
         setVisible(false);
+        mainMenuPanel();
         new GameWindow("Hard Level",3, getMenuFrame());
       }
     }); 
@@ -362,47 +365,77 @@ public class MenuFrames extends JFrame
   }
   
   /**
-   * 
+   * The "settings" method. It adds an instance of SettingsPanel to the frame, and creates a new instance if one has yet to have been created. 
+   * It also initializes the AudioClip object from the SettingsPanel class upon first instantiation. 
    */
   private void settings()
   {
     panelNum = 4;
-    remove (menuPanel);
     if (musicPanelUncreated)
     {
       musicPanelUncreated = false;
       settingsPanel = new SettingsPanel();
       if (!SettingsPanel.musicInitialized)
-        settingsPanel.initializeClip();
+      settingsPanel.initializeClip();
     }
     add (settingsPanel);
+    settingsActionListeners();
     validate();
-    
+  } 
+  
+  /**
+   * The "settingsActionListeners" method. It implements an ActionListener object to each component of the settings panel.
+   */
+  private void settingsActionListeners()
+  {
     settingsPanel.musicOn.addActionListener (new ActionListener ()
-                                                   {
+                                               {
       public void actionPerformed (ActionEvent e) {
         settingsPanel.toggleOn();
         repaint();
       }});
     settingsPanel.musicOff.addActionListener (new ActionListener ()
-                                               {
+                                                {
       public void actionPerformed (ActionEvent e) {
         settingsPanel.toggleOff();
         repaint();
         validate();
       }});
-  } 
+  }
   
   /**
+   * The "getMenuFrame" method, which returns a MenuFrames object. 
    * 
+   * @return Returns this instance of MenuFrames. 
    */
-  public JFrame getMenuFrame()
+  public MenuFrames getMenuFrame()
   {
     return this;
   }
   
-  public JPanel getSettings()
+  /**
+   * The "setSettings" method, which provides public access to the settings method.
+   */
+  public void setSettings()
   {
-    return settingsPanel;
+    settings();
+  }
+  
+  /**
+   * The "removeSettings" method, which allows other classes to remove the settings panel. 
+   */
+  public void removeSettings()
+  {
+    remove(settingsPanel);
+  }
+  
+  /**
+   * The "getSettings" method, which returns an instance of SettingsPanel.
+   * 
+   * @return Returns the current instance of SettingsPanel by calling its accessor method. 
+   */
+  public SettingsPanel getSettings()
+  {
+    return settingsPanel.getPanel();
   }
 }

@@ -8,16 +8,42 @@ import java.awt.event.*;
  * @author Anqi Wu
  * @author Chusa Nguyen
  * @version 1.0, May 28, 2014. (added panel to the side, the main menu, pause and sound buttons. Sound button not yet functional)
- * @version 1.1, May 30 2014. (Fixed null pointer exception described in MenuFrames.)
+ * @version 1.1, May 30 2014. (Fixed null pointer exception described in MenuFrames and added ActionListener to sound.)
  */
 public class SidePanel extends JPanel
 {
+  /**
+   * myGame - reference - References to the corresponding GameWindow object. 
+   */
   private GameWindow myGame;
-  private ImageIcon menuIcon = new ImageIcon ("list_3.png");
-  private ImageIcon pauseIcon = new ImageIcon ("circle_pause_2.png");
-  private ImageIcon soundIcon = new ImageIcon ("volume_icon_1.png");
+  /**
+   * menuIcon - reference - References to the corresponding ImageIcon object.
+   */
+  private ImageIcon menuIcon = new ImageIcon ("Images/list_3.png");
+  /**
+   * pauseIcon - reference - References to the corresponding ImageIcon object.
+   */
+  private ImageIcon pauseIcon = new ImageIcon ("Images/circle_pause_2.png");
+  /**
+   * soundIcon - reference - References to the corresponding ImageIcon object.
+   */
+  private ImageIcon soundIcon = new ImageIcon ("Images/volume_icon_1.png");
+  /**
+   * constraints - reference - References to the corresponding ImageIcon object.
+   */
   private GridBagConstraints constraints = new GridBagConstraints();
+  /**
+   * createdSettings - boolean - Represents whether or not an instance of the SettingsPanel class has already been created.
+   */
+  private boolean createdSettings = false;
   
+  /**
+   * The class constructor. 
+   * The constructor sets the panel specifications, adds the buttons with the specifications, and sets the 
+   * class's layout manager. Each button has own ActionListener object. 
+   * 
+   * @param game GameWindow - The current instance of GameWindow being used is passed through.
+   */
   public SidePanel (GameWindow game)
   {
     myGame = game;
@@ -29,19 +55,19 @@ public class SidePanel extends JPanel
     mainMenu.setPreferredSize(new Dimension (64, 64));
     mainMenu.setContentAreaFilled(false);
     mainMenu.setBorder (null);
-    mainMenu.setRolloverIcon (new ImageIcon ("list_roll.png"));
+    mainMenu.setRolloverIcon (new ImageIcon ("Images/list_roll.png"));
     
     JButton pauseButton = new JButton (pauseIcon);
     pauseButton.setPreferredSize(new Dimension (64, 64));
     pauseButton.setContentAreaFilled(false);
     pauseButton.setBorder (null);
-    pauseButton.setRolloverIcon (new ImageIcon ("circle_pause_roll.png"));
+    pauseButton.setRolloverIcon (new ImageIcon ("Images/circle_pause_roll.png"));
     
     JButton soundButton = new JButton (soundIcon);
     soundButton.setPreferredSize(new Dimension (64, 64));
     soundButton.setContentAreaFilled(false);
     soundButton.setBorder (null);
-    soundButton.setRolloverIcon (new ImageIcon ("volume_icon_roll.png"));
+    soundButton.setRolloverIcon (new ImageIcon ("Images/volume_icon_roll.png"));
     
     setLayout (new GridBagLayout());
     
@@ -62,6 +88,8 @@ public class SidePanel extends JPanel
     mainMenu.addActionListener (new ActionListener ()
                                   {
       public void actionPerformed (ActionEvent e)      { 
+        if (createdSettings)
+          myGame.getMenus().removeSettings();
         myGame.getMenus().setVisible(true);
         myGame.closeWindow();
       }});
@@ -72,8 +100,25 @@ public class SidePanel extends JPanel
         myGame.pause();
       }});
     
-//    soundButton.addActionListener (new ActionListener ()
-//                                     {
-//      });
+    soundButton.addActionListener (new ActionListener ()
+                                     {
+      public void actionPerformed (ActionEvent e) {
+        if (!SettingsPanel.isOn)
+        {
+          if (!SettingsPanel.musicInitialized)
+          {
+            myGame.getMenus().setSettings();
+            createdSettings = true;
+          }
+          myGame.getMenus().getSettings().toggleOn();
+          SettingsPanel.isOn = true;
+        }
+        else
+        {
+          if (SettingsPanel.musicInitialized)
+            myGame.getMenus().getSettings().toggleOff();
+          SettingsPanel.isOn = false;
+        }
+      }});
   }
 }

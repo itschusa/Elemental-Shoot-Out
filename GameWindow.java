@@ -16,20 +16,57 @@ import java.awt.*;
  */
 public class GameWindow
 {
-  //the panel
+  /**
+   * gameWindow - reference - Reference variable to a new instance of a JFrame object. 
+   */
   private final JFrame gameWindow = new JFrame();
+  /**
+   * screenFactory - reference - Reference variable to the corresponding ScreenFactory object.
+   */
   private final ScreenFactory screenFactory;
+  /**
+   * game - reference - Reference variable to the corresponding LevelMap object.
+   */
   private final LevelMap game;
+  /**
+   * panel - reference - Reference variable to the corresponding SidePanel object.
+   */
   private final SidePanel panel;
+  /**
+   * pause - reference - Reference variable to the corresponding PausePanel object.
+   */
   private final PausePanel pause;
+  /**
+   * keyboardListener - reference - Reference variable to the corresponding KeyboardListener object.
+   */
   private final KeyboardListener keyboardListener;
+  /**
+   * movement - static int - Represents the direction the user wants to move in. 
+   */
   protected static int movement = 0;
+  /**
+   * thread - reference - References to the corresponding Thread object.
+   */
   private Thread thread;
+  /**
+   * paused - static boolean - Represents whether or not the game in currently being paused. 
+   */
   public static boolean paused = false;
-  private JFrame frame;
+  /**
+   * frame - reference - Represents the corresponding MenuFrames object. 
+   */
+  private MenuFrames frame;
   
   //constructor, sets title, panel
-  public GameWindow(String description, int level, JFrame frame)
+  /**
+   * The class constructor. 
+   * It sets the window's title and the appropriate panels.
+   * 
+   * @param description  String - Describes the current game level.
+   * @param level int - Represents the current level difficulty.
+   * @param frame MenuFrames - The current instance of MenuFrames is passed through to give this class access to it. 
+   */
+  public GameWindow(String description, int level, MenuFrames frame)
   {
     gameWindow.setTitle ("Elemental Shoot-Out: " + description);
     gameWindow.setSize (900,600);
@@ -101,12 +138,18 @@ public class GameWindow
     gameWindow.setVisible (true);
   }
   
+  /**
+   * The "closeWindow" method, which disposes of the current instance of GameWindow and brings the current game to a stop. 
+   */
   public void closeWindow()
   {
     gameWindow.dispose();
     game.stop();
   }
   
+  /**
+   * The "pause" method, which allows the game to be paused. 
+   */
   public void pause()
   {
     if (paused)
@@ -119,26 +162,51 @@ public class GameWindow
     pause.pause();
   }
   
+  /**
+   * The "getKeyboardListener" method, which allows public access the KeyboardListener object attached to this GameWindow. 
+   * 
+   * @return Returns the instance of the KeyboardListner object attached to this GameWindow.
+   */
   public KeyboardListener getKeyboardListener ()
   {
     return keyboardListener;
   }
   
+  /**
+   * The "getScreenFactory" method, which allows public access to the current ScreenFactory in use.
+   * 
+   * @return Returns the instance of the ScreenFactory in use. 
+   */
   public ScreenFactory getScreenFactory ()
   {
     return screenFactory;
   }
   
+  /**
+   * The "getWindow" method, which allows public access to the JFrame object in use.
+   * 
+   * @return Returns the current instance of the JFrame object in use. 
+   */
   public JFrame getWindow ()
   {
     return gameWindow;
   } 
   
+  /**
+   * The "getMove" method, which allows public access to the current value of "movement".
+   * 
+   * @return Returns the current value of "movement".
+   */
   public int getMove()
   {
     return movement;
   }
   
+  /**
+   * The "verifyClose" method, which confirms whether or not the user wishes to leave the game before exiting the program. 
+   * 
+   * @param choice int - Represents the user's choice. 
+   */
   private void verifyClose()
   {
     int choice = JOptionPane.CANCEL_OPTION;
@@ -148,7 +216,12 @@ public class GameWindow
       System.exit(0);
   }
   
-  public JFrame getMenus()
+  /**
+   * The "getMenus" method, which allows public access to the current instance of MenuFrames.
+   * 
+   * @return Returns the instance of MenuFrames in use. 
+   */
+  public MenuFrames getMenus()
   {
     return frame;
   }

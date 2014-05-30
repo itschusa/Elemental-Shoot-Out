@@ -6,7 +6,7 @@ import javax.swing.*;
  * @author Chusa Nguyen
  * @version 1.0, May 25 2014. (Created class to instantiate and access Sound class.)
  * @version 1.1, May 26 2014. (Split toggle method into two to fix glitches - song would not start/stop properly and overlapped.)
- * @version 1.2, May 30 2014. (Created a method to initialize clip in a separate method.)
+ * @version 1.2, May 30 2014. (Created a method to initialize clip in a separate method, added musicInitialized and getPanel method.)
  */
 public class SettingsPanel extends JPanel
 {
@@ -17,17 +17,17 @@ public class SettingsPanel extends JPanel
   /**
    * isOn - boolean - Describes whether the AudioClip from the Sound class is playing or not. 
    */
-  private boolean isOn = false;
+  public static boolean isOn = false;
   /**
    * musicOn - reference - Reference variable to the specified JButton. 
    */
-  protected JButton musicOn = new JButton (new ImageIcon ("volume_2.png"));
+  protected JButton musicOn = new JButton (new ImageIcon ("Images/volume_2.png"));
   /**
-   * musicOff - JButton - Reference variable to the specified JButton. 
+   * musicOff - reference - Reference variable to the specified JButton. 
    */
-  protected JButton musicOff = new JButton (new ImageIcon ("volume_off.png"));
+  protected JButton musicOff = new JButton (new ImageIcon ("Images/volume_off.png"));
   /**
-   * 
+   * musicInitialized - static boolean - Represents whether or not the AudioClip object from the Sound class has been instantiated yet. 
    */
   protected static boolean musicInitialized = false;
   
@@ -48,15 +48,18 @@ public class SettingsPanel extends JPanel
   {
     musicOn.setContentAreaFilled(false);
     musicOn.setBorder (null);    
-    musicOn.setRolloverIcon(new ImageIcon ("volume_2Roll.png"));
+    musicOn.setRolloverIcon(new ImageIcon ("Images/volume_2Roll.png"));
     musicOff.setContentAreaFilled(false);
     musicOff.setBorder (null);
-    musicOff.setRolloverIcon(new ImageIcon ("volume_OffRoll.png"));
+    musicOff.setRolloverIcon(new ImageIcon ("Images/volume_OffRoll.png"));
     add(musicOn);
     add(musicOff);
     musicOff.setEnabled(false);
   }
   
+  /**
+   * The "initializeClip" method. It creates a new instance of the Sound class and sets musicInitialized to true. 
+   */
   public void initializeClip()
   {
     music = new Sound();
@@ -83,5 +86,15 @@ public class SettingsPanel extends JPanel
     musicOn.setEnabled(true);
     musicOff.setEnabled(false);
     isOn = !isOn;
+  }
+  
+  /**
+   * The "getPanel" method. It returns a SettingsPanel object. 
+   * 
+   * @return Returns this instance of SettingsPanel.
+   */
+  public SettingsPanel getPanel()
+  {
+    return this;
   }
 }

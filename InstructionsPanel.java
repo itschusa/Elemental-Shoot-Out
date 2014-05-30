@@ -26,7 +26,7 @@ public class InstructionsPanel extends JPanel
    */
   private void setText()
   {
-    JLabel instructions = new JLabel(new ImageIcon("Instructions.png"));
+    JLabel instructions = new JLabel(new ImageIcon("Images/Instructions.png"));
     add (instructions);
   }
   

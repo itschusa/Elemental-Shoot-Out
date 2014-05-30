@@ -17,35 +17,35 @@ public class MenusPanel extends JPanel
   /**
    * play - reference - References to the specified image.
    */
-  private ImageIcon play = new ImageIcon ("play2.png");
+  private ImageIcon play = new ImageIcon ("Images/play2.png");
   /**
    * playRoll - reference - References to the specified image.
    */
-  private ImageIcon playRoll = new ImageIcon ("play3.png");
+  private ImageIcon playRoll = new ImageIcon ("Images/play3.png");
   /**
    * settings - reference - References to the specified image.
    */
-  private ImageIcon settings = new ImageIcon ("gear2.png");
+  private ImageIcon settings = new ImageIcon ("Images/gear2.png");
   /**
    * settingsRoll - reference - References to the specified image.
    */
-  private ImageIcon settingsRoll = new ImageIcon ("gear3.png");
+  private ImageIcon settingsRoll = new ImageIcon ("Images/gear3.png");
   /**
    * instruction - reference - References to the specified image.
    */
-  private ImageIcon instruction = new ImageIcon ("magnifyingglass2.png");  
+  private ImageIcon instruction = new ImageIcon ("Images/magnifyingglass2.png");  
   /**
    * instructionRoll - reference - References to the specified image.
    */
-  private ImageIcon instructionRoll = new ImageIcon ("magnifyingglass3.png"); 
+  private ImageIcon instructionRoll = new ImageIcon ("Images/magnifyingglass3.png"); 
   /**
    * highscore - reference - References to the specified image.
    */
-  private ImageIcon highscore = new ImageIcon ("clipboard2.png");
+  private ImageIcon highscore = new ImageIcon ("Images/clipboard2.png");
   /**
    * highscoreRoll - reference - References to the specified image.
    */
-  private ImageIcon highscoreRoll = new ImageIcon ("clipboard3.png");
+  private ImageIcon highscoreRoll = new ImageIcon ("Images/clipboard3.png");
   /**
    * playButton - reference - References to the specified JButton object.
    */
