@@ -6,7 +6,9 @@ import java.awt.event.*;
  * The SidePanel stores all the components of the side panel while the user is playing the game.
  * 
  * @author Anqi Wu
+ * @author Chusa Nguyen
  * @version 1.0, May 28, 2014. (added panel to the side, the main menu, pause and sound buttons. Sound button not yet functional)
+ * @version 1.1, May 30 2014. (Fixed null pointer exception described in MenuFrames.)
  */
 public class SidePanel extends JPanel
 {
@@ -60,7 +62,7 @@ public class SidePanel extends JPanel
     mainMenu.addActionListener (new ActionListener ()
                                   {
       public void actionPerformed (ActionEvent e)      { 
-        new MenuFrames();
+        myGame.getMenus().setVisible(true);
         myGame.closeWindow();
       }});
     
@@ -69,5 +71,9 @@ public class SidePanel extends JPanel
       public void actionPerformed (ActionEvent e)      { 
         myGame.pause();
       }});
+    
+//    soundButton.addActionListener (new ActionListener ()
+//                                     {
+//      });
   }
 }

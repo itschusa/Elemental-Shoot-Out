@@ -12,7 +12,7 @@ import java.awt.*;
  * @version 1.2, May 26 2014. (Coded keyboard listener, modified window listener.)
  * @version 1.3, May 27, 2014. (bug fix with up key, added closeWindow method)
  * @version 1.4, May 28, 2014. (Added side and pause panels (for every level). Medium game also shows up!)
- * @version 1.5, May 30 2014. (Changed access level of paused to public static.)
+ * @version 1.5, May 30 2014. (Changed access level of paused to public static, added frame and its accessor method. Added argument to constructor param list.)
  */
 public class GameWindow
 {
@@ -25,10 +25,11 @@ public class GameWindow
   private final KeyboardListener keyboardListener;
   protected static int movement = 0;
   private Thread thread;
-  public static boolean paused;
+  public static boolean paused = false;
+  private JFrame frame;
   
   //constructor, sets title, panel
-  public GameWindow(String description, int level)
+  public GameWindow(String description, int level, JFrame frame)
   {
     gameWindow.setTitle ("Elemental Shoot-Out: " + description);
     gameWindow.setSize (900,600);
@@ -43,6 +44,7 @@ public class GameWindow
     gameWindow.setFocusable (true);
     gameWindow.setResizable (false);
     gameWindow.setLocationRelativeTo (null);
+    this.frame = frame;
     
     screenFactory = new ScreenFactory (this);
     
@@ -144,5 +146,10 @@ public class GameWindow
                                             JOptionPane.YES_NO_OPTION);
     if (choice == JOptionPane.YES_OPTION)
       System.exit(0);
+  }
+  
+  public JFrame getMenus()
+  {
+    return frame;
   }
 }

@@ -1,6 +1,7 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.IOException;
 
 /**
  * The "MenuFrames" class, which creates a JFrame window to which JPanel objects and other components (i.e. JButton, 
@@ -23,6 +24,7 @@ import java.awt.event.*;
  * @version 2.3, May 26 2014. (Fixed glitches with music.)
  * @version 2.4, May 27 2014. (Difficulty buttons now go to separate windows.)
  * @version 2.5, May 29 2014. (Replaced features menu item with instructions menu item.)
+ * @version 2.6, May 30 2014. (Fixed: settings --> main --> play --> main --> settings --> null pointer exception.)
  */
 public class MenuFrames extends JFrame
 {
@@ -83,9 +85,9 @@ public class MenuFrames extends JFrame
    */
   protected JMenuItem closeItem = new JMenuItem("Close            F5");
   /**
-   * musicUncreated - boolean - Represents whether or not the Sound class has been called to create an instance of AudioClip.
+   * musicPanelUncreated - boolean - Represents whether or not the Sound class has been called to create an instance of AudioClip.
    */
-  private boolean musicUncreated = true;
+  protected static boolean musicPanelUncreated = true;
   
   /**
    * The constructor of the "MenuFrames" class. It creates the JFrame by calling the constructor of this class's super
@@ -200,7 +202,14 @@ public class MenuFrames extends JFrame
       }});
     helpItem.addActionListener(new ActionListener(){
       public void actionPerformed (ActionEvent e)      {
-        JOptionPane.showMessageDialog (new JFrame(), "-insert info here-", "Game Features", JOptionPane.INFORMATION_MESSAGE);
+        try
+        {
+          Runtime.getRuntime().exec("hh.exe HelpFilesProject.chm");
+        }
+        catch (IOException ex)
+        {
+          System.out.println (ex);
+        }
       }});    
     instructionsItem.addActionListener(new ActionListener(){
       public void actionPerformed (ActionEvent e) {
@@ -307,24 +316,24 @@ public class MenuFrames extends JFrame
                                                       {
       public void actionPerformed (ActionEvent e)
       { 
-        new GameWindow("Easy Level",1);
-        dispose();
+        setVisible(false);
+        new GameWindow("Easy Level",1, getMenuFrame());
       }
     }); 
     difficultiesPanel.mediumButton.addActionListener (new ActionListener ()
                                                         {
       public void actionPerformed (ActionEvent e)
       { 
-        new GameWindow("Medium Level",2);
-        dispose();
+        setVisible(false);
+        new GameWindow("Medium Level",2,getMenuFrame());
       }
     }); 
     difficultiesPanel.difficultButton.addActionListener (new ActionListener ()
                                                            {
       public void actionPerformed (ActionEvent e)
       { 
-        new GameWindow("Hard Level",3);
-        dispose();
+        setVisible(false);
+        new GameWindow("Hard Level",3, getMenuFrame());
       }
     }); 
   }
@@ -359,11 +368,15 @@ public class MenuFrames extends JFrame
   {
     panelNum = 4;
     remove (menuPanel);
-    if (musicUncreated)
+    if (musicPanelUncreated)
+    {
+      musicPanelUncreated = false;
       settingsPanel = new SettingsPanel();
+      if (!SettingsPanel.musicInitialized)
+        settingsPanel.initializeClip();
+    }
     add (settingsPanel);
     validate();
-    musicUncreated = false;
     
     settingsPanel.musicOn.addActionListener (new ActionListener ()
                                                    {
@@ -379,4 +392,17 @@ public class MenuFrames extends JFrame
         validate();
       }});
   } 
+  
+  /**
+   * 
+   */
+  public JFrame getMenuFrame()
+  {
+    return this;
+  }
+  
+  public JPanel getSettings()
+  {
+    return settingsPanel;
+  }
 }

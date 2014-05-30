@@ -6,6 +6,7 @@ import javax.swing.*;
  * @author Chusa Nguyen
  * @version 1.0, May 25 2014. (Created class to instantiate and access Sound class.)
  * @version 1.1, May 26 2014. (Split toggle method into two to fix glitches - song would not start/stop properly and overlapped.)
+ * @version 1.2, May 30 2014. (Created a method to initialize clip in a separate method.)
  */
 public class SettingsPanel extends JPanel
 {
@@ -25,6 +26,10 @@ public class SettingsPanel extends JPanel
    * musicOff - JButton - Reference variable to the specified JButton. 
    */
   protected JButton musicOff = new JButton (new ImageIcon ("volume_off.png"));
+  /**
+   * 
+   */
+  protected static boolean musicInitialized = false;
   
   /**
    * The constructors. It sets the properties of this JPanel and adds components to it. 
@@ -33,7 +38,6 @@ public class SettingsPanel extends JPanel
   {
     setLayout (new GridBagLayout());
     setBackground(new Color(0,0,0,0));
-    music = new Sound();
     setInitialStates();
   }
   
@@ -51,6 +55,12 @@ public class SettingsPanel extends JPanel
     add(musicOn);
     add(musicOff);
     musicOff.setEnabled(false);
+  }
+  
+  public void initializeClip()
+  {
+    music = new Sound();
+    musicInitialized = true;
   }
   
   /**
