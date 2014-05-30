@@ -11,9 +11,19 @@ import java.awt.*;
  * @version 1.2, May 26 2014. (Modified all code involving 'player' to fit changes to LevelScreen.)
  * @version 1.3, May 27, 2014. (Modified code for updating the inventory and targets. Actually shoots and interacts! + comment lines)
  * @version 1.4, May 28, 2014. (Temporary code to print points in the interactions pane.)
+ * @version 1.5, May 29, 2014. (JavaDoc, removed KeyOverrides method - was protected, don't know what it does)
  */
 public class EasyGame extends LevelScreen
 {        
+  /**
+   * Creates a new screen that represents the easy level.
+   * It creates a random list of targets and user inventory.
+   * 
+   * @param screenFactory - ScreenFactory - The ScreenFactory object that stores the current screen.
+   * @param newTargets - ArrayList<Element> - The new list of targets.
+   * @param name - String - Temporarily stores the names of the elements to create.
+   * @param newInventory - ArrayList<Element> - The new list of inventory particles.
+   */
   public EasyGame (ScreenFactory screenFactory)
   {
     super(screenFactory);
@@ -48,10 +58,23 @@ public class EasyGame extends LevelScreen
     super.setAllInventory (newInventory);
   }
   
+  /**
+   * Empty override from the Screen class.
+   */
   public void onCreate ()
   {
   }
   
+  /**
+   * Updates the elements currently stored in the easy level.
+   * It first updates the player/launcher movement.
+   * If the up key is pressed, the first element of the inventory is moved up to where the launcher is and canMove is set to true.
+   * The inventory will then be shifted to the left.
+   * Then, target-inventory interaction is updated. If there is any target directly infront of an inventory particle, interaction has occurred.
+   * Either both are removed or only one is removed, depending on whether the user shot at the correct target.
+   * Points are also updated.
+   * Finally, all elements with no locations are removed, and all elements are updated.
+   */
   public void onUpdate ()
   {
     //if key pressed
@@ -184,9 +207,5 @@ public class EasyGame extends LevelScreen
     {
       getAllTargets().get(x).draw(twoDimensional);
     }
-  }
-  protected class KeyOverrides
-  {
-    
   }
 }
