@@ -17,5 +17,11 @@ public class Database
   //other icons
   public static ImageIcon icon4 = new ImageIcon ("Launcher.png");
   public static String[] alkaliMetals = new String[]{"Lithium","Sodium","Potassium","Rubidium","Cesium","Francium"};
-  
+  public static ImageIcon icon5 = new ImageIcon ("Lithium2.png");
+  public static ImageIcon icon6 = new ImageIcon ("Sodium2.png");
+  public static ImageIcon icon7 = new ImageIcon ("Potassium2.png");
+  public static ImageIcon icon8 = new ImageIcon ("Rubidium2.png");
+  public static ImageIcon icon9 = new ImageIcon ("Cesium2.png");
+  public static ImageIcon icon10 = new ImageIcon ("Francium2.png");
+  public static ImageIcon icon11 = new ImageIcon ("Hydroxide.png");
 }

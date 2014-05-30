@@ -7,6 +7,7 @@ import java.awt.*;
  * 
  * @author Anqi Wu
  * @version 1.0, May 28, 2014. (everything except the icon storing works)
+ * @version 1.1, May 29, 2014. (The icons work!)
  */
 public class MediumParticle extends Element
 {

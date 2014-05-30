@@ -7,6 +7,7 @@ import java.awt.*;
  * 
  * @author Anqi Wu
  * @version 1.0, May 28, 2014. (alkali metals and hydroxide elements update - repeat of EasyGame)
+ * @version 1.1, May 29, 2014. (Fixed issue with storing only the first alkali)
  */
 public class MediumGame extends LevelScreen
 {        
