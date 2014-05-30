@@ -6,11 +6,14 @@ import java.awt.*;
  * It involves acid-base neutralization.
  * 
  * @author Anqi Wu
+ * @author Chusa Nguye
  * @version 1.0, May 28, 2014. (alkali metals and hydroxide elements update - repeat of EasyGame)
- * @version 1.1, May 29, 2014. (Fixed issue with storing only the first alkali)
+ * @version 1.1, May 30 2014. (Added code to create and update acid cloud obstacles.)
  */
 public class MediumGame extends LevelScreen
 {        
+  private ArrayList <AcidCloud> obstacles = new ArrayList<AcidCloud> ();
+  
   public MediumGame (ScreenFactory screenFactory)
   {
     super(screenFactory);
@@ -36,6 +39,10 @@ public class MediumGame extends LevelScreen
       newInventory.add (new MediumParticle("Hydroxide", new Location (col, 10),-1));      
     }
     
+    obstacles.add(new AcidCloud ("Cloud", new Location (1, 4), 0, true));
+    obstacles.add(new AcidCloud ("Cloud", new Location (9, 4), 0, true));
+    obstacles.add(new AcidCloud ("Cloud", new Location (8, 5), 0, false));
+      
     //save changes
     super.setAllTargets (newTargets);
     super.setAllInventory (newInventory);
@@ -47,6 +54,23 @@ public class MediumGame extends LevelScreen
   
   public void onUpdate ()
   {
+    //moves the obstacles
+    if (!GameWindow.paused)
+    {
+      for (int x = 0; x < obstacles.size(); x++)
+      {
+        if (obstacles.get(x).getUpdateCount() < 100)
+        {
+          obstacles.get(x).setUpdateCount(obstacles.get(x).getUpdateCount() + 1);
+        }
+        else
+        {
+          obstacles.get(x).setUpdateCount(0);
+          obstacles.get(x).update();
+        }
+      }
+    }
+    
     //if key pressed
     if (GameWindow.movement != 0)
     {
@@ -99,9 +123,8 @@ public class MediumGame extends LevelScreen
         //if there is a target
         if (index!=-1)
         {
-          //get targer
+          //get target
           Element tar = getAllTargets().get(index);
-          //stable and stable || unstable and neutron <-- remove both inventory and target
           if (inv.getCharge() + tar.getCharge() == 0)
           {
             System.out.println ("+10");
@@ -177,6 +200,9 @@ public class MediumGame extends LevelScreen
     {
       getAllTargets().get(x).draw(twoDimensional);
     }
+    
+    for (int x = 0; x < obstacles.size(); x++)
+      obstacles.get(x).draw(twoDimensional);
   }
   protected class KeyOverrides
   {
