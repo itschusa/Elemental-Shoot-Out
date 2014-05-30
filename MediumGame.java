@@ -22,8 +22,9 @@ public class MediumGame extends LevelScreen
     {
       for (int col=1;col<13;col++)
       {
-        int element = (int) Math.random()*6;
+        int element = (int) (Math.random()*6);
         name = Database.alkaliMetals[element];
+        System.out.println (element +" "+ name);
         newTargets.add (new MediumParticle(name, new Location(col, row),1));
       }
     }

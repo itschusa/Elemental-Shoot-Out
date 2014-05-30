@@ -23,18 +23,19 @@ public class MediumParticle extends Element
     super (newName, newLocation);
     
     if (newName.equals ("Lithium"))
-      myIcon = Database.icon;
+      myIcon = Database.icon5;
     else if (newName.equals ("Sodium"))
-      myIcon = Database.icon2;
+      myIcon = Database.icon6;
     else if (newName.equals ("Potassium"))
-      myIcon = Database.icon3;
+      myIcon = Database.icon7;
     else if (newName.equals ("Rubidium"))
-      myIcon = Database.icon3;
+      myIcon = Database.icon8;
     else if (newName.equals ("Cesium"))
-      myIcon = Database.icon3;
-    //francium
+      myIcon = Database.icon9;
+    else if (newName.equals ("Francium"))
+      myIcon = Database.icon10;
     else
-      myIcon = Database.icon3;
+      myIcon = Database.icon11;
   }
   
   public int getCharge ()
