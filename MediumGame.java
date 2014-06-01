@@ -6,9 +6,10 @@ import java.awt.*;
  * It involves acid-base neutralization.
  * 
  * @author Anqi Wu
- * @author Chusa Nguye
+ * @author Chusa Nguyen
  * @version 1.0, May 28, 2014. (alkali metals and hydroxide elements update - repeat of EasyGame)
  * @version 1.1, May 30 2014. (Added code to create and update acid cloud obstacles.)
+ * @version 1.2, May 31, 2014 (Creates all inventory, and only displays first 12. No alkaline metals yet.)
  */
 public class MediumGame extends LevelScreen
 {        
@@ -34,14 +35,14 @@ public class MediumGame extends LevelScreen
     }
     
     ArrayList<Element> newInventory = new ArrayList <Element>();
-    for (int col = 1; col<13;col++)
+    for (int col = 1; col<37;col++)
     {
       newInventory.add (new MediumParticle("Hydroxide", new Location (col, 10),-1));      
     }
     
-    obstacles.add(new AcidCloud ("Cloud", new Location (1, 4), 0, true));
-    obstacles.add(new AcidCloud ("Cloud", new Location (9, 4), 0, true));
-    obstacles.add(new AcidCloud ("Cloud", new Location (8, 5), 0, false));
+    obstacles.add(new AcidCloud ("Cloud", new Location (1, 4), -3, true));
+    obstacles.add(new AcidCloud ("Cloud", new Location (9, 4), -3, true));
+    obstacles.add(new AcidCloud ("Cloud", new Location (8, 5), -3, false));
       
     //save changes
     super.setAllTargets (newTargets);
@@ -190,7 +191,7 @@ public class MediumGame extends LevelScreen
     getPlayer().draw(twoDimensional);
     
     //draw inventory
-    for (int x = 0; x<getAllInventory().size();x++)
+    for (int x = 0; x<12&&x<getAllInventory().size();x++)
     {
       getAllInventory().get(x).draw(twoDimensional);
     }

@@ -10,21 +10,22 @@ import javax.swing.*;
  * @version 1.2, May 28 2014. (Added the alkaliMetals array to store the names.)
  * @version 1.3, May 29 2014. (Alkali metal icons and javadoc)
  * @version 1.4, May 30 2014. (Added acid cloud obstacle.)
+ * @version 1.5, May 31 2014. (Added all difficult level names, easy element icons upgraded)
  */
 public class Database
 {
   /**
    * icon - ImageIcon - Stores the icon for a stable particle.
    */
-  public static ImageIcon icon = new ImageIcon ("Images/Stable.png");
+  public static ImageIcon icon = new ImageIcon ("Images/Stable3.png");
   /**
    * icon2 - ImageIcon - Stores the icon for a unstable particle.
    */
-  public static ImageIcon icon2 = new ImageIcon ("Images/Unstable.png");
+  public static ImageIcon icon2 = new ImageIcon ("Images/Unstable3.png");
   /**
    * icon3 - ImageIcon - Stores the icon for a neutron.
    */
-  public static ImageIcon icon3 = new ImageIcon ("Images/Neutron2.png");
+  public static ImageIcon icon3 = new ImageIcon ("Images/Neutron4.png");
   /**
    * icon4 - ImageIcon - Stores the icon for the launcher.
    */
@@ -65,4 +66,11 @@ public class Database
    * icon12 - ImageIcon - Stores the icon for an acid cloud.
    */
   public static ImageIcon icon12 = new ImageIcon ("Images/cloud.png");
+  //n2o3
+  public static String[] chargeNegativeOne = new String[]{"Chloride","Bromide","Fluoride","Iodide","Hydroxide"};
+  public static String[] chargeNegativeTwo = new String[]{"Sulfide","2Chloride","Carbonate","Sulphate","2Fluoride"};
+  public static String[] chargeNegativeThree = new String[]{"Phosphate"};
+  public static String[] chargePositiveOne = new String[]{"Sodium","Silver","Potassium","Ammonium"};
+  public static String[] chargePositiveTwo = new String[]{"Barium", "Mercury","2Sodium","Calcium"};
+  public static String[] chargePositiveThree = new String[] {"Iron","3Lithium","Aluminum"};
 }

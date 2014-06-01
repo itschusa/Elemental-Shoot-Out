@@ -1,101 +1,85 @@
 import java.util.ArrayList;
 import java.awt.*;
-import javax.swing.*;
 
 /**
- * The EasyGame class is a screen that draws the easy level.
+ * The DifficultGame class represents the screen for the difficult level.
+ * It involves ionic compounds.
  * 
  * @author Anqi Wu
- * @author Chusa Nguyen
- * @version 1.0, May 21 2014. (extends panel, uses paintComponent)
- * @version 1.1, May 22, 2014. (extends levelscreen, updates!)
- * @version 1.2, May 26 2014. (Modified all code involving 'player' to fit changes to LevelScreen.)
- * @version 1.3, May 27, 2014. (Modified code for updating the inventory and targets. Actually shoots and interacts! + comment lines)
- * @version 1.4, May 28, 2014. (Temporary code to print points in the interactions pane.)
- * @version 1.5, May 29, 2014. (JavaDoc, removed KeyOverrides method - was protected, don't know what it does)
- * @version 1.6, May 31, 2014. (Creates equal number of stable and unstable so game is winnable, creates full inventory, added win/lose methods)
+ * @version 1.0, May 31, 2014. (Creates the game with difficult particles. No win/game over screen)
  */
-public class EasyGame extends LevelScreen
-{        
-   private ImageIcon instructionImage = new ImageIcon ("Images/EasyGame.png");;
-   private ImageIcon gameOverImage = new ImageIcon ("Images/GameOver2.png");
-   private ImageIcon winImage = new ImageIcon ("Images/Win1.png");
-  /**
-   * Creates a new screen that represents the easy level.
-   * It creates a random list of targets and user inventory.
-   * 
-   * @param screenFactory - ScreenFactory - The ScreenFactory object that stores the current screen.
-   * @param newTargets - ArrayList<Element> - The new list of targets.
-   * @param name - String - Temporarily stores the names of the elements to create.
-   * @param newInventory - ArrayList<Element> - The new list of inventory particles.
-   */
-  public EasyGame (ScreenFactory screenFactory)
+public class DifficultGame extends LevelScreen
+{          
+  public DifficultGame (ScreenFactory screenFactory)
   {
     super(screenFactory);
     
     ArrayList<Element> newTargets = new ArrayList<Element>();
-    String name = "Stable";
-    int count = 0;
-    int count2=0;
+    String name = "";
+    
     //set targets randomly
     for (int row = 1; row<4;row++)
     {
       for (int col=1;col<13;col++)
       {
-        if ((Math.random()<0.5&&count<19)||count2>18)
+        int charge = (int) (Math.random()*3)+1;
+        int element;
+        
+        if (charge == 1)
         {
-          name = "Unstable";
-          count++;
+          element = (int)(Math.random()*Database.chargePositiveOne.length);
+          name = Database.chargePositiveOne[element];
+        }
+        else if (charge == 2)
+        {
+          element = (int)(Math.random()*Database.chargePositiveTwo.length);
+          name = Database.chargePositiveTwo[element];
         }
         else
         {
-          name = "Stable";
-          count2++;
+          element = (int)(Math.random()*Database.chargePositiveThree.length);
+          name = Database.chargePositiveThree[element];
         }
-        newTargets.add (new EasyParticle(name, new Location(col, row)));
+
+        System.out.println (name);
+        newTargets.add (new DifficultParticle(name, new Location(col, row),charge));
       }
-    }
-    count = 0;
-    count2=0;
-    //set inventory randomly
-    ArrayList<Element> newInventory = new ArrayList <Element>();
-    for (int col = 1; col<37;col++)
-    {
-      if ((Math.random()<0.5&&count<19)||count2>18)
-      {
-        name = "Neutron";
-        count++;
-      }
-      else
-      {
-        name="Stable";
-        count2++;
-      }
-      newInventory.add (new EasyParticle(name, new Location (col, 10)));      
     }
     
+    ArrayList<Element> newInventory = new ArrayList <Element>();
+    for (int col = 1;col<37;col++)
+    {
+        int charge = -((int) (Math.random()*3))-1;
+        int element;
+        
+        if (charge == -1)
+        {
+          element = (int)(Math.random()*Database.chargeNegativeOne.length);
+          name = Database.chargeNegativeOne[element];
+        }
+        else if (charge == -2)
+        {
+          element = (int)(Math.random()*Database.chargeNegativeTwo.length);
+          name = Database.chargeNegativeTwo[element];
+        }
+        else
+        {
+          element = (int)(Math.random()*Database.chargeNegativeThree.length);
+          name = Database.chargeNegativeThree[element];
+        }
+        System.out.println (name);
+        newInventory.add (new DifficultParticle(name, new Location(col, 10),charge));
+    }
+            
     //save changes
     super.setAllTargets (newTargets);
     super.setAllInventory (newInventory);
   }
   
-  /**
-   * Empty override from the Screen class.
-   */
   public void onCreate ()
   {
   }
   
-  /**
-   * Updates the elements currently stored in the easy level.
-   * It first updates the player/launcher movement.
-   * If the up key is pressed, the first element of the inventory is moved up to where the launcher is and canMove is set to true.
-   * The inventory will then be shifted to the left.
-   * Then, target-inventory interaction is updated. If there is any target directly infront of an inventory particle, interaction has occurred.
-   * Either both are removed or only one is removed, depending on whether the user shot at the correct target.
-   * Points are also updated.
-   * Finally, all elements with no locations are removed, and all elements are updated.
-   */
   public void onUpdate ()
   {
     //if key pressed
@@ -150,10 +134,11 @@ public class EasyGame extends LevelScreen
         //if there is a target
         if (index!=-1)
         {
-          //get targer
+          //get target
           Element tar = getAllTargets().get(index);
-          //stable and stable || unstable and neutron <-- remove both inventory and target
-          if (inv.getName().equals(tar.getName())||inv.getName().equals("Neutron") && tar.getName().equals("Unstable"))
+          System.out.println ("Inv: "+inv.getCharge());
+          System.out.println ("Tar: "+tar.getCharge());
+          if (inv.getCharge() + tar.getCharge() == 0)
           {
             System.out.println ("+10");
             inv.removeFromGrid();
@@ -209,24 +194,10 @@ public class EasyGame extends LevelScreen
     }
   }
   
-  public void win (Graphics2D twoDimensional)
-  {
-    twoDimensional.drawImage (winImage.getImage(),0,0,winImage.getImageObserver());
-  }
-  
-  public void gameOver (Graphics2D twoDimensional)
-  {
-    twoDimensional.drawImage (gameOverImage.getImage(),0,0,gameOverImage.getImageObserver());
-  }
-  
   public void onDraw (Graphics2D twoDimensional)
   {
     //draw background
     twoDimensional.drawImage (getWallpaper().getImage(), 0, 0, getWallpaper().getImageObserver()); 
-    
-    //tutorial
-    if (getAllTargets().size() == 36)
-      twoDimensional.drawImage (instructionImage.getImage(), -100,0,instructionImage.getImageObserver());
     
     //draw player
     getPlayer().draw(twoDimensional);
@@ -241,15 +212,6 @@ public class EasyGame extends LevelScreen
     for (int x=0;x<getAllTargets().size();x++)
     {
       getAllTargets().get(x).draw(twoDimensional);
-    }
-    
-    //game over or win
-    if (getAllInventory().size() == 0)
-    {
-      if (getAllTargets().size() == 0)
-        win (twoDimensional);
-      else
-        gameOver (twoDimensional);
     }
   }
 }

@@ -6,13 +6,14 @@ import java.awt.*;
  * 
  * @author Anqi Wu
  * @version 1.0, May 28, 2014 (two image icons are drawn - clear vs pause)
+ * @version 1.1, May 31, 2014 (moved the instantiation to the top)
  */
 public class PausePanel extends JPanel
 {
   private GameWindow myGame;
   private boolean paused;
-  private ImageIcon pauseImage;
-  private ImageIcon clearImage;
+  private ImageIcon pauseImage = new ImageIcon("Images/Paused4.png");
+  private ImageIcon clearImage = new ImageIcon ("Images/ClearImage.png");
   
   public PausePanel (GameWindow game)
   {
@@ -21,9 +22,6 @@ public class PausePanel extends JPanel
     setPreferredSize(new Dimension(700,600));
     setBackground(new Color(0,0,0,0));
     setVisible(true);
-    
-    pauseImage = new ImageIcon("Images/Paused4.png");
-    clearImage = new ImageIcon ("Images/ClearImage.png");
   }
   
   public void pause ()

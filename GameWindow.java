@@ -13,6 +13,7 @@ import java.awt.*;
  * @version 1.3, May 27, 2014. (bug fix with up key, added closeWindow method)
  * @version 1.4, May 28, 2014. (Added side and pause panels (for every level). Medium game also shows up!)
  * @version 1.5, May 30 2014. (Changed access level of paused to public static, added frame and its accessor method. Added argument to constructor param list.)
+ * @version 1.6, May 31, 2013. (Added difficult level)
  */
 public class GameWindow
 {
@@ -123,7 +124,10 @@ public class GameWindow
       getScreenFactory().setCurrentScreen (screen);
     }
     else
-      System.out.println ("Not Available Yet");
+    {
+      screen = new DifficultGame (getScreenFactory());
+      getScreenFactory().setCurrentScreen (screen);
+    }
     
     getScreenFactory().showScreen (screen);
     

@@ -10,11 +10,13 @@ import java.awt.*;
  * @version 1.1, May 22, 2014. (now implements Runnable, which updates/paints the current screen)
  * @version 1.2, May 27, 2014. (added temporary main menu button - can close the current window and create the main menu, stacktrace errors vs print errors)
  * @version 1.3, May 28, 2014. (prints total user points)
+ * @version 1.4, May 31, 2014. (added ring that tells user which inventory element they are using.)
  */
 public class LevelMap extends JPanel implements Runnable
 {
   private final GameWindow game;
   private boolean stop;
+  private ImageIcon ring = new ImageIcon ("Images/Ring.png");
   
   //default constructor
   public LevelMap (GameWindow elemental)
@@ -57,6 +59,7 @@ public class LevelMap extends JPanel implements Runnable
     if (game.getScreenFactory().getCurrentScreen() != null)
       game.getScreenFactory().getCurrentScreen().onDraw (twoDimensional);
     
+    twoDimensional.drawImage (ring.getImage(), 30, 479, ring.getImageObserver()); 
     twoDimensional.drawString("Total Points: "+game.getScreenFactory().getCurrentScreen().getPlayer().getCurrentPoints(), 10,20);
     repaint();
   }
