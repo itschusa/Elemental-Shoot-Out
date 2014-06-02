@@ -111,7 +111,6 @@ public class CurrentPlayer extends Element
     }
   }
   
-  //Empty override
   /**
    * Empty override from the Element class.
    */
@@ -150,7 +149,6 @@ public class CurrentPlayer extends Element
     return myIcon;
   }
   
-  //add points
   /**
    * Adds the number of points to the current points as specified by the parameter.
    * 
@@ -161,7 +159,6 @@ public class CurrentPlayer extends Element
     points += add;
   }
   
-  //remove points
   /**
    * Removes the number of points from the current points as specified by the parameter.
    * If the number of points to remove is less than the total number of points, points is set to 0.
@@ -174,7 +171,6 @@ public class CurrentPlayer extends Element
       points = 0;
   }
   
-  //return points
   /**
    * Returns the current number of points of the player.
    */
@@ -183,7 +179,6 @@ public class CurrentPlayer extends Element
     return points;
   }
   
-  //empty override
   /**
    * Empty override from the Element class. (Note: Remove later)
    */

@@ -66,11 +66,28 @@ public class Database
    * icon12 - ImageIcon - Stores the icon for an acid cloud.
    */
   public static ImageIcon icon12 = new ImageIcon ("Images/cloud.png");
-  //n2o3
+  /**
+   * chargeNegativeOne - String [] - Stores an array of strings, where each string is the name of a particle with a charge of -1.
+   */
   public static String[] chargeNegativeOne = new String[]{"Chloride","Bromide","Fluoride","Iodide","Hydroxide"};
+  /**
+   * chargeNegativeTwo - String [] - Stores an array of strings, where each string is the name of a particle with a charge of -2.
+   */
   public static String[] chargeNegativeTwo = new String[]{"Sulfide","2Chloride","Carbonate","Sulphate","2Fluoride"};
+  /**
+   * chargeNegativeThree - String [] - Stores an array of strings, where each string is the name of a particle with a charge of -3.
+   */
   public static String[] chargeNegativeThree = new String[]{"Phosphate"};
+  /**
+   * chargePositiveOne - String [] - Stores an array of strings, where each string is the name of a particle with a charge of +1.
+   */
   public static String[] chargePositiveOne = new String[]{"Sodium","Silver","Potassium","Ammonium"};
+  /**
+   * chargePositiveTwo - String [] - Stores an array of strings, where each string is the name of a particle with a charge of +2.
+   */
   public static String[] chargePositiveTwo = new String[]{"Barium", "Mercury","2Sodium","Calcium"};
+  /**
+   * chargePositiveThree - String [] - Stores an array of strings, where each string is the name of a particle with a charge of +3.
+   */
   public static String[] chargePositiveThree = new String[] {"Iron","3Lithium","Aluminum"};
 }
