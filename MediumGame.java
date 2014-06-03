@@ -11,6 +11,7 @@ import java.awt.*;
  * @version 1.1, May 30 2014. (Added code to create and update acid cloud obstacles.)
  * @version 1.2, May 31, 2014 (Creates all inventory, and only displays first 12. No alkaline metals yet.)
  * @version 1.3, June 2, 2014. (JavaDoc)
+ * @version 1.4, June 3, 2014. (Added some functionality to acid cloud, eats ions.)
  */
 public class MediumGame extends LevelScreen
 {        
@@ -86,9 +87,11 @@ public class MediumGame extends LevelScreen
    * @param tar - GameParticle - Stores the temporary target elements.
    * @param tar - ArrayList<GameParticle> - Stores all targets with location not equal to null. 
    * @param inv - ArrayList<GameParticle> - Stores all inventory with location not equal to null.
+   * @param wasEaten - boolean - Represents whether or not the "dart" was eaten by an acid cloud. 
    */
   public void onUpdate ()
   {
+    boolean wasEaten = false;
     //moves the obstacles
     if (!GameWindow.paused)
     {
@@ -153,29 +156,59 @@ public class MediumGame extends LevelScreen
         //get the index of the target directly in front of it
         int index = getTargetIndex(new Location(inv.getLocation().getColumn(), inv.getLocation().getRow()-1));
         
-        //if there is a target
-        if (index!=-1)
+        //if it hits an acid cloud
+        for (int f = 0; f < obstacles.size(); f++)
         {
-          //get target
-          GameParticle tar = getAllTargets().get(index);
-          if (inv.getCharge() + tar.getCharge() == 0)
+          if (inv.getLocation().getRow() == obstacles.get(f).getLocation().getRow())
           {
-            System.out.println ("+10");
-            inv.removeFromGrid();
-            tar.removeFromGrid();
-            getPlayer().addPoints (10);
-            setInventory (inv, x);
-            setTarget(tar, index);
-            System.out.println ("Total: "+getPlayer().getCurrentPoints());
-          }
-          //if wrong target, remove the inventory
-          else
+            System.out.println ("Same Row");
+            if (inv.getLocation().getColumn() == obstacles.get(f).getLocation().getColumn())
+            {
+              System.out.println ("Same Column");
+              if (inv.getCharge() + obstacles.get(f).getCharge() != 0)
+              {
+                System.out.println ("-5");
+                inv.removeFromGrid();
+                getPlayer().removePoints(5);
+                setInventory(inv, x);
+                System.out.println ("Eaten");
+                System.out.println ("Total: "+getPlayer().getCurrentPoints());
+                wasEaten = true;
+              }//end if: can't neutralize
+              else
+              {
+                
+              }//end if: can neutralize
+            }//end if: same col
+          }//end if: same row
+        }
+        
+        //if there is a target
+        if (!wasEaten)
+        {
+          if (index!=-1)
           {
-            System.out.println ("-5");
-            inv.removeFromGrid();
-            getPlayer().removePoints(5);
-            setInventory(inv, x);
-            System.out.println ("Total: "+getPlayer().getCurrentPoints());
+            //get target
+            GameParticle tar = getAllTargets().get(index);
+            if (inv.getCharge() + tar.getCharge() == 0)
+            {
+              System.out.println ("+10");
+              inv.removeFromGrid();
+              tar.removeFromGrid();
+              getPlayer().addPoints (10);
+              setInventory (inv, x);
+              setTarget(tar, index);
+              System.out.println ("Total: "+getPlayer().getCurrentPoints());
+            }
+            //if wrong target, remove the inventory
+            else
+            {
+              System.out.println ("-5");
+              inv.removeFromGrid();
+              getPlayer().removePoints(5);
+              setInventory(inv, x);
+              System.out.println ("Total: "+getPlayer().getCurrentPoints());
+            }
           }
         }
       }

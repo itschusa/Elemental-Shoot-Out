@@ -25,6 +25,7 @@ import java.io.IOException;
  * @version 2.4, May 27 2014. (Difficulty buttons now go to separate windows.)
  * @version 2.5, May 29 2014. (Replaced features menu item with instructions menu item.)
  * @version 2.6, May 30 2014. (Fixed: settings --> main --> play --> main --> settings --> null pointer exception. Rearranged some code and added 4 new methods.)
+ * @version 2.7, June 3 2014. (Bring window to front, hopefully.)
  */
 public class MenuFrames extends JFrame
 {
@@ -129,6 +130,8 @@ public class MenuFrames extends JFrame
       }
     });
     setVisible (true);
+    requestFocus();
+    toFront();
     setSize (900,600);
     setResizable (false);
     setLocationRelativeTo(null);

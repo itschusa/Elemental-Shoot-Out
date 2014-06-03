@@ -14,6 +14,7 @@ import java.awt.event.*;
  * @version 1.1, May 15, 2014.
  * @version 1.2, May 29, 2014. (Added another argument to constructor argument list and boolean firstRun).
  * @version 1.3, May 30, 2014. (Added mouse input.)
+ * @version 1.4, June 3 2014. (Set focus, always on top).
  */
 public class SplashScreen extends JWindow
 {
@@ -91,9 +92,7 @@ public class SplashScreen extends JWindow
     setVisible(true); //makes window visible
     Thread splashThread = new Thread(waitRunner, "Splash"); //creates a new thread for waitRunner
     splashThread.start(); //starts thread
-    this.requestFocus();
-    super.requestFocus();
-    requestFocus();
+    setAlwaysOnTop (true);
   }
   
   //create menu frames window
