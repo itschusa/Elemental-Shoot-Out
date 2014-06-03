@@ -3,18 +3,31 @@ import java.awt.*;
 
 /**
  * The DifficultGame class represents the screen for the difficult level.
- * It involves ionic compounds.
+ * The gameplay involves shooting anions at cations to create ionic compounds.
  * 
  * @author Anqi Wu
  * @version 1.0, May 31, 2014. (Creates the game with difficult particles. No win/game over screen)
+ * @version 1.1, June 2, 2014. (Full JavaDoc)
  */
 public class DifficultGame extends LevelScreen
 {          
+  /**
+   * Constructs a difficult level screen. This creates a random list of targets and inventory with charges from -3 to +3.
+   * 
+   * @param screenFactory - ScreenFactory - The ScreenFactory object that stores the current screen.
+   * @param newTargets - ArrayList<GameParticle> - Stores the temporary targets.
+   * @param name - String - Stores the temporary names of the elements.
+   * @param row - int - Stores the current row of the location to set for the elements.
+   * @param col - int - Stores the current column of the location to set for the elements.
+   * @param charge - int - Stores the temporary charge of the element.
+   * @param element - int - Stores the temporary index of the current element.
+   * @param newInventory - Stores the temporary inventory.
+   */
   public DifficultGame (ScreenFactory screenFactory)
   {
     super(screenFactory);
     
-    ArrayList<Element> newTargets = new ArrayList<Element>();
+    ArrayList<GameParticle> newTargets = new ArrayList<GameParticle>();
     String name = "";
     
     //set targets randomly
@@ -46,7 +59,7 @@ public class DifficultGame extends LevelScreen
       }
     }
     
-    ArrayList<Element> newInventory = new ArrayList <Element>();
+    ArrayList<GameParticle> newInventory = new ArrayList <GameParticle>();
     for (int col = 1;col<37;col++)
     {
         int charge = -((int) (Math.random()*3))-1;
@@ -76,10 +89,31 @@ public class DifficultGame extends LevelScreen
     super.setAllInventory (newInventory);
   }
   
+  /**
+   * Empty override from the Screen class.
+   */
   public void onCreate ()
   {
   }
   
+  /**
+   * Updates the elements currently stored in the difficult level.
+   * It first updates the player/launcher movement.
+   * If the up key is pressed, the first element of the inventory is moved up to where the launcher is and canMove is set to true.
+   * The inventory will then be shifted to the left.
+   * Then, target-inventory interaction is updated. If there is any target directly infront of an inventory particle, interaction has occurred.
+   * Either both are removed or only one is removed, depending on whether the user shot at the correct target.
+   * Points are also updated.
+   * Finally, all elements with no locations are removed, and all elements are updated.
+   * 
+   * @param index - int - Stores the index of the element at the location with row 10 and column 1.
+   * @param dart - GameParticle - Stores the temporary element to be shot with.
+   * @param inv - GameParticle - Stores the temporary inventory elements.
+   * @param x - int - Increments through for loop.
+   * @param tar - GameParticle - Stores the temporary target elements.
+   * @param tar - ArrayList<GameParticle> - Stores all targets with location not equal to null. 
+   * @param inv - ArrayList<GameParticle> - Stores all inventory with location not equal to null.
+   */
   public void onUpdate ()
   {
     //if key pressed
@@ -99,13 +133,13 @@ public class DifficultGame extends LevelScreen
         {
           //get element that is shot and change its location to 1 row in front of player
           //update immediately (no wait)
-          Element dart = getAllInventory().get(index);
+          GameParticle dart = getAllInventory().get(index);
           dart.setLocation (new Location(getPlayer().getLocation().getColumn(), getPlayer().getLocation().getRow()-1));
           dart.setCanMove(true);
           dart.setCurrentStep (10);
           setInventory (dart, index);
           
-          Element inv;
+          GameParticle inv;
           //shift the remaining inventory 1 column left
           for (int x = index+1;x<getAllInventory().size();x++)
           {
@@ -123,7 +157,7 @@ public class DifficultGame extends LevelScreen
     for (int x=0;x<getAllInventory().size();x++)
     {
       //gets the inventory element
-      Element inv = getAllInventory().get(x);
+      GameParticle inv = getAllInventory().get(x);
       
       //if the location exists
       if(inv.getLocation()!=null)
@@ -135,7 +169,7 @@ public class DifficultGame extends LevelScreen
         if (index!=-1)
         {
           //get target
-          Element tar = getAllTargets().get(index);
+          GameParticle tar = getAllTargets().get(index);
           System.out.println ("Inv: "+inv.getCharge());
           System.out.println ("Tar: "+tar.getCharge());
           if (inv.getCharge() + tar.getCharge() == 0)
@@ -162,7 +196,7 @@ public class DifficultGame extends LevelScreen
     }
     
     //removes targets that have no location from the arraylist
-    ArrayList<Element> tar = new ArrayList<Element>();
+    ArrayList<GameParticle> tar = new ArrayList<GameParticle>();
     for (int x = 0;x<getAllTargets().size();x++)
     {
       if (getAllTargets().get(x).getLocation() != null)
@@ -170,7 +204,7 @@ public class DifficultGame extends LevelScreen
     }
     
     //removes inventory that have no location from the arraylist
-    ArrayList<Element> inv = new ArrayList<Element>();
+    ArrayList<GameParticle> inv = new ArrayList<GameParticle>();
     for (int x = 0;x<getAllInventory().size();x++)
     {
       if (getAllInventory().get(x).getLocation() != null)
@@ -183,17 +217,19 @@ public class DifficultGame extends LevelScreen
     
     //update targets
     for (int x=0;x<getAllTargets().size();x++)
-    {
       getAllTargets().get(x).update();
-    }
     
     //update inventory
     for (int x = 0; x<getAllInventory().size();x++)
-    {
       getAllInventory().get(x).update();
-    }
   }
   
+   /**
+   * Displays the difficult level on the jpanel.
+   * It draws the wallpaper, player (launcher), inventory and targets, respectively.
+   * 
+   * @param twoDimensional - Graphics2D - The Graphics2D object.
+   */
   public void onDraw (Graphics2D twoDimensional)
   {
     //draw background
@@ -204,14 +240,10 @@ public class DifficultGame extends LevelScreen
     
     //draw inventory
     for (int x = 0; x<12&&x<getAllInventory().size();x++)
-    {
       getAllInventory().get(x).draw(twoDimensional);
-    }
     
     //draw targets
     for (int x=0;x<getAllTargets().size();x++)
-    {
       getAllTargets().get(x).draw(twoDimensional);
-    }
   }
 }

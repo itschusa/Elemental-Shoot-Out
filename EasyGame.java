@@ -14,29 +14,45 @@ import javax.swing.*;
  * @version 1.4, May 28, 2014. (Temporary code to print points in the interactions pane.)
  * @version 1.5, May 29, 2014. (JavaDoc, removed KeyOverrides method - was protected, don't know what it does)
  * @version 1.6, May 31, 2014. (Creates equal number of stable and unstable so game is winnable, creates full inventory, added win/lose methods)
+ * @version 1.7, June 2, 2014. (More JavaDoc)
  */
 public class EasyGame extends LevelScreen
 {        
-   private ImageIcon instructionImage = new ImageIcon ("Images/EasyGame.png");;
-   private ImageIcon gameOverImage = new ImageIcon ("Images/GameOver2.png");
-   private ImageIcon winImage = new ImageIcon ("Images/Win1.png");
+  /**
+   * instructionImage - ImageIcon - Stores the image that explains how to play the game to the user.
+   */
+  private ImageIcon instructionImage = new ImageIcon ("Images/EasyGame.png");;
+  /**
+   * gameOverImage - ImageIcon - Stores the game over screen.
+   */
+  private ImageIcon gameOverImage = new ImageIcon ("Images/GameOver2.png");
+  /**
+   * winImage - ImageIcon - Stores the win screen.
+   */
+  private ImageIcon winImage = new ImageIcon ("Images/Win1.png");
+  
   /**
    * Creates a new screen that represents the easy level.
    * It creates a random list of targets and user inventory.
    * 
    * @param screenFactory - ScreenFactory - The ScreenFactory object that stores the current screen.
-   * @param newTargets - ArrayList<Element> - The new list of targets.
+   * @param newTargets - ArrayList<GameParticle> - The new list of targets.
    * @param name - String - Temporarily stores the names of the elements to create.
-   * @param newInventory - ArrayList<Element> - The new list of inventory particles.
+   * @param newInventory - ArrayList<GameParticle> - The new list of inventory particles.
+   * @param count - int - Stores the number of unstable or neutrons elements.
+   * @param count2 - int - Stores the number of stable elements.
+   * @param row - int - Stores the current row.
+   * @param col - int - Stores the current column.
    */
   public EasyGame (ScreenFactory screenFactory)
   {
     super(screenFactory);
     
-    ArrayList<Element> newTargets = new ArrayList<Element>();
+    ArrayList<GameParticle> newTargets = new ArrayList<GameParticle>();
     String name = "Stable";
     int count = 0;
-    int count2=0;
+    int count2 = 0;
+    
     //set targets randomly
     for (int row = 1; row<4;row++)
     {
@@ -55,10 +71,12 @@ public class EasyGame extends LevelScreen
         newTargets.add (new EasyParticle(name, new Location(col, row)));
       }
     }
+    
     count = 0;
     count2=0;
     //set inventory randomly
-    ArrayList<Element> newInventory = new ArrayList <Element>();
+    ArrayList<GameParticle> newInventory = new ArrayList <GameParticle>();
+    
     for (int col = 1; col<37;col++)
     {
       if ((Math.random()<0.5&&count<19)||count2>18)
@@ -95,10 +113,19 @@ public class EasyGame extends LevelScreen
    * Either both are removed or only one is removed, depending on whether the user shot at the correct target.
    * Points are also updated.
    * Finally, all elements with no locations are removed, and all elements are updated.
+   * 
+   * @param index - int - Stores the index of the element at the location with row 10 and column 1.
+   * @param dart - GameParticle - Stores the temporary element to be shot with.
+   * @param inv - GameParticle - Stores the temporary inventory elements.
+   * @param x - int - Increments through for loop.
+   * @param tar - GameParticle - Stores the temporary target elements.
+   * @param tar - ArrayList<GameParticle> - Stores all targets with location not equal to null. 
+   * @param inv - ArrayList<GameParticle> - Stores all inventory with location not equal to null.
    */
   public void onUpdate ()
   {
-    //if key pressed
+    
+//if key pressed
     if (GameWindow.movement != 0)
     {
       //update player
@@ -115,13 +142,13 @@ public class EasyGame extends LevelScreen
         {
           //get element that is shot and change its location to 1 row in front of player
           //update immediately (no wait)
-          Element dart = getAllInventory().get(index);
+          GameParticle dart = getAllInventory().get(index);
           dart.setLocation (new Location(getPlayer().getLocation().getColumn(), getPlayer().getLocation().getRow()-1));
           dart.setCanMove(true);
           dart.setCurrentStep (10);
           setInventory (dart, index);
           
-          Element inv;
+          GameParticle inv;
           //shift the remaining inventory 1 column left
           for (int x = index+1;x<getAllInventory().size();x++)
           {
@@ -139,7 +166,7 @@ public class EasyGame extends LevelScreen
     for (int x=0;x<getAllInventory().size();x++)
     {
       //gets the inventory element
-      Element inv = getAllInventory().get(x);
+      GameParticle inv = getAllInventory().get(x);
       
       //if the location exists
       if(inv.getLocation()!=null)
@@ -151,7 +178,7 @@ public class EasyGame extends LevelScreen
         if (index!=-1)
         {
           //get targer
-          Element tar = getAllTargets().get(index);
+          GameParticle tar = getAllTargets().get(index);
           //stable and stable || unstable and neutron <-- remove both inventory and target
           if (inv.getName().equals(tar.getName())||inv.getName().equals("Neutron") && tar.getName().equals("Unstable"))
           {
@@ -177,7 +204,7 @@ public class EasyGame extends LevelScreen
     }
     
     //removes targets that have no location from the arraylist
-    ArrayList<Element> tar = new ArrayList<Element>();
+    ArrayList<GameParticle> tar = new ArrayList<GameParticle>();
     for (int x = 0;x<getAllTargets().size();x++)
     {
       if (getAllTargets().get(x).getLocation() != null)
@@ -185,7 +212,7 @@ public class EasyGame extends LevelScreen
     }
     
     //removes inventory that have no location from the arraylist
-    ArrayList<Element> inv = new ArrayList<Element>();
+    ArrayList<GameParticle> inv = new ArrayList<GameParticle>();
     for (int x = 0;x<getAllInventory().size();x++)
     {
       if (getAllInventory().get(x).getLocation() != null)
@@ -198,27 +225,39 @@ public class EasyGame extends LevelScreen
     
     //update targets
     for (int x=0;x<getAllTargets().size();x++)
-    {
       getAllTargets().get(x).update();
-    }
     
     //update inventory
     for (int x = 0; x<getAllInventory().size();x++)
-    {
       getAllInventory().get(x).update();
-    }
   }
   
+  /**
+   * Draws the win screen.
+   * 
+   * @param twoDimensional - Graphics2D - The Graphics2D object.
+   */
   public void win (Graphics2D twoDimensional)
   {
     twoDimensional.drawImage (winImage.getImage(),0,0,winImage.getImageObserver());
   }
   
+   /**
+   * Draws the game over screen.
+   * 
+   * @param twoDimensional - Graphics2D - The Graphics2D object.
+   */
   public void gameOver (Graphics2D twoDimensional)
   {
     twoDimensional.drawImage (gameOverImage.getImage(),0,0,gameOverImage.getImageObserver());
   }
   
+   /**
+   * Displays the easy level on the jpanel.
+   * It draws the wallpaper, tutorial, player (launcher), inventory, targets and win/lose screen, respectively.
+   * 
+   * @param twoDimensional - Graphics2D - The Graphics2D object.
+   */
   public void onDraw (Graphics2D twoDimensional)
   {
     //draw background
@@ -233,15 +272,11 @@ public class EasyGame extends LevelScreen
     
     //draw inventory
     for (int x = 0; x<12&&x<getAllInventory().size();x++)
-    {
       getAllInventory().get(x).draw(twoDimensional);
-    }
     
     //draw targets
     for (int x=0;x<getAllTargets().size();x++)
-    {
       getAllTargets().get(x).draw(twoDimensional);
-    }
     
     //game over or win
     if (getAllInventory().size() == 0)
