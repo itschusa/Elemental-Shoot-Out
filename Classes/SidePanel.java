@@ -109,7 +109,7 @@ public class SidePanel extends JPanel
         {
           if (!SettingsPanel.musicInitialized)
           {
-            myGame.getMenus().setSettings();
+            myGame.getMenus().settings();
             createdSettings = true;
           }
           myGame.getMenus().getSettings().toggleOn();
