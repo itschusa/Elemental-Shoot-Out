@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.awt.*;
+import javax.swing.*;
 
 /**
  * The DifficultGame class represents the screen for the difficult level.
@@ -9,9 +10,16 @@ import java.awt.*;
  * @version 1.0, May 31, 2014. (Creates the game with difficult particles. No win/game over screen)
  * @version 1.1, June 2, 2014. (Full JavaDoc)
  * @version 1.2, June 3, 2014. (Modifications due to location class constructor change, removes instead of sets location to null, two keys at once)
+ * @version 1.3, June 4, 2014. (Added win and lose screens)
  */
 public class DifficultGame extends LevelScreen
 {          
+  /**
+   * gameOverImage - ImageIcon - Stores the game over screen.
+   */
+  private ImageIcon gameOverImage = new ImageIcon ("../Images/GameOver2.png");
+  private boolean end = false;
+  
   /**
    * Constructs a difficult level screen. This creates a random list of targets and inventory with charges from -3 to +3.
    * 
@@ -54,7 +62,7 @@ public class DifficultGame extends LevelScreen
           element = (int)(Math.random()*Database.chargePositiveThree.length);
           name = Database.chargePositiveThree[element];
         }
-
+        
         System.out.println (name);
         newTargets.add (new GameParticle(name, new Location(col, row, false),charge,3));
       }
@@ -63,28 +71,28 @@ public class DifficultGame extends LevelScreen
     ArrayList<GameParticle> newInventory = new ArrayList <GameParticle>();
     for (int col = 1;col<37;col++)
     {
-        int charge = -((int) (Math.random()*3))-1;
-        int element;
-        
-        if (charge == -1)
-        {
-          element = (int)(Math.random()*Database.chargeNegativeOne.length);
-          name = Database.chargeNegativeOne[element];
-        }
-        else if (charge == -2)
-        {
-          element = (int)(Math.random()*Database.chargeNegativeTwo.length);
-          name = Database.chargeNegativeTwo[element];
-        }
-        else
-        {
-          element = (int)(Math.random()*Database.chargeNegativeThree.length);
-          name = Database.chargeNegativeThree[element];
-        }
-        System.out.println (name);
-        newInventory.add (new GameParticle(name, new Location(col, 10, false),charge,3));
+      int charge = -((int) (Math.random()*3))-1;
+      int element;
+      
+      if (charge == -1)
+      {
+        element = (int)(Math.random()*Database.chargeNegativeOne.length);
+        name = Database.chargeNegativeOne[element];
+      }
+      else if (charge == -2)
+      {
+        element = (int)(Math.random()*Database.chargeNegativeTwo.length);
+        name = Database.chargeNegativeTwo[element];
+      }
+      else
+      {
+        element = (int)(Math.random()*Database.chargeNegativeThree.length);
+        name = Database.chargeNegativeThree[element];
+      }
+      System.out.println (name);
+      newInventory.add (new GameParticle(name, new Location(col, 10, false),charge,3));
     }
-            
+    
     //save changes
     super.setAllTargets (newTargets);
     super.setAllInventory (newInventory);
@@ -193,7 +201,7 @@ public class DifficultGame extends LevelScreen
       }
     }
     
-        //removes inventory that have no location from the arraylist
+    //removes inventory that have no location from the arraylist
     ArrayList<GameParticle> inv = new ArrayList<GameParticle>();
     for (int x = 0;x<getAllInventory().size();x++)
     {
@@ -213,7 +221,18 @@ public class DifficultGame extends LevelScreen
       getAllInventory().get(x).update();
   }
   
-   /**
+  /**
+   * Draws the game over screen.
+   * 
+   * @param twoDimensional - Graphics2D - The Graphics2D object.
+   */
+  private void gameOver (Graphics2D twoDimensional)
+  {
+    getScreenFactory().loseFocus();
+    twoDimensional.drawImage (gameOverImage.getImage(),0,0,gameOverImage.getImageObserver());
+  }
+  
+  /**
    * Displays the difficult level on the jpanel.
    * It draws the wallpaper, player (launcher), inventory and targets, respectively.
    * 
@@ -234,5 +253,20 @@ public class DifficultGame extends LevelScreen
     //draw targets
     for (int x=0;x<getAllTargets().size();x++)
       getAllTargets().get(x).draw(twoDimensional);
-  }
+    
+    //game over or win
+    if (getAllInventory().size() == 0)
+    {
+      if (!end && getAllTargets().size() == 0)
+      {
+        end = true;
+        getScreenFactory().win (4);
+      }
+      else
+      {
+        if (getAllTargets().size() !=0)
+          gameOver (twoDimensional);
+      }
+    }
+  }  
 }

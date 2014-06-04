@@ -13,7 +13,7 @@ import java.awt.*;
  * @version 1.4, May 27, 2014. (added setCanMove, and setCurrentStep(empty))
  * @version 1.5, May 28, 2014. (added getCharge (empty))
  * @version 1.6, May 29, 2014. (JavaDoc all parts)
- * @version 1.7, June 3, 2014. (Player can have negative points)
+ * @version 1.7, June 3, 2014. (Player can have negative points, added method to set icon)
  */
 public class CurrentPlayer extends Element
 {
@@ -194,5 +194,10 @@ public class CurrentPlayer extends Element
   public int getCharge ()
   {
     return 0;
+  }
+  
+  public void setIcon (ImageIcon icon)
+  {
+    myIcon = icon;
   }
 }

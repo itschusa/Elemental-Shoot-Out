@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.awt.*;
+import javax.swing.*;
 
 /**
  * The MediumGame class represents the screen for the medium level.
@@ -12,6 +13,7 @@ import java.awt.*;
  * @version 1.2, May 31, 2014 (Creates all inventory, and only displays first 12. No alkaline metals yet.)
  * @version 1.3, June 2, 2014. (JavaDoc)
  * @version 1.4, June 3, 2014. (Modifications due to location class constructor change, removes instead of sets location to null, two keys at once)
+ * @version 1.5, June 4, 2014. (Added win and lose screens, can go to difficult level)
  */
 public class MediumGame extends LevelScreen
 {        
@@ -19,6 +21,11 @@ public class MediumGame extends LevelScreen
    * obstacles - ArrayList<AcidCloud> - Stores the acid cloud objects.
    */
   private ArrayList <AcidCloud> obstacles = new ArrayList<AcidCloud> ();
+  /**
+   * gameOverImage - ImageIcon - Stores the game over screen.
+   */
+  private ImageIcon gameOverImage = new ImageIcon ("../Images/GameOver2.png");
+  private boolean end = false;
   
   /**
    * Constructs a medium level screen. This creates a random list of targets and inventory.
@@ -237,6 +244,17 @@ public class MediumGame extends LevelScreen
   }
   
   /**
+   * Draws the game over screen.
+   * 
+   * @param twoDimensional - Graphics2D - The Graphics2D object.
+   */
+  private void gameOver (Graphics2D twoDimensional)
+  {
+    getScreenFactory().loseFocus();
+    twoDimensional.drawImage (gameOverImage.getImage(),0,0,gameOverImage.getImageObserver());
+  }
+  
+  /**
    * Displays the medium level on the jpanel.
    * It draws the wallpaper, player (launcher), inventory, targets and obstacles, respectively.
    * 
@@ -260,5 +278,20 @@ public class MediumGame extends LevelScreen
     
     for (int x = 0; x < obstacles.size(); x++)
       obstacles.get(x).draw(twoDimensional);
+    
+    //game over or win
+    if (getAllInventory().size() == 0)
+    {
+      if (!end && getAllTargets().size() == 0)
+      {
+        end = true;
+        getScreenFactory().win (3);
+      }
+      else
+      {
+        if (getAllTargets().size() !=0)
+          gameOver (twoDimensional);
+      }
+    }
   }
 }

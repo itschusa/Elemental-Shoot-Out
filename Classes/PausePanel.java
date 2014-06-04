@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 /**
  * The PausePanel shows the pause screen when user wants to pause.
@@ -8,6 +9,7 @@ import java.awt.*;
  * @version 1.0, May 28, 2014 (two image icons are drawn - clear vs pause)
  * @version 1.1, May 31, 2014 (moved the instantiation to the top)
  * @version 1.2, June 2, 2014 (JavaDoc)
+ * @version 1.3, June 4, 2014 (Stores the win images, displays win screen, added showWin and resetLevel methods)
  */
 public class PausePanel extends JPanel
 {
@@ -27,6 +29,21 @@ public class PausePanel extends JPanel
    * clearImage - ImageIcon - Stores the image when 'paused' is not true.
    */
   private ImageIcon clearImage = new ImageIcon ("../Images/ClearImage.png");
+  /**
+   * winImage - ImageIcon - Stores the win screen.
+   */
+  private ImageIcon winImage1 = new ImageIcon ("../Images/Win1.png");
+  /**
+   * winImage - ImageIcon - Stores the win screen.
+   */
+  private ImageIcon winImage2 = new ImageIcon ("../Images/Win2.png");
+  /**
+   * winImage - ImageIcon - Stores the win screen.
+   */
+  private ImageIcon winImage3 = new ImageIcon ("../Images/Win3.png");
+  private int level;
+  private JPanel buttonPanel = new JPanel();
+  private JButton continueButton = new JButton ("Continue");
   
   /**
    * Creates a new PausePanel object. Sets the background to transparent.
@@ -55,6 +72,34 @@ public class PausePanel extends JPanel
       paused = true;
   }
   
+  public void showWin (int level)
+  {
+    this.level = level;
+    System.out.println (this.level);
+    buttonPanel.setBackground (new Color (0,0,0));
+    buttonPanel.add(continueButton);
+    add (buttonPanel);
+    buttonPanel.setVisible (true);
+    validate();
+    repaint();
+    buttonPanel.requestFocusInWindow();
+    continueButton.addActionListener (new ActionListener ()
+                                        {
+      public void actionPerformed (ActionEvent e)      { 
+        System.out.println (e);
+        resetLevel ();
+      }});
+  }
+  
+  public void resetLevel ()
+  {
+    remove(buttonPanel);
+    System.out.println (level);
+    myGame.changeScreen (level);
+    level = 0;
+    repaint();
+  }
+  
   /**
    * Paints the graphics of the pause screen.
    * When paused is true, paints the pause screen.
@@ -66,10 +111,19 @@ public class PausePanel extends JPanel
   {
     super.paintComponent (g);
     
-    if (paused)
-      g.drawImage (pauseImage.getImage(), 0, 0, pauseImage.getImageObserver()); 
+    if (level == 2)
+      g.drawImage (winImage1.getImage(), 0, 0, winImage1.getImageObserver()); 
+    else if (level == 3)
+      g.drawImage (winImage2.getImage(), 0, 0, winImage2.getImageObserver());
+    else if (level == 4)
+      g.drawImage (winImage3.getImage(), 0, 0, winImage3.getImageObserver());
     else
-      g.drawImage (clearImage.getImage(), 0, 0, clearImage.getImageObserver()); 
+    {
+      if (paused)
+        g.drawImage (pauseImage.getImage(), 0, 0, pauseImage.getImageObserver()); 
+      else
+        g.drawImage (clearImage.getImage(), 0, 0, clearImage.getImageObserver()); 
+    }
     
     repaint();
   }

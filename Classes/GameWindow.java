@@ -14,7 +14,7 @@ import java.awt.*;
  * @version 1.4, May 28, 2014. (Added side and pause panels (for every level). Medium game also shows up!)
  * @version 1.5, May 30 2014. (Changed access level of paused to public static, added frame and its accessor method. Added argument to constructor param list.)
  * @version 1.6, May 31, 2014. (Added difficult level)
- * @version 1.7, June 4, 2014. (Added keyReleased = for shooting, to eliminate player shooting randomly)
+ * @version 1.7, June 4, 2014. (Added keyReleased = for shooting, to eliminate player shooting randomly, win, loseFocus and changeScreen methods)
  */
 public class GameWindow
 {
@@ -153,6 +153,42 @@ public class GameWindow
     gameWindow.add (pause, BorderLayout.LINE_START);
     gameWindow.add (panel, BorderLayout.LINE_END);
     gameWindow.setVisible (true);
+  }
+  
+  public void win (int level)
+  {
+    pause.showWin (level);
+  }
+  
+  public void loseFocus()
+  {
+    panel.requestFocusInWindow();
+  }
+  
+  public void changeScreen (int level)
+  {
+    if (level == 0)
+      return;
+    
+    LevelScreen screen = new LevelScreen(getScreenFactory());
+    int points = getScreenFactory().getCurrentScreen().getPlayer().getCurrentPoints();
+    
+    if (level == 2)
+    {
+      screen = new MediumGame (getScreenFactory());
+      screen.getPlayer().setIcon (new ImageIcon ("../Images/SockBunny.png"));
+    }
+    else
+    {
+      if (level == 3)
+      {
+        screen = new DifficultGame (getScreenFactory());
+        screen.getPlayer().setIcon (new ImageIcon ("../Images/HappyLlama.png"));
+      }
+    }
+    getScreenFactory().setCurrentScreen (screen);
+    screen.getPlayer().addPoints (points);
+    gameWindow.requestFocusInWindow();
   }
   
   /**

@@ -9,6 +9,7 @@ import java.awt.event.*;
  * @author Chusa Nguyen
  * @version 1.0, May 28, 2014. (added panel to the side, the main menu, pause and sound buttons. Sound button not yet functional)
  * @version 1.1, May 30 2014. (Fixed null pointer exception described in MenuFrames and added ActionListener to sound.)
+ * @version 1.2, June 4, 2014. (Music now does not lose focus of the game)
  */
 public class SidePanel extends JPanel
 {
@@ -103,6 +104,7 @@ public class SidePanel extends JPanel
     soundButton.addActionListener (new ActionListener ()
                                      {
       public void actionPerformed (ActionEvent e) {
+        myGame.getWindow().requestFocusInWindow();
         if (!SettingsPanel.isOn)
         {
           if (!SettingsPanel.musicInitialized)

@@ -21,11 +21,11 @@ public class SettingsPanel extends JPanel
   /**
    * musicOn - reference - Reference variable to the specified JButton. 
    */
-  protected JButton musicOn = new JButton (new ImageIcon ("Images/volume_2.png"));
+  protected JButton musicOn = new JButton (new ImageIcon ("../Images/volume_2.png"));
   /**
    * musicOff - reference - Reference variable to the specified JButton. 
    */
-  protected JButton musicOff = new JButton (new ImageIcon ("Images/volume_off.png"));
+  protected JButton musicOff = new JButton (new ImageIcon ("../Images/volume_off.png"));
   /**
    * musicInitialized - static boolean - Represents whether or not the AudioClip object from the Sound class has been instantiated yet. 
    */
@@ -48,10 +48,10 @@ public class SettingsPanel extends JPanel
   {
     musicOn.setContentAreaFilled(false);
     musicOn.setBorder (null);    
-    musicOn.setRolloverIcon(new ImageIcon ("Images/volume_2Roll.png"));
+    musicOn.setRolloverIcon(new ImageIcon ("../Images/volume_2Roll.png"));
     musicOff.setContentAreaFilled(false);
     musicOff.setBorder (null);
-    musicOff.setRolloverIcon(new ImageIcon ("Images/volume_OffRoll.png"));
+    musicOff.setRolloverIcon(new ImageIcon ("../Images/volume_OffRoll.png"));
     add(musicOn);
     add(musicOff);
     musicOff.setEnabled(false);

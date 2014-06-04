@@ -16,6 +16,7 @@ import javax.swing.*;
  * @version 1.6, May 31, 2014. (Creates equal number of stable and unstable so game is winnable, creates full inventory, added win/lose methods)
  * @version 1.7, June 2, 2014. (More JavaDoc)
  * @version 1.8, June 3, 2014. (Modifications due to location class constructor change, removes instead of sets location to null, two keys at once)
+ * @version 1.9, June 4, 2014. (Modified win and lose screens, once a player wins, they will be taken to the next level)
  */
 public class EasyGame extends LevelScreen
 {        
@@ -27,10 +28,7 @@ public class EasyGame extends LevelScreen
    * gameOverImage - ImageIcon - Stores the game over screen.
    */
   private ImageIcon gameOverImage = new ImageIcon ("../Images/GameOver2.png");
-  /**
-   * winImage - ImageIcon - Stores the win screen.
-   */
-  private ImageIcon winImage = new ImageIcon ("../Images/Win1.png");
+  private boolean end = false;
   
   /**
    * Creates a new screen that represents the easy level.
@@ -59,7 +57,7 @@ public class EasyGame extends LevelScreen
     {
       for (int col=1;col<13;col++)
       {
-        if ((Math.random()<0.5&&count<19)||count2>18)
+        if ((Math.random()<0.5&&count<18)||count2>17)
         {
           name = "Unstable";
           count++;
@@ -80,7 +78,7 @@ public class EasyGame extends LevelScreen
     
     for (int col = 1; col<37;col++)
     {
-      if ((Math.random()<0.5&&count<19)||count2>18)
+      if ((Math.random()<0.5&&count<18)||count2>17)
       {
         name = "Neutron";
         count++;
@@ -220,22 +218,13 @@ public class EasyGame extends LevelScreen
   }
   
   /**
-   * Draws the win screen.
-   * 
-   * @param twoDimensional - Graphics2D - The Graphics2D object.
-   */
-  public void win (Graphics2D twoDimensional)
-  {
-    twoDimensional.drawImage (winImage.getImage(),0,0,winImage.getImageObserver());
-  }
-  
-  /**
    * Draws the game over screen.
    * 
    * @param twoDimensional - Graphics2D - The Graphics2D object.
    */
-  public void gameOver (Graphics2D twoDimensional)
+  private void gameOver (Graphics2D twoDimensional)
   {
+    getScreenFactory().loseFocus();
     twoDimensional.drawImage (gameOverImage.getImage(),0,0,gameOverImage.getImageObserver());
   }
   
@@ -265,13 +254,20 @@ public class EasyGame extends LevelScreen
     for (int x=0;x<getAllTargets().size();x++)
       getAllTargets().get(x).draw(twoDimensional);
     
+    
     //game over or win
     if (getAllInventory().size() == 0)
     {
-      if (getAllTargets().size() == 0)
-        win (twoDimensional);
+      if (!end && getAllTargets().size() == 0)
+      {
+        end = true;
+        getScreenFactory().win (2);
+      }
       else
-        gameOver (twoDimensional);
+      {
+        if (getAllTargets().size() !=0)
+            gameOver (twoDimensional);
+      }
     }
   }
 }
