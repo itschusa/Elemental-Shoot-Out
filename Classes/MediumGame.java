@@ -13,7 +13,7 @@ import javax.swing.*;
  * @version 1.2, May 31, 2014 (Creates all inventory, and only displays first 12. No alkaline metals yet.)
  * @version 1.3, June 2, 2014. (JavaDoc)
  * @version 1.4, June 3, 2014. (Modifications due to location class constructor change, removes instead of sets location to null, two keys at once)
- * @version 1.5, June 4, 2014. (Added win and lose screens, can go to difficult level)
+ * @version 1.5, June 4, 2014. (Added win and lose screens, can go to difficult level. Added base particles, no functionality.)
  */
 public class MediumGame extends LevelScreen
 {        
@@ -200,6 +200,15 @@ public class MediumGame extends LevelScreen
               getAllTargets().remove(index);
               getPlayer().addPoints (10);
               System.out.println ("Total: "+getPlayer().getCurrentPoints());
+              /**
+               * add a base particle
+               */
+              System.out.println ("Inventory left: " + getAllInventory().size());
+              int tempIndex = (int)(Math.random()*(getAllInventory().size() - 1));
+              GameParticle baseParticle = new GameParticle ("Base", new Location (tempIndex + 1, 10, false), +3, 2);
+              System.out.println ("Placed at: " + (tempIndex + 1));
+              getAllInventory().add (tempIndex , baseParticle);
+              x--;
             }
             //if wrong target, remove the inventory
             else

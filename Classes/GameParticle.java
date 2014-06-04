@@ -45,8 +45,10 @@ public class GameParticle extends Element
         setIcon (Database.icon10);
       else if (newName.equals("Hydroxide"))
         setIcon (Database.icon11);
-      else 
+      else if (newName.equals("Cloud"))
         setIcon (Database.icon12);
+      else
+        setIcon (Database.icon13);
     }
     else
     {
