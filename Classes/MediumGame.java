@@ -11,6 +11,7 @@ import java.awt.*;
  * @version 1.1, May 30 2014. (Added code to create and update acid cloud obstacles.)
  * @version 1.2, May 31, 2014 (Creates all inventory, and only displays first 12. No alkaline metals yet.)
  * @version 1.3, June 2, 2014. (JavaDoc)
+ * @version 1.4, June 3, 2014. (Modifications due to location class constructor change, removes instead of sets location to null)
  */
 public class MediumGame extends LevelScreen
 {        
@@ -45,17 +46,17 @@ public class MediumGame extends LevelScreen
         int element = (int) (Math.random()*6);
         name = Database.alkaliMetals[element];
         System.out.println (element +" "+ name);
-        newTargets.add (new GameParticle(name, new Location(col, row),1,2));
+        newTargets.add (new GameParticle(name, new Location(col, row, false),1,2));
       }
     }
     
     ArrayList<GameParticle> newInventory = new ArrayList <GameParticle>();
     for (int col = 1; col<37;col++)
-      newInventory.add (new GameParticle("Hydroxide", new Location (col, 10),-1,2));      
+      newInventory.add (new GameParticle("Hydroxide", new Location (col, 10, false),-1,2));      
     
-    obstacles.add(new AcidCloud ("Cloud", new Location (1, 4), -3, true));
-    obstacles.add(new AcidCloud ("Cloud", new Location (9, 4), -3, true));
-    obstacles.add(new AcidCloud ("Cloud", new Location (8, 5), -3, false));
+    obstacles.add(new AcidCloud ("Cloud", new Location (1, 4, false), -3, true));
+    obstacles.add(new AcidCloud ("Cloud", new Location (9, 4, false), -3, true));
+    obstacles.add(new AcidCloud ("Cloud", new Location (8, 5, false), -3, false));
     
     //save changes
     super.setAllTargets (newTargets);
@@ -116,7 +117,7 @@ public class MediumGame extends LevelScreen
       if (GameWindow.movement == 38)
       {
         //get index of element of the first inventory slot
-        int index = getInventoryIndex(new Location(1,10));
+        int index = getInventoryIndex(new Location(1,10, false));
         
         //if there is something there
         if (index != -1)
@@ -124,9 +125,8 @@ public class MediumGame extends LevelScreen
           //get element that is shot and change its location to 1 row in front of player
           //update immediately (no wait)
           GameParticle dart = getAllInventory().get(index);
-          dart.setLocation (new Location(getPlayer().getLocation().getColumn(), getPlayer().getLocation().getRow()-1));
+          dart.setLocation (new Location(getPlayer().getLocation().getColumn(), getPlayer().getLocation().getRow()-1, false));
           dart.setCanMove(true);
-          dart.setCurrentStep (10);
           setInventory (dart, index);
           
           GameParticle inv;
@@ -153,8 +153,8 @@ public class MediumGame extends LevelScreen
       if(inv.getLocation()!=null)
       {
         //get the index of the target directly in front of it
-        int index = getTargetIndex(new Location(inv.getLocation().getColumn(), inv.getLocation().getRow()-1));
-        int index2 = getObstacleIndex (new Location(inv.getLocation().getColumn(), inv.getLocation().getRow()-1));
+        int index = getTargetIndex(new Location(inv.getLocation().getColumn(), inv.getLocation().getRow(), false));
+        int index2 = getObstacleIndex (new Location(inv.getLocation().getColumn(), inv.getLocation().getRow(), false));
         
         //if hits an acid cloud        
         if (index2!=-1)
@@ -205,6 +205,17 @@ public class MediumGame extends LevelScreen
         }
       }
     }
+    
+    //removes inventory that have no location from the arraylist
+    ArrayList<GameParticle> inv = new ArrayList<GameParticle>();
+    for (int x = 0;x<getAllInventory().size();x++)
+    {
+      if (getAllInventory().get(x).getLocation() != null)
+        inv.add (getAllInventory().get(x));
+    }
+    
+    //sets the new inv
+    setAllInventory (inv);
     
     //update targets
     for (int x=0;x<getAllTargets().size();x++)

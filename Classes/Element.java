@@ -11,6 +11,7 @@ import java.awt.*;
  * @version 1.2, May 27, 2014. (added more abstract methods that easyparticle uses. removeFromGrid now works!)
  * @version 1.3, May 28, 2014. (added abstract method getCharge)
  * @version 1.4, May 29, 2014. (JavaDoc)
+ * @version 1.5, June 3, 2014. (Removed methods associated with currentSteps)
  */
 public abstract class Element
 {
@@ -109,13 +110,6 @@ public abstract class Element
    * Returns whether or not the element can move.
    */
   public abstract boolean canMove ();
-  
-  /**
-   * Sets the current step of the element.
-   * 
-   * @param steps - int - The number of calls to update before the element moves.
-   */
-  public abstract void setCurrentStep(int steps);
   
   //override to return icon
   /**

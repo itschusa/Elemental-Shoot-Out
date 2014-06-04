@@ -1,90 +1,98 @@
 import java.util.ArrayList;
 import java.awt.*;
+import javax.swing.*;
 
 /**
- * The DifficultGame class represents the screen for the difficult level.
- * The gameplay involves shooting anions at cations to create ionic compounds.
+ * The EasyGame class is a screen that draws the easy level.
  * 
  * @author Anqi Wu
- * @version 1.0, May 31, 2014. (Creates the game with difficult particles. No win/game over screen)
- * @version 1.1, June 2, 2014. (Full JavaDoc)
- * @version 1.2, June 3, 2014. (Modifications due to location class constructor change, removes instead of sets location to null)
+ * @author Chusa Nguyen
+ * @version 1.0, May 21 2014. (extends panel, uses paintComponent)
+ * @version 1.1, May 22, 2014. (extends levelscreen, updates!)
+ * @version 1.2, May 26 2014. (Modified all code involving 'player' to fit changes to LevelScreen.)
+ * @version 1.3, May 27, 2014. (Modified code for updating the inventory and targets. Actually shoots and interacts! + comment lines)
+ * @version 1.4, May 28, 2014. (Temporary code to print points in the interactions pane.)
+ * @version 1.5, May 29, 2014. (JavaDoc, removed KeyOverrides method - was protected, don't know what it does)
+ * @version 1.6, May 31, 2014. (Creates equal number of stable and unstable so game is winnable, creates full inventory, added win/lose methods)
+ * @version 1.7, June 2, 2014. (More JavaDoc)
+ * @version 1.8, June 3, 2014. (Modifications due to location class constructor change, removes instead of sets location to null)
  */
-public class DifficultGame extends LevelScreen
-{          
+public class EasyGame extends LevelScreen
+{        
   /**
-   * Constructs a difficult level screen. This creates a random list of targets and inventory with charges from -3 to +3.
+   * instructionImage - ImageIcon - Stores the image that explains how to play the game to the user.
+   */
+  private ImageIcon instructionImage = new ImageIcon ("../Images/EasyGame.png");;
+  /**
+   * gameOverImage - ImageIcon - Stores the game over screen.
+   */
+  private ImageIcon gameOverImage = new ImageIcon ("../Images/GameOver2.png");
+  /**
+   * winImage - ImageIcon - Stores the win screen.
+   */
+  private ImageIcon winImage = new ImageIcon ("../Images/Win1.png");
+  
+  /**
+   * Creates a new screen that represents the easy level.
+   * It creates a random list of targets and user inventory.
    * 
    * @param screenFactory - ScreenFactory - The ScreenFactory object that stores the current screen.
-   * @param newTargets - ArrayList<GameParticle> - Stores the temporary targets.
-   * @param name - String - Stores the temporary names of the elements.
-   * @param row - int - Stores the current row of the location to set for the elements.
-   * @param col - int - Stores the current column of the location to set for the elements.
-   * @param charge - int - Stores the temporary charge of the element.
-   * @param element - int - Stores the temporary index of the current element.
-   * @param newInventory - Stores the temporary inventory.
+   * @param newTargets - ArrayList<GameParticle> - The new list of targets.
+   * @param name - String - Temporarily stores the names of the elements to create.
+   * @param newInventory - ArrayList<GameParticle> - The new list of inventory particles.
+   * @param count - int - Stores the number of unstable or neutrons elements.
+   * @param count2 - int - Stores the number of stable elements.
+   * @param row - int - Stores the current row.
+   * @param col - int - Stores the current column.
    */
-  public DifficultGame (ScreenFactory screenFactory)
+  public EasyGame (ScreenFactory screenFactory)
   {
     super(screenFactory);
     
     ArrayList<GameParticle> newTargets = new ArrayList<GameParticle>();
-    String name = "";
+    String name = "Stable";
+    int count = 0;
+    int count2 = 0;
     
     //set targets randomly
     for (int row = 1; row<4;row++)
     {
       for (int col=1;col<13;col++)
       {
-        int charge = (int) (Math.random()*3)+1;
-        int element;
-        
-        if (charge == 1)
+        if ((Math.random()<0.5&&count<19)||count2>18)
         {
-          element = (int)(Math.random()*Database.chargePositiveOne.length);
-          name = Database.chargePositiveOne[element];
-        }
-        else if (charge == 2)
-        {
-          element = (int)(Math.random()*Database.chargePositiveTwo.length);
-          name = Database.chargePositiveTwo[element];
+          name = "Unstable";
+          count++;
         }
         else
         {
-          element = (int)(Math.random()*Database.chargePositiveThree.length);
-          name = Database.chargePositiveThree[element];
+          name = "Stable";
+          count2++;
         }
-
-        System.out.println (name);
-        newTargets.add (new GameParticle(name, new Location(col, row, false),charge,3));
+        newTargets.add (new GameParticle(name, new Location(col, row, false),0,1));
       }
     }
     
+    count = 0;
+    count2=0;
+    //set inventory randomly
     ArrayList<GameParticle> newInventory = new ArrayList <GameParticle>();
-    for (int col = 1;col<37;col++)
+    
+    for (int col = 1; col<37;col++)
     {
-        int charge = -((int) (Math.random()*3))-1;
-        int element;
-        
-        if (charge == -1)
-        {
-          element = (int)(Math.random()*Database.chargeNegativeOne.length);
-          name = Database.chargeNegativeOne[element];
-        }
-        else if (charge == -2)
-        {
-          element = (int)(Math.random()*Database.chargeNegativeTwo.length);
-          name = Database.chargeNegativeTwo[element];
-        }
-        else
-        {
-          element = (int)(Math.random()*Database.chargeNegativeThree.length);
-          name = Database.chargeNegativeThree[element];
-        }
-        System.out.println (name);
-        newInventory.add (new GameParticle(name, new Location(col, 10, false),charge,3));
+      if ((Math.random()<0.5&&count<19)||count2>18)
+      {
+        name = "Neutron";
+        count++;
+      }
+      else
+      {
+        name="Stable";
+        count2++;
+      }
+      newInventory.add (new GameParticle(name, new Location (col, 10, false),0,1));      
     }
-            
+    
     //save changes
     super.setAllTargets (newTargets);
     super.setAllInventory (newInventory);
@@ -98,7 +106,7 @@ public class DifficultGame extends LevelScreen
   }
   
   /**
-   * Updates the elements currently stored in the difficult level.
+   * Updates the elements currently stored in the easy level.
    * It first updates the player/launcher movement.
    * If the up key is pressed, the first element of the inventory is moved up to where the launcher is and canMove is set to true.
    * The inventory will then be shifted to the left.
@@ -117,7 +125,8 @@ public class DifficultGame extends LevelScreen
    */
   public void onUpdate ()
   {
-    //if key pressed
+    
+//if key pressed
     if (GameWindow.movement != 0)
     {
       //update player
@@ -127,7 +136,7 @@ public class DifficultGame extends LevelScreen
       if (GameWindow.movement == 38)
       {
         //get index of element of the first inventory slot
-        int index = getInventoryIndex(new Location(1,10,false));
+        int index = getInventoryIndex(new Location(1,10, false));
         
         //if there is something there
         if (index != -1)
@@ -168,11 +177,10 @@ public class DifficultGame extends LevelScreen
         //if there is a target
         if (index!=-1)
         {
-          //get target
+          //get targer
           GameParticle tar = getAllTargets().get(index);
-          System.out.println ("Inv: "+inv.getCharge());
-          System.out.println ("Tar: "+tar.getCharge());
-          if (inv.getCharge() + tar.getCharge() == 0)
+          //stable and stable || unstable and neutron <-- remove both inventory and target
+          if (inv.getName().equals(tar.getName())||inv.getName().equals("Neutron") && tar.getName().equals("Unstable"))
           {
             System.out.println ("+10");
             getAllInventory().remove(x);
@@ -192,7 +200,7 @@ public class DifficultGame extends LevelScreen
       }
     }
     
-        //removes inventory that have no location from the arraylist
+    //removes inventory that have no location from the arraylist
     ArrayList<GameParticle> inv = new ArrayList<GameParticle>();
     for (int x = 0;x<getAllInventory().size();x++)
     {
@@ -212,9 +220,29 @@ public class DifficultGame extends LevelScreen
       getAllInventory().get(x).update();
   }
   
+  /**
+   * Draws the win screen.
+   * 
+   * @param twoDimensional - Graphics2D - The Graphics2D object.
+   */
+  public void win (Graphics2D twoDimensional)
+  {
+    twoDimensional.drawImage (winImage.getImage(),0,0,winImage.getImageObserver());
+  }
+  
    /**
-   * Displays the difficult level on the jpanel.
-   * It draws the wallpaper, player (launcher), inventory and targets, respectively.
+   * Draws the game over screen.
+   * 
+   * @param twoDimensional - Graphics2D - The Graphics2D object.
+   */
+  public void gameOver (Graphics2D twoDimensional)
+  {
+    twoDimensional.drawImage (gameOverImage.getImage(),0,0,gameOverImage.getImageObserver());
+  }
+  
+   /**
+   * Displays the easy level on the jpanel.
+   * It draws the wallpaper, tutorial, player (launcher), inventory, targets and win/lose screen, respectively.
    * 
    * @param twoDimensional - Graphics2D - The Graphics2D object.
    */
@@ -222,6 +250,10 @@ public class DifficultGame extends LevelScreen
   {
     //draw background
     twoDimensional.drawImage (getWallpaper().getImage(), 0, 0, getWallpaper().getImageObserver()); 
+    
+    //tutorial
+    if (getAllTargets().size() == 36)
+      twoDimensional.drawImage (instructionImage.getImage(), -100,0,instructionImage.getImageObserver());
     
     //draw player
     getPlayer().draw(twoDimensional);
@@ -233,5 +265,14 @@ public class DifficultGame extends LevelScreen
     //draw targets
     for (int x=0;x<getAllTargets().size();x++)
       getAllTargets().get(x).draw(twoDimensional);
+    
+    //game over or win
+    if (getAllInventory().size() == 0)
+    {
+      if (getAllTargets().size() == 0)
+        win (twoDimensional);
+      else
+        gameOver (twoDimensional);
+    }
   }
 }

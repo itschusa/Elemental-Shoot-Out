@@ -3,7 +3,9 @@
  * The acid clouds move along a predefined path on the game screen. It is, by extension, a MediumParticle. 
  * 
  * @author Chusa Nguyen
+ * @author Anqi Wu
  * @version 1.0, May 29 2014. 
+ * @version 1.1, June 3, 2014. (added currentStep (5 step wait), so clouds move slower)
  */
 public class AcidCloud extends GameParticle
 {
@@ -19,6 +21,7 @@ public class AcidCloud extends GameParticle
    * updateCount - int - Counter which keeps track of the number of times the screen updates.
    */
   private int updateCount = 0;
+  private int currentStep = 0;
   
   /**
    * The class constructor. It creates an acid cloud object with the specified name, at a specified location 
@@ -30,7 +33,7 @@ public class AcidCloud extends GameParticle
    */
   public AcidCloud (String newName, Location newLocation, int charge, boolean forwards)
   {
-    super(newName, newLocation,  charge,2);
+    super(newName, newLocation,  charge, 2);
     this.forwards = forwards;
     if (forwards)
       steps = 0;
@@ -63,34 +66,38 @@ public class AcidCloud extends GameParticle
    */
   public void move ()
   {
-    if (forwards)
+    if (currentStep == 5)
     {
-      if (steps < 3)
+      currentStep=0;
+      if (forwards)
       {
-        getLocation().setColumn(getLocation().getColumn()+1);
-        steps++;
+        if (steps < 3)
+        {
+          getLocation().setColumn(getLocation().getColumn()+1);
+          steps++;
+        }
+        else
+        {
+          forwards = false;
+          getLocation().setColumn(getLocation().getColumn()-1);
+          steps --;
+        }
       }
       else
       {
-        forwards = false;
-        getLocation().setColumn(getLocation().getColumn()-1);
-        steps --;
-      }
+        if (steps > 0)
+        {
+          getLocation().setColumn(getLocation().getColumn()-1);
+          steps --;
+        }
+        else
+        {
+          forwards = true;
+          getLocation().setColumn(getLocation().getColumn()+1);
+          steps++;
+        }
+      } 
     }
-    else
-    {
-      if (steps > 0)
-      {
-        getLocation().setColumn(getLocation().getColumn()-1);
-        steps --;
-      }
-      else
-      {
-        forwards = true;
-        getLocation().setColumn(getLocation().getColumn()+1);
-        steps++;
-      }
-    } 
   }
   
   /**
@@ -101,6 +108,22 @@ public class AcidCloud extends GameParticle
     if (getLocation() == null)
       return;
     move();
+    currentStep++;
+  }
+  
+  /**
+   * Sets the current step of the element.
+   * 
+   * @param steps - int - The number of calls to update before the element moves.
+   */
+  public void setCurrentStep(int steps)
+  {
+    currentStep = steps;
+  }
+  
+  public int getCurrentStep()
+  {
+    return currentStep;
   }
   
   /**

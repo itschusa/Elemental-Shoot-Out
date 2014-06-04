@@ -7,12 +7,12 @@ import javax.swing.*;
  * @author Anqi Wu
  * @version 1.0, June 2, 2014 (Has all the methods - Thinking of just combining all into one, with param indicating level)
  * @version 1.1, June 3, 2014 (Deprecated EasyParticle, MediumParticle and DifficultParticle)
+ * @version 1.2, June 3, 2014 (Removed unecessary code, update moves the particle one pixel at a time)
  */
 public class GameParticle extends Element
 {
   private ImageIcon myIcon;
   private boolean canMove;
-  private int currentStep=0;
   private boolean shift;
   private int charge;
   
@@ -71,11 +71,6 @@ public class GameParticle extends Element
     return canMove;
   }
   
-  public void setCurrentStep(int steps)
-  {
-    currentStep = steps;
-  }
-  
   public void setShift (boolean set)
   {
     shift = set;
@@ -85,7 +80,6 @@ public class GameParticle extends Element
   {
     if (getLocation().getRow() <= 0)
       removeFromGrid();
-    //setLocation(new Location (getColumn(), 1));
   }
   
   public int getCharge()
@@ -98,24 +92,19 @@ public class GameParticle extends Element
     if (getLocation() == null)
       return;
     
-    if (currentStep == 10)
+    if (canMove())
     {
-      currentStep = 0;
-      if (canMove())
+      setLocation (new Location (getLocation().getXCoord(), getLocation().getYCoord()-1, true));
+      updateBounce();
+    }
+    else
+    {
+      if (shift)
       {
-        setLocation (new Location (getLocation().getColumn(), getLocation().getRow()-1));
-        updateBounce();
-      }
-      else
-      {
-        if (shift)
-        {
-          setLocation(new Location(getLocation().getColumn()-1, getLocation().getRow()));
-          shift = false;
-        }
+        setLocation(new Location(getLocation().getColumn()-1, getLocation().getRow(), false));
+        shift = false;
       }
     }
-    currentStep++;
   }
   
   public void draw (Graphics2D graphics)

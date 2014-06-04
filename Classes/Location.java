@@ -4,6 +4,7 @@
  * 
  * @author Anqi Wu
  * @version 1.0, May 21 2014.
+ * @version 1.1, June 3, 2014. (Added setXCoord and setYCoord methods)
  */
 public class Location
 {
@@ -13,10 +14,18 @@ public class Location
   private int yCoord;
   
   //constructor, sets x and y coords using column and row
-  public Location (int column, int row)
+  public Location (int column, int row, boolean exact)
   {
-    xCoord = column*50;
-    yCoord = row*50;
+    if (exact)
+    {
+      xCoord = column;
+      yCoord = row;
+    }
+    else
+    {
+      xCoord = column*50;
+      yCoord = row*50;
+    }
   }
   
   //returns column
@@ -53,5 +62,17 @@ public class Location
   public int getYCoord ()
   {
     return yCoord;
+  }
+  
+  //returns xcoord
+  public void setXCoord (int coord)
+  {
+    xCoord = coord;
+  }
+  
+  //returns ycoord
+  public void setYCoord (int coord)
+  {
+    yCoord = coord;
   }
 }

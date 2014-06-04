@@ -19,7 +19,7 @@ public class LevelScreen extends Screen
   //the inventory particles
   private ArrayList <GameParticle> inventory = new ArrayList <GameParticle>();
   private ImageIcon wallpaper = new ImageIcon ("../Images/WallpaperGame.png");
-  private CurrentPlayer player = new CurrentPlayer("Launcher", new Location (6, 9));
+  private CurrentPlayer player = new CurrentPlayer("Launcher", new Location (6, 9, false));
   
   public LevelScreen (ScreenFactory screenFactory)
   {
