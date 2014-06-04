@@ -3,19 +3,23 @@ import java.awt.event.*;
 
 /**
  * @author baseball435 from Youtube
+ * @author Anqi Wu (modifications)
+ * @version 2.0, June 3, 2014. (Added another array to store only released keys, and a refresh method)
  */
 public class KeyboardListener implements KeyListener
 {
-  protected boolean[] keys = new boolean[256];
+  protected boolean[] pressedKeys = new boolean[256]; 
+  protected boolean[] releasedKeys = new boolean[256];
   
   public void keyPressed (KeyEvent event)
   {
-    keys[event.getKeyCode()] = true;
+     pressedKeys[event.getKeyCode()] = true;
   }
   
   public void keyReleased (KeyEvent event)
   {
-    keys[event.getKeyCode()] = false;
+    pressedKeys[event.getKeyCode()] = false;
+    releasedKeys[event.getKeyCode()] = true;
   }
   
   public void keyTyped (KeyEvent event)
@@ -25,11 +29,16 @@ public class KeyboardListener implements KeyListener
   
   public boolean isKeyPressed (int key)
   {
-    return keys[key];
+    return pressedKeys[key];
   }
   
   public boolean isKeyReleased(int key)
   {
-    return !keys[key];
+    return releasedKeys[key];
+  }
+  
+  public void refreshReleased ()
+  {
+    releasedKeys = new boolean[256];
   }
 }

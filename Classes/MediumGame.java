@@ -11,7 +11,7 @@ import java.awt.*;
  * @version 1.1, May 30 2014. (Added code to create and update acid cloud obstacles.)
  * @version 1.2, May 31, 2014 (Creates all inventory, and only displays first 12. No alkaline metals yet.)
  * @version 1.3, June 2, 2014. (JavaDoc)
- * @version 1.4, June 3, 2014. (Modifications due to location class constructor change, removes instead of sets location to null)
+ * @version 1.4, June 3, 2014. (Modifications due to location class constructor change, removes instead of sets location to null, two keys at once)
  */
 public class MediumGame extends LevelScreen
 {        
@@ -108,13 +108,13 @@ public class MediumGame extends LevelScreen
     }
     
     //if key pressed
-    if (GameWindow.movement != 0)
+    if (GameWindow.movement != 0 || GameWindow.movement2 != 0)
     {
       //update player
       getPlayer().update(GameWindow.movement);
       
       //if pressed up
-      if (GameWindow.movement == 38)
+      if (GameWindow.movement2 == 38)
       {
         //get index of element of the first inventory slot
         int index = getInventoryIndex(new Location(1,10, false));
@@ -141,6 +141,7 @@ public class MediumGame extends LevelScreen
       }
       //reset key
       GameWindow.movement = 0;
+      GameWindow.movement2 = 0;
     }
     
     //checks for target-inventory interaction
@@ -152,8 +153,8 @@ public class MediumGame extends LevelScreen
       //if the location exists
       if(inv.getLocation()!=null)
       {
-        //get the index of the target directly in front of it
-        int index = getTargetIndex(new Location(inv.getLocation().getColumn(), inv.getLocation().getRow(), false));
+        //get the index of the target
+        int index = getTargetIndex(new Location(inv.getLocation().getXCoord(), inv.getLocation().getYCoord(), true));
         int index2 = getObstacleIndex (new Location(inv.getLocation().getColumn(), inv.getLocation().getRow(), false));
         
         //if hits an acid cloud        

@@ -15,7 +15,7 @@ import javax.swing.*;
  * @version 1.5, May 29, 2014. (JavaDoc, removed KeyOverrides method - was protected, don't know what it does)
  * @version 1.6, May 31, 2014. (Creates equal number of stable and unstable so game is winnable, creates full inventory, added win/lose methods)
  * @version 1.7, June 2, 2014. (More JavaDoc)
- * @version 1.8, June 3, 2014. (Modifications due to location class constructor change, removes instead of sets location to null)
+ * @version 1.8, June 3, 2014. (Modifications due to location class constructor change, removes instead of sets location to null, two keys at once)
  */
 public class EasyGame extends LevelScreen
 {        
@@ -125,15 +125,13 @@ public class EasyGame extends LevelScreen
    */
   public void onUpdate ()
   {
-    
-//if key pressed
-    if (GameWindow.movement != 0)
+    if (GameWindow.movement != 0 || GameWindow.movement2 != 0)
     {
       //update player
       getPlayer().update(GameWindow.movement);
       
       //if pressed up
-      if (GameWindow.movement == 38)
+      if (GameWindow.movement2 == 38)
       {
         //get index of element of the first inventory slot
         int index = getInventoryIndex(new Location(1,10, false));
@@ -160,6 +158,7 @@ public class EasyGame extends LevelScreen
       }
       //reset key
       GameWindow.movement = 0;
+      GameWindow.movement2 = 0;
     }
     
     //checks for target-inventory interaction
@@ -171,8 +170,8 @@ public class EasyGame extends LevelScreen
       //if the location exists
       if(inv.getLocation()!=null)
       {
-        //get the index of the target directly in front of it
-        int index = getTargetIndex(new Location(inv.getLocation().getColumn(), inv.getLocation().getRow(), false));
+        //get the index of the target
+        int index = getTargetIndex(new Location(inv.getLocation().getXCoord(), inv.getLocation().getYCoord(), true));
         
         //if there is a target
         if (index!=-1)
@@ -230,7 +229,7 @@ public class EasyGame extends LevelScreen
     twoDimensional.drawImage (winImage.getImage(),0,0,winImage.getImageObserver());
   }
   
-   /**
+  /**
    * Draws the game over screen.
    * 
    * @param twoDimensional - Graphics2D - The Graphics2D object.
@@ -240,7 +239,7 @@ public class EasyGame extends LevelScreen
     twoDimensional.drawImage (gameOverImage.getImage(),0,0,gameOverImage.getImageObserver());
   }
   
-   /**
+  /**
    * Displays the easy level on the jpanel.
    * It draws the wallpaper, tutorial, player (launcher), inventory, targets and win/lose screen, respectively.
    * 

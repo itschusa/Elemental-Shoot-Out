@@ -13,7 +13,8 @@ import java.awt.*;
  * @version 1.3, May 27, 2014. (bug fix with up key, added closeWindow method)
  * @version 1.4, May 28, 2014. (Added side and pause panels (for every level). Medium game also shows up!)
  * @version 1.5, May 30 2014. (Changed access level of paused to public static, added frame and its accessor method. Added argument to constructor param list.)
- * @version 1.6, May 31, 2013. (Added difficult level)
+ * @version 1.6, May 31, 2014. (Added difficult level)
+ * @version 1.7, June 4, 2014. (Added keyReleased = for shooting, to eliminate player shooting randomly)
  */
 public class GameWindow
 {
@@ -45,6 +46,7 @@ public class GameWindow
    * movement - static int - Represents the direction the user wants to move in. 
    */
   protected static int movement = 0;
+  protected static int movement2 = 0;
   /**
    * thread - reference - References to the corresponding Thread object.
    */
@@ -91,22 +93,33 @@ public class GameWindow
     pause = new PausePanel (this);
     
     keyboardListener = new KeyboardListener(){
-      public void keyPressed (KeyEvent event)
+      public void keyReleased (KeyEvent event)
       {
-        keys[event.getKeyCode()] = true;
+        pressedKeys[event.getKeyCode()] = false;
+        releasedKeys[event.getKeyCode()] = true;
         act();
       }
+      
+      public void keyPressed (KeyEvent event)
+      {
+        pressedKeys[event.getKeyCode()] = true;
+        act();
+      }
+      
       public void act()
       {
         if (isKeyPressed(37))
           movement = 37;
-        else if (isKeyPressed (39))
-          movement = 39;
         else
         {
-          if (isKeyPressed(38))
-            movement = 38;
+          if (isKeyPressed (39))
+            movement = 39;
         }
+        
+        if (isKeyReleased(38))
+          movement2 = 38;
+        
+        refreshReleased();
       }
     };
     

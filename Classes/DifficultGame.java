@@ -8,7 +8,7 @@ import java.awt.*;
  * @author Anqi Wu
  * @version 1.0, May 31, 2014. (Creates the game with difficult particles. No win/game over screen)
  * @version 1.1, June 2, 2014. (Full JavaDoc)
- * @version 1.2, June 3, 2014. (Modifications due to location class constructor change, removes instead of sets location to null)
+ * @version 1.2, June 3, 2014. (Modifications due to location class constructor change, removes instead of sets location to null, two keys at once)
  */
 public class DifficultGame extends LevelScreen
 {          
@@ -118,16 +118,16 @@ public class DifficultGame extends LevelScreen
   public void onUpdate ()
   {
     //if key pressed
-    if (GameWindow.movement != 0)
+    if (GameWindow.movement != 0 || GameWindow.movement2 != 0)
     {
       //update player
       getPlayer().update(GameWindow.movement);
       
       //if pressed up
-      if (GameWindow.movement == 38)
+      if (GameWindow.movement2 == 38)
       {
         //get index of element of the first inventory slot
-        int index = getInventoryIndex(new Location(1,10,false));
+        int index = getInventoryIndex(new Location(1, 10, false));
         
         //if there is something there
         if (index != -1)
@@ -151,6 +151,7 @@ public class DifficultGame extends LevelScreen
       }
       //reset key
       GameWindow.movement = 0;
+      GameWindow.movement2 = 0;
     }
     
     //checks for target-inventory interaction
@@ -162,8 +163,8 @@ public class DifficultGame extends LevelScreen
       //if the location exists
       if(inv.getLocation()!=null)
       {
-        //get the index of the target directly in front of it
-        int index = getTargetIndex(new Location(inv.getLocation().getColumn(), inv.getLocation().getRow(), false));
+        //get the index of the target
+        int index = getTargetIndex(new Location(inv.getLocation().getXCoord(), inv.getLocation().getYCoord(), true));
         
         //if there is a target
         if (index!=-1)
