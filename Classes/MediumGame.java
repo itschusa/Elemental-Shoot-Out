@@ -14,7 +14,10 @@ import javax.swing.*;
  * @version 1.3, June 2, 2014. (JavaDoc)
  * @version 1.4, June 3, 2014. (Modifications due to location class constructor change, removes instead of sets location to null, two keys at once)
  * @version 1.5, June 4, 2014. (Added win and lose screens, can go to difficult level. Added base particles, no functionality.)
+<<<<<<< HEAD
  * @version 1.6, June 4, 2014. (Base implementation and having mix and match for alkali and hydroxide, more targets and inventory)
+=======
+>>>>>>> bd7216f09abc54138dc5f326f00bc5861786d958
  */
 public class MediumGame extends LevelScreen
 {        
@@ -217,6 +220,15 @@ public class MediumGame extends LevelScreen
               getPlayer().addPoints (10);
               setTempPoints(10);
               System.out.println ("Total: "+getPlayer().getCurrentPoints());
+              /**
+               * add a base particle
+               */
+              System.out.println ("Inventory left: " + getAllInventory().size());
+              int tempIndex = (int)(Math.random()*(getAllInventory().size() - 1));
+              GameParticle baseParticle = new GameParticle ("Base", new Location (tempIndex + 1, 10, false), +3, 2);
+              System.out.println ("Placed at: " + (tempIndex + 1));
+              getAllInventory().add (tempIndex , baseParticle);
+              x--;
             }
             //if wrong target, remove the inventory
             else

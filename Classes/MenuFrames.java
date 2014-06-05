@@ -25,6 +25,7 @@ import java.io.IOException;
  * @version 2.4, May 27 2014. (Difficulty buttons now go to separate windows.)
  * @version 2.5, May 29 2014. (Replaced features menu item with instructions menu item.)
  * @version 2.6, May 30 2014. (Fixed: settings --> main --> play --> main --> settings --> null pointer exception. Rearranged some code and added 4 new methods.)
+ * @version 2.7, June 4 2014. (Removed setSettings method because of redundency, changed access level of settings, added basic code for highscores.)
  */
 public class MenuFrames extends JFrame
 {
@@ -44,6 +45,10 @@ public class MenuFrames extends JFrame
    * settingsPanel - reference - Reference variable to the object created by the SettingsPanel class which extends JPanel. 
    */
   private SettingsPanel settingsPanel;
+  /**
+   * scorePanel - reference - Reference variable to the object created by the HighscorePanel class.
+   */
+  private HighscorePanel scorePanel;
   /**
    * scoresPanel - reference - Reference variable to the object created by the HighscorePanel which extends JPanel. 
    */
@@ -291,6 +296,8 @@ public class MenuFrames extends JFrame
     menuPanel.scoresButton.addActionListener (new ActionListener ()
                                                 {
       public void actionPerformed (ActionEvent e)      { 
+        remove (menuPanel);
+        highscorePanel();
       }
     });   
   }
@@ -369,7 +376,7 @@ public class MenuFrames extends JFrame
    * The "settings" method. It adds an instance of SettingsPanel to the frame, and creates a new instance if one has yet to have been created. 
    * It also initializes the AudioClip object from the SettingsPanel class upon first instantiation. 
    */
-  private void settings()
+  protected void settings()
   {
     panelNum = 4;
     if (musicPanelUncreated)
@@ -404,6 +411,15 @@ public class MenuFrames extends JFrame
       }});
   }
   
+  private void highscorePanel()
+  {
+    panelNum = 5;
+    scoresPanel = new HighscorePanel();
+    add(scoresPanel);
+    validate();
+    repaint();
+  }
+  
   /**
    * The "getMenuFrame" method, which returns a MenuFrames object. 
    * 
@@ -413,15 +429,7 @@ public class MenuFrames extends JFrame
   {
     return this;
   }
-  
-  /**
-   * The "setSettings" method, which provides public access to the settings method.
-   */
-  public void setSettings()
-  {
-    settings();
-  }
-  
+    
   /**
    * The "removeSettings" method, which allows other classes to remove the settings panel. 
    */

@@ -11,6 +11,7 @@ import javax.swing.*;
  * @version 1.3, May 29 2014. (Alkali metal icons and javadoc)
  * @version 1.4, May 30 2014. (Added acid cloud obstacle.)
  * @version 1.5, May 31 2014. (Added all difficult level names, easy element icons upgraded)
+ * @version 1.6, June 3 2014. (Added base icon for medium.)
  */
 public class Database
 {
@@ -66,6 +67,10 @@ public class Database
    * icon12 - ImageIcon - Stores the icon for an acid cloud.
    */
   public static ImageIcon icon12 = new ImageIcon ("../Images/cloud.png");
+  /**
+   * icon13 - ImageIcon - Referenc variable to the icon for the base particles. 
+   */
+  public static ImageIcon icon13 = new ImageIcon ("../Images/Base.png");
   /**
    * chargeNegativeOne - String [] - Stores an array of strings, where each string is the name of a particle with a charge of -1.
    */
