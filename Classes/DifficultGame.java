@@ -11,6 +11,7 @@ import javax.swing.*;
  * @version 1.1, June 2, 2014. (Full JavaDoc)
  * @version 1.2, June 3, 2014. (Modifications due to location class constructor change, removes instead of sets location to null, two keys at once)
  * @version 1.3, June 4, 2014. (Added win and lose screens)
+ * @version 1.4, June 5, 2014. (Added more targets and inventory)
  */
 public class DifficultGame extends LevelScreen
 {          
@@ -40,7 +41,7 @@ public class DifficultGame extends LevelScreen
     String name = "";
     
     //set targets randomly
-    for (int row = 1; row<4;row++)
+    for (int row = 1; row<6;row++)
     {
       for (int col=1;col<13;col++)
       {
@@ -69,7 +70,7 @@ public class DifficultGame extends LevelScreen
     }
     
     ArrayList<GameParticle> newInventory = new ArrayList <GameParticle>();
-    for (int col = 1;col<37;col++)
+    for (int col = 1;col<61;col++)
     {
       int charge = -((int) (Math.random()*3))-1;
       int element;
@@ -187,6 +188,7 @@ public class DifficultGame extends LevelScreen
             getAllInventory().remove(x);
             getAllTargets().remove(index);
             getPlayer().addPoints (10);
+            setTempPoints(10);
             System.out.println ("Total: "+getPlayer().getCurrentPoints());
           }
           //if wrong target, remove the inventory
@@ -195,6 +197,7 @@ public class DifficultGame extends LevelScreen
             System.out.println ("-5");
             getAllInventory().remove(x);
             getPlayer().removePoints(5);
+            setTempPoints(-5);
             System.out.println ("Total: "+getPlayer().getCurrentPoints());
           }
         }

@@ -12,6 +12,7 @@ import java.awt.*;
  * @version 1.2, May 27, 2014. (added temporary main menu button - can close the current window and create the main menu, stacktrace errors vs print errors)
  * @version 1.3, May 28, 2014. (prints total user points)
  * @version 1.4, May 31, 2014. (added ring that tells user which inventory element they are using.)
+ * @version 1.5, June 5, 2014. (Somewhat displays how many points were added)
  */
 public class LevelMap extends JPanel implements Runnable
 {
@@ -62,6 +63,14 @@ public class LevelMap extends JPanel implements Runnable
     
     twoDimensional.drawImage (ring.getImage(), 30, 479, ring.getImageObserver()); 
     twoDimensional.drawString("Total Points: "+game.getScreenFactory().getCurrentScreen().getPlayer().getCurrentPoints(), 10,20);
+    int tempPoints = game.getScreenFactory().getCurrentScreen().getTempPoints();
+    if (tempPoints > 0)
+      twoDimensional.drawString ("Fascinating! +"+tempPoints,10,40);
+    else
+    {
+      if (tempPoints < 0)
+        twoDimensional.drawString ("Uh Oh! "+tempPoints,10,40);
+    }
     repaint();
   }
 }

@@ -8,12 +8,13 @@ import javax.swing.*;
  * @version 1.0, June 2, 2014 (Has all the methods - Thinking of just combining all into one, with param indicating level)
  * @version 1.1, June 3, 2014 (Deprecated EasyParticle, MediumParticle and DifficultParticle)
  * @version 1.2, June 3, 2014 (Removed unecessary code, update moves the particle one pixel at a time)
+ * @version 1.3, June 5, 2014 (setReverseShift method)
  */
 public class GameParticle extends Element
 {
   private ImageIcon myIcon;
   private boolean canMove;
-  private boolean shift;
+  private boolean shift, reverseShift;
   private int charge;
   
   //constructor, sets name, location and grid
@@ -45,8 +46,10 @@ public class GameParticle extends Element
         setIcon (Database.icon10);
       else if (newName.equals("Hydroxide"))
         setIcon (Database.icon11);
-      else 
+      else if (newName.equals("Cloud"))
         setIcon (Database.icon12);
+      else
+        setIcon (Database.icon13);
     }
     else
     {
@@ -76,6 +79,11 @@ public class GameParticle extends Element
     shift = set;
   }
   
+  public void setReverseShift (boolean set)
+  {
+    reverseShift = set;
+  }
+  
   public void updateBounce ()
   {
     if (getLocation().getRow() <= 0)
@@ -103,6 +111,14 @@ public class GameParticle extends Element
       {
         setLocation(new Location(getLocation().getColumn()-1, getLocation().getRow(), false));
         shift = false;
+      }
+      else
+      {
+        if (reverseShift)
+        {
+          setLocation (new Location (getLocation().getColumn()+1,getLocation().getRow(),false));
+          reverseShift = false;
+        }
       }
     }
   }

@@ -72,9 +72,6 @@ public class SidePanel extends JPanel
     
     setLayout (new GridBagLayout());
     
-    add (mainMenu);
-    add (pauseButton);
-    
     constraints.insets = new Insets (10, 10, 10, 10);
     constraints.gridx = 1;
     constraints.gridy = 1;
@@ -109,7 +106,7 @@ public class SidePanel extends JPanel
         {
           if (!SettingsPanel.musicInitialized)
           {
-            myGame.getMenus().setSettings();
+            myGame.getMenus().settings();
             createdSettings = true;
           }
           myGame.getMenus().getSettings().toggleOn();
