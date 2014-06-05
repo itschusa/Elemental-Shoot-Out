@@ -25,7 +25,7 @@ import java.io.IOException;
  * @version 2.4, May 27 2014. (Difficulty buttons now go to separate windows.)
  * @version 2.5, May 29 2014. (Replaced features menu item with instructions menu item.)
  * @version 2.6, May 30 2014. (Fixed: settings --> main --> play --> main --> settings --> null pointer exception. Rearranged some code and added 4 new methods.)
- * @version 2.7, June 4 2014. (Removed setSettings method because of redundency, changed access level of settings, added basic code for highscores.)
+ * @version 2.7, June 4 2014. (Removed setSettings method because of redundency, changed access level of settings, added code for highscores [should be functional].)
  */
 public class MenuFrames extends JFrame
 {
@@ -411,6 +411,9 @@ public class MenuFrames extends JFrame
       }});
   }
   
+  /**
+   * The "highscorePanel" method. It adds an instance of HighscorePanel to the current JFrame. 
+   */
   private void highscorePanel()
   {
     panelNum = 5;
@@ -418,6 +421,32 @@ public class MenuFrames extends JFrame
     add(scoresPanel);
     validate();
     repaint();
+    scoresActionListener();
+  }
+  
+  /**
+   * The "scoresActionListener" method. It adds an ActionListener object to the panel's reset button. 
+   * 
+   * @param choice int - Represents the user's choice on the JOptionPane dialog box. 
+   */
+  private void scoresActionListener()
+  {
+    scoresPanel.resetButton.addActionListener(new ActionListener()
+                                                {
+      public void actionPerformed (ActionEvent e) {
+        int choice = JOptionPane.CANCEL_OPTION;
+        choice = JOptionPane.showConfirmDialog (new JOptionPane(), "Would you like to erase all current scores?", 
+                                                "Confirm Reset", JOptionPane.YES_NO_OPTION);
+        if (choice == JOptionPane.YES_OPTION)
+        {
+          scoresPanel.resetScores();
+          remove(scoresPanel);
+          scoresPanel = new HighscorePanel();
+          add(scoresPanel);
+        }
+        repaint();
+        revalidate();
+      }});
   }
   
   /**
