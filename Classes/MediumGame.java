@@ -15,6 +15,7 @@ import javax.swing.*;
  * @version 1.4, June 3, 2014. (Modifications due to location class constructor change, removes instead of sets location to null, two keys at once)
  * @version 1.5, June 4, 2014. (Added win and lose screens, can go to difficult level. Added base particles, no functionality.)
  * @version 1.6, June 4, 2014. (Base implementation and having mix and match for alkali and hydroxide, more targets and inventory)
+ * @version 1.7, June 5, 2014. (Equal number of hydroxide and alkali metals)
  */
 public class MediumGame extends LevelScreen
 {        
@@ -45,35 +46,50 @@ public class MediumGame extends LevelScreen
     
     ArrayList<GameParticle> newTargets = new ArrayList<GameParticle>();
     String name = "";
+    int count = 0;
+    int count2 = 0;
+    double which = 0;
     
     //set targets randomly
     for (int row = 1; row<5;row++)
     {
       for (int col=1; col < 13; col++)
       {
-        int element = (int) (Math.random()*14);
-        if (element > 5)
+        int element = (int) (Math.random()*6);
+        which = Math.random ();
+        if (which >0.5 && count<24 || count2 > 23)
+        {
           newTargets.add (new GameParticle("Hydroxide", new Location (col, row, false), -1, 2));
+          count++;
+        }
         else
         {
           name = Database.alkaliMetals[element];
           System.out.println (element +" "+ name);
           newTargets.add (new GameParticle(name, new Location(col, row, false),1,2));
+          count2++;
         }
       }
     }
     
-    ArrayList<GameParticle> newInventory = new ArrayList <GameParticle>();
+    count = 0;
+    count2 = 0;
     
+    ArrayList<GameParticle> newInventory = new ArrayList <GameParticle>();
     for (int col = 1; col < 49; col++)
     {
-      int element = (int)(Math.random()*14);
-      if (element > 5)
+      int element = (int)(Math.random()*6);
+      which = Math.random ();
+      if (which > 0.5&&element > 5 && count < 24 || count2 > 23)
+      {
         newInventory.add (new GameParticle("Hydroxide", new Location (col, 10, false),-1,2));
+        count++;
+      }
       else
       {
         name = Database.alkaliMetals[element];
         newInventory.add (new GameParticle (name, new Location (col, 10, false), 1, 2));
+        count2++;
       }
     }
     

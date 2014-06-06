@@ -5,7 +5,9 @@ import javax.swing.*;
  * The "LevelsPanel class which creates an instance of a JPanel. JButton objects are added to it. 
  * 
  * @author Chusa Nguyen
+ * @author Anqi Wu
  * @version 1.0, May 22 2014. (Created class based on previous code from "MenuFrames.")
+ * @version 1.1, June 5, 2014. (Added title.)
  */
 public class LevelsPanel extends JPanel
 {
@@ -57,6 +59,17 @@ public class LevelsPanel extends JPanel
   {
     setLayout(new GridBagLayout());
     setBackground(new Color(0,0,0,0));
+    
+    ImageIcon levelsImage = new ImageIcon ("../Images/LevelsTitle.png");
+    JLabel title = new JLabel (levelsImage);
+    
+    constraints.insets = new Insets (20, 50, 20, 50);
+    constraints.gridx = 1;
+    constraints.gridy = 0;
+    constraints.gridwidth = 3;
+    constraints.anchor = GridBagConstraints.CENTER;
+    add (title, constraints);
+    
     setButtons();
   }
   
@@ -77,12 +90,14 @@ public class LevelsPanel extends JPanel
     difficultButton.setBorder (null);
     difficultButton.setRolloverIcon(hardRoll);
     
-    constraints.insets = new Insets (50, 50, 50, 50);
     constraints.gridy = 1;
     constraints.gridx = 1;
+    constraints.gridwidth = 1;
     add(easyButton, constraints);
+    
     constraints.gridx = 2;
     add(mediumButton, constraints);
+    
     constraints.gridx = 3;
     add(difficultButton, constraints);
   }

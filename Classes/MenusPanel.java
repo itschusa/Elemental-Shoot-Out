@@ -7,6 +7,7 @@ import java.awt.*;
  * @author Chusa Nguyen
  * @author Anqi Wu
  * @version 1.0, May 22 2014. (Created class based on previous code from "MenuFrames.")
+ * @version 1.1, June 5, 2014. (Added title.)
  */
 public class MenusPanel extends JPanel
 {
@@ -71,6 +72,16 @@ public class MenusPanel extends JPanel
   {
     setLayout (new GridBagLayout());
     setBackground(new Color(0,0,0,0));
+    
+    ImageIcon titleImage = new ImageIcon ("../Images/MainMenuTitle.png");
+    JLabel title = new JLabel (titleImage);
+
+    constraints.gridwidth = 3;
+    constraints.insets = new Insets (10, 10, 10, 10);
+    constraints.gridx=1;
+    constraints.gridy=0;
+    add (title, constraints);
+    
     setButtons();
   }
   
@@ -78,7 +89,7 @@ public class MenusPanel extends JPanel
    * The "setButtons" method. It adds the buttons to the panel after setting their specifications (border, location, etc.).
    */
   private void setButtons()
-  {   
+  {      
     playButton.setContentAreaFilled(false);
     playButton.setBorder (null);
     playButton.setRolloverIcon(playRoll);
@@ -95,15 +106,18 @@ public class MenusPanel extends JPanel
     scoresButton.setBorder (null);
     scoresButton.setRolloverIcon (highscoreRoll);
     
-    constraints.insets = new Insets (10, 10, 10, 10);
+    constraints.gridwidth = 1;
     constraints.gridx = 2;
     constraints.gridy = 1;
     add(playButton, constraints);
+    
     constraints.gridx = 1;
     constraints.gridy = 2;
     add(instructionsButton, constraints);
+    
     constraints.gridx = 2;
     add(settingsButton, constraints);
+    
     constraints.gridx = 3;
     add (scoresButton, constraints);
   }
