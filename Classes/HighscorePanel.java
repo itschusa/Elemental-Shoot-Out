@@ -286,6 +286,7 @@ public class HighscorePanel extends JPanel
    * @param nameLabel reference - Reference variable to the corresponding JLabel object.
    * @param scoreLabel reference - Reference variable to the corresponding JLabel object.
    * @param levelLabel reference - Reference variable to the corresponding JLabel object.
+   * @param titleLabel reference - Reference variable to the corresponding JLabel object. 
    * @param  y int - For loop counter. 
    */
   private void displayFile()
@@ -295,11 +296,12 @@ public class HighscorePanel extends JPanel
     JLabel nameLabel = new JLabel ("Name");
     JLabel scoreLabel = new JLabel ("Score");
     JLabel levelLabel = new JLabel ("Level");
+    JLabel titleLabel = new JLabel (new ImageIcon ("../Images/Highscores.png"));
     
     //set arrays of JLabels 
     for (int y = 0; y < MAX_SCORES; y++)
     {
-      constraints.gridy = y+1;
+      constraints.gridy = y+2;
       constraints.gridx = 0;  
       constraints.insets = new Insets (5, 10, 5, 10);
       add (ranks[y], constraints);
@@ -316,7 +318,7 @@ public class HighscorePanel extends JPanel
     }
     
     //set heading labels
-    constraints.gridy = 0;
+    constraints.gridy = 1;
     constraints.gridx = 1;
     add (nameLabel, constraints);
     constraints.gridx = 2;
@@ -324,8 +326,16 @@ public class HighscorePanel extends JPanel
     constraints.gridx = 3;
     add (levelLabel, constraints);
     
-    constraints.gridy = 11;
+    //set title label
+    constraints.gridy = 0;
+    constraints.gridx = 0;
+    constraints.gridwidth = 4;
+    add (titleLabel, constraints);
+    
+    
+    constraints.gridy = 12;
     constraints.gridx = 4;
+    constraints.gridwidth = 1;
     add (printButton, constraints);
   }
   
