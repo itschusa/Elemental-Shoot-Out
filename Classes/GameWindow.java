@@ -16,6 +16,7 @@ import java.awt.*;
  * @version 1.6, May 31 2014. (Added difficult level)
  * @version 1.7, June 4 2014. (Added keyReleased = for shooting, to eliminate player shooting randomly, win, loseFocus and changeScreen methods)
  * @version 1.8, June 5 2014. (JavaDoc)
+ * @version 1.9, June 6 2014. (Added username prompt to create score record.)
  */
 public class GameWindow
 {
@@ -63,6 +64,10 @@ public class GameWindow
    * frame - MenuFrames - Represents the corresponding MenuFrames object. 
    */
   private MenuFrames frame;
+  /**
+   * gameLevel - int - Represents the current game difficulty, which is set to easy by default. 
+   */
+  private int gameLevel = 1;
   
   /**
    * The class constructor. 
@@ -106,6 +111,7 @@ public class GameWindow
     game = new LevelMap (this);
     panel = new SidePanel(this);
     pause = new PausePanel (this);
+    gameLevel = level; //sets game level as user's choice from level selection
     
     //add keyboard listener
     keyboardListener = new KeyboardListener(){
@@ -177,6 +183,7 @@ public class GameWindow
   public void win (int level)
   {
     pause.showWin (level);
+    gameLevel = level + 1;//if they win, game level is now next level
   }
   
   /**
@@ -316,5 +323,36 @@ public class GameWindow
   public MenuFrames getMenus()
   {
     return frame;
+  }
+  
+  /**
+   * The "askName" method, which prompts the user to input their name before returning to the main menu. The while loop
+   * is used to repeatedly prompt for input until an acceptable name has been given.
+   * 
+   * @param username String - Stores the user's name.
+   * @param level String - String representation of the current game level.
+   * @return Returns false if the user chooses to cancel (not return to main menu), true if an acceptable name is entered.
+   */
+  protected boolean askName()
+  {
+    String username = "";
+    String level;
+    if (gameLevel == 1)
+      level = "Easy";
+    else if (gameLevel == 2)
+      level = "Medium";
+    else
+      level = "Difficult";
+    
+    while (true)
+    {
+      username = (String)JOptionPane.showInputDialog("Enter your name. \n(Note: Maximum 10 characters, no spaces.)");
+      if (username == null)
+        return false;
+      if (!username.equals("") && username.length() <= 10 && !username.contains(" "))
+        break;
+    }
+    new HighscorePanel (username, getScreenFactory().getCurrentScreen().getPlayer().getCurrentPoints(), level);
+    return true;
   }
 }
