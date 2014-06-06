@@ -10,7 +10,8 @@ import java.awt.*;
  * @version 1.0, May 21, 2014. (Methods of the LevelMap class)
  * @version 1.1, May 22, 2014. (Moved all methods over to this class, added getWallpaper method, extends Screen)
  * @version 1.2, May 26 2014. (Instantiates CurrentPlayer, added related methods.)
- * @version 1.3, May 27, 2013. (getInventoryIndex works! +changed from get element to get index)
+ * @version 1.3, May 27, 2014. (getInventoryIndex works! +changed from get element to get index)
+ * @version 1.4, June 5, 2014. (Added tempPoints variable and method)
  */
 public class LevelScreen extends Screen
 {
@@ -20,6 +21,7 @@ public class LevelScreen extends Screen
   private ArrayList <GameParticle> inventory = new ArrayList <GameParticle>();
   private ImageIcon wallpaper = new ImageIcon ("../Images/WallpaperGame.png");
   private CurrentPlayer player = new CurrentPlayer("Launcher", new Location (6, 9, false));
+  private int tempPoints = 0;
   
   public LevelScreen (ScreenFactory screenFactory)
   {
@@ -38,11 +40,21 @@ public class LevelScreen extends Screen
   {
   }
   
+  public void setTempPoints (int points)
+  {
+    tempPoints = points;
+  }
+  
+  public int getTempPoints ()
+  {
+    return tempPoints;
+  }
+  
   //returns the target at location in parameters, returns null if not found
   public int getTargetIndex (Location location)
   {
     for (int x = 0;x<targets.size();x++)
-      if (targets.get(x).getLocation()!=null && targets.get(x).getLocation().getRow() == location.getRow() && targets.get(x).getLocation().getColumn() == location.getColumn())
+      if (targets.get(x).getLocation()!=null && targets.get(x).getLocation().getYCoord() == location.getYCoord() && targets.get(x).getLocation().getXCoord() == location.getXCoord())
         return x;
     return -1;
   }

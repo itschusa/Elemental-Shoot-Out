@@ -5,22 +5,45 @@ import javax.swing.*;
  * The GameParticle class represents the generic game element.
  * 
  * @author Anqi Wu
- * @version 1.0, June 2, 2014 (Has all the methods - Thinking of just combining all into one, with param indicating level)
- * @version 1.1, June 3, 2014 (Deprecated EasyParticle, MediumParticle and DifficultParticle)
- * @version 1.2, June 3, 2014 (Removed unecessary code, update moves the particle one pixel at a time)
- * @version 1.3, June 5, 2014 (setReverseShift method)
+ * @version 2.0, June 2 2014 (Has all the methods - Thinking of just combining all into one, with param indicating level)
+ * @version 2.1, June 3 2014 (Deprecated EasyParticle, MediumParticle and DifficultParticle)
+ * @version 2.2, June 3 2014 (Removed unecessary code, update moves the particle one pixel at a time)
+ * @version 2.3, June 5 2014 (setReverseShift method)
+ * @version 2.4, June 5 2014. (JavaDoc)
  */
 public class GameParticle extends Element
 {
-  private ImageIcon myIcon;
+  /**
+   * canMove - private boolean - Stores whether the element can move.
+   */
   private boolean canMove;
-  private boolean shift, reverseShift;
+  /**
+   * shift - private boolean - Stores whether the element should shift left.
+   */
+  private boolean shift;
+  /**
+   * reverseShift - private boolean - Stores whether the element should shift right.
+   */
+  private boolean reverseShift;
+  /**
+   * charge - private int - Stores the charge of the GameParticle.
+   */
   private int charge;
   
-  //constructor, sets name, location and grid
+  /**
+   * Constructs a new GameParticle with the specified name, location and level.
+   * 
+   * @param newName - String - The name of the element.
+   * @param newLocation - Location - The location of the element.
+   * @param charge - int - The charge of the GameParticle.
+   * @param level - int - The level of the GameParticle.
+   */
   public GameParticle (String newName, Location newLocation, int charge, int level)
   {
+    //Element constructor
     super (newName, newLocation);
+    
+    //easy
     if (level == 1)
     {
       if (newName.equals ("Stable"))
@@ -30,6 +53,7 @@ public class GameParticle extends Element
       else
         setIcon (Database.icon3);
     }
+    //medium
     else if (level == 2)
     {
       if (newName.equals ("Lithium"))
@@ -51,50 +75,23 @@ public class GameParticle extends Element
       else
         setIcon (Database.icon13);
     }
+    //difficult
     else
     {
-      String path = "../Images/Difficult/"+newName+".png";
+      String path = "../Images/Difficult/" + newName + ".png";
       setIcon (new ImageIcon (path));
     }
+    
+    //set charge
     this.charge = charge;
   }
   
-  public void setIcon (ImageIcon icon)
-  {
-    myIcon = icon;
-  }
-  
-  public void setCanMove (boolean move)
-  {
-    canMove=move;
-  }
-  
-  public boolean canMove ()
-  {
-    return canMove;
-  }
-  
-  public void setShift (boolean set)
-  {
-    shift = set;
-  }
-  
-  public void setReverseShift (boolean set)
-  {
-    reverseShift = set;
-  }
-  
-  public void updateBounce ()
-  {
-    if (getLocation().getRow() <= 0)
-      removeFromGrid();
-  }
-  
-  public int getCharge()
-  {
-    return charge;
-  }
-  
+  /**
+   * Updates the location of the GameParticle.
+   * If the GameParticle can move, the location moves up by 1 pixel.
+   * Otherwise, ...
+   * Overridden from the Element class.
+   */
   public void update ()
   {
     if (getLocation() == null)
@@ -131,9 +128,43 @@ public class GameParticle extends Element
     graphics.drawImage (getIcon().getImage(), getLocation().getXCoord(), getLocation().getYCoord(),getIcon().getImageObserver());
   }
   
-  //returns the icon
-  public ImageIcon getIcon ()
+  /**
+   * Sets whether the element can shift to the left depending on the parameter.
+   * This method is used solely by inventory particles.
+   * 
+   * @param set - boolean - Stores whether or not the element should shift to the left.
+   */
+  public void setShift (boolean set)
   {
-    return myIcon;
+    shift = set;
+  }
+  
+  /**
+   * Sets whether the element can shift to the right depending on the parameter.
+   * This method is used solely by inventory particles.
+   * 
+   * @param set - boolean - Stores whether or not the element should shift to the right.
+   */
+  public void setReverseShift (boolean set)
+  {
+    reverseShift = set;
+  }
+  
+  /**
+   * Updates whether the GameParticle travels outside the game boundaries.
+   * If the location is outside, the GameParticle's location is set to null.
+   */
+  public void updateBounce ()
+  {
+    if (getLocation().getRow() <= 0)
+      removeFromGrid();
+  }
+  
+  /**
+   * Returns the charge of the GameParticle.
+   */
+  public int getCharge()
+  {
+    return charge;
   }
 }

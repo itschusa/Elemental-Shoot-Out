@@ -5,7 +5,8 @@
  * @author Chusa Nguyen
  * @author Anqi Wu
  * @version 1.0, May 29 2014. 
- * @version 1.1, June 3, 2014. (added currentStep (5 step wait), so clouds move slower)
+ * @version 1.1, June 3 2014. (added currentStep (5 step wait), so clouds move slower)
+ * @version 1.2, June 5 2014. (JavaDoc is current)
  */
 public class AcidCloud extends GameParticle
 {
@@ -21,14 +22,18 @@ public class AcidCloud extends GameParticle
    * updateCount - int - Counter which keeps track of the number of times the screen updates.
    */
   private int updateCount = 0;
+  /**
+   * currentStep - int - Stores the current number of steps after it was updated.
+   */
   private int currentStep = 0;
   
   /**
    * The class constructor. It creates an acid cloud object with the specified name, at a specified location 
    * and a given charge, as well as set its initial direction of movement.
    * 
-   * @param newName String - String representation of this object's name.
-   * @param newLocation Location - The location given upon creation. 
+   * @param newName - String - String representation of this object's name.
+   * @param newLocation - Location - The location given upon creation. 
+   * @param charge - int - The charge of the AcidCloud.
    * @param forwards boolean - Determines whether the first step will be forwards or backwards.
    */
   public AcidCloud (String newName, Location newLocation, int charge, boolean forwards)
@@ -63,12 +68,14 @@ public class AcidCloud extends GameParticle
   
   /**
    * The "move" method. It changes the location of this object to follow a predefined path. 
+   * The AcidCloud moves every 5 updates.
    */
   public void move ()
   {
     if (currentStep == 5)
     {
-      currentStep=0;
+      currentStep = 0;
+      
       if (forwards)
       {
         if (steps < 3)
@@ -107,12 +114,13 @@ public class AcidCloud extends GameParticle
   {
     if (getLocation() == null)
       return;
+    
     move();
     currentStep++;
   }
   
   /**
-   * Sets the current step of the element.
+   * Sets the current step of the cloud.
    * 
    * @param steps - int - The number of calls to update before the element moves.
    */
@@ -121,6 +129,9 @@ public class AcidCloud extends GameParticle
     currentStep = steps;
   }
   
+  /**
+   * Returns the current step of the cloud.
+   */
   public int getCurrentStep()
   {
     return currentStep;
@@ -144,6 +155,5 @@ public class AcidCloud extends GameParticle
   public int getUpdateCount()
   {
     return updateCount;
-  }
-  
+  }  
 }

@@ -2,7 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * The Particle class represents a particle. It stores the name, location and grid.
+ * The Element class represents a generic element with a name and location.
+ * This class is meant to be extended from.
  * 
  * @author Anqi Wu
  * @author baseball435 (update and draw methods)
@@ -12,19 +13,27 @@ import java.awt.*;
  * @version 1.3, May 28, 2014. (added abstract method getCharge)
  * @version 1.4, May 29, 2014. (JavaDoc)
  * @version 1.5, June 3, 2014. (Removed methods associated with currentSteps)
+ * @version 1.6, June 5, 2014. (Removed methods and JavaDoc is current)
  */
 public abstract class Element
 {
   /**
-   * name - String - Stores the name of the element.
+   * name - private String - Stores the name of the element.
    */
   private String name;
   /**
-   * lcoation - Location - Stores the location of the element.
+   * location - private Location - Stores the location of the element.
    */
   private Location location;
+  /**
+   * myIcon - private ImageIcon - Stores the icon of the game particle.
+   */
+  private ImageIcon myIcon;
+  /**
+   * canMove - boolean - Stores whether the player can move or not.
+   */
+  private boolean canMove;
   
-  //constructor, sets the name, location and grid
   /**
    * Constructs a new Element with the specified name and location.
    * 
@@ -37,7 +46,6 @@ public abstract class Element
     location = newLocation;
   }
   
-  //returns name
   /**
    * Returns the name of the element.
    */
@@ -46,7 +54,6 @@ public abstract class Element
     return name;
   }
   
-  //sets name
   /**
    * Sets the name of the element to the specified new name.
    * 
@@ -57,7 +64,6 @@ public abstract class Element
     name = newName;
   }
   
-  //returns location
   /**
    * Returns the Location of the element.
    */
@@ -66,7 +72,6 @@ public abstract class Element
     return location;
   }
   
-  //sets location
   /**
    * Sets the location of the element to the specified new location.
    * 
@@ -77,7 +82,6 @@ public abstract class Element
     location = newLocation;
   }
   
-  //remove particle
   /**
    * Removes itself by setting the location to null.
    */
@@ -87,35 +91,40 @@ public abstract class Element
   }
   
   /**
-   * Returns the charge of the element.
+   * Returns the icon of the element.
    */
-  public abstract int getCharge();
+  public ImageIcon getIcon ()
+  {
+    return myIcon;
+  }
+  
+  /**
+   * Sets the icon for the element.
+   * 
+   * @param icon - ImageIcon - The new icon.
+   */
+  public void setIcon (ImageIcon icon)
+  {
+    myIcon = icon;
+  }
   
   /**
    * Sets canMove to the boolean specified in the parameters.
    * 
    * @param move - boolean - Stores whether or not the element can move.
    */
-  public abstract void setCanMove (boolean move);
-  
-  /**
-   * Sets whether the element can shift depending on the parameter.
-   * This method is used solely by inventory particles.
-   * 
-   * @param set - boolean - Stores whether or not the element should shift to the left.
-   */
-  public abstract void setShift (boolean set);
+  public void setCanMove (boolean move)
+  {
+    canMove = move;
+  }
   
   /**
    * Returns whether or not the element can move.
    */
-  public abstract boolean canMove ();
-  
-  //override to return icon
-  /**
-   * Returns the icon of the element.
-   */
-  public abstract ImageIcon getIcon ();
+  public boolean canMove ()
+  {
+    return canMove;
+  }
   
   /**
    * Updates the status of the element.

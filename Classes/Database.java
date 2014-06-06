@@ -1,7 +1,7 @@
 import javax.swing.*;
 
 /**
- * The Database class stores all the icons (currently).
+ * The Database class stores all the game icons, except for the difficult game.
  * 
  * @author Anqi Wu
  * @author Chusa Nguyen
@@ -34,7 +34,7 @@ public class Database
   /**
    * alkaliMetals - String [] - Stores names of all possible alkali metals.
    */
-  public static String[] alkaliMetals = new String[]{"Lithium","Sodium","Potassium","Rubidium","Cesium","Francium"};
+  public static String[] alkaliMetals = new String[] {"Lithium","Sodium","Potassium","Rubidium","Cesium","Francium"};
   /**
    * icon5 - ImageIcon - Stores the icon for lithium.
    */
@@ -74,23 +74,23 @@ public class Database
   /**
    * chargeNegativeOne - String [] - Stores an array of strings, where each string is the name of a particle with a charge of -1.
    */
-  public static String[] chargeNegativeOne = new String[]{"Chloride","Bromide","Fluoride","Iodide","Hydroxide"};
+  public static String[] chargeNegativeOne = new String[] {"Chloride","Bromide","Fluoride","Iodide","Hydroxide"};
   /**
    * chargeNegativeTwo - String [] - Stores an array of strings, where each string is the name of a particle with a charge of -2.
    */
-  public static String[] chargeNegativeTwo = new String[]{"Sulfide","2Chloride","Carbonate","Sulphate","2Fluoride"};
+  public static String[] chargeNegativeTwo = new String[] {"Sulfide","2Chloride","Carbonate","Sulphate","2Fluoride"};
   /**
    * chargeNegativeThree - String [] - Stores an array of strings, where each string is the name of a particle with a charge of -3.
    */
-  public static String[] chargeNegativeThree = new String[]{"Phosphate"};
+  public static String[] chargeNegativeThree = new String[] {"Phosphate"};
   /**
    * chargePositiveOne - String [] - Stores an array of strings, where each string is the name of a particle with a charge of +1.
    */
-  public static String[] chargePositiveOne = new String[]{"Sodium","Silver","Potassium","Ammonium"};
+  public static String[] chargePositiveOne = new String[] {"Sodium","Silver","Potassium","Ammonium"};
   /**
    * chargePositiveTwo - String [] - Stores an array of strings, where each string is the name of a particle with a charge of +2.
    */
-  public static String[] chargePositiveTwo = new String[]{"Barium", "Mercury","2Sodium","Calcium"};
+  public static String[] chargePositiveTwo = new String[] {"Barium", "Mercury","2Sodium","Calcium"};
   /**
    * chargePositiveThree - String [] - Stores an array of strings, where each string is the name of a particle with a charge of +3.
    */
