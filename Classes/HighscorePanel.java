@@ -9,6 +9,7 @@ import java.util.StringTokenizer;
  * 
  * @author Chusa Nguyen
  * @version 1.1, June 4 2014. (Completed basic implementation. Missing: printer functionality, completed javadoc.)
+ * @version 1.2, June 5 2014. (Completed javadoc. Need to test printer functionality.)
  */
 public class HighscorePanel extends JPanel
 {
@@ -51,10 +52,18 @@ public class HighscorePanel extends JPanel
   /**
    * resetButton - reference - Reference variable for the corresponding JButton object. 
    */
-  protected JButton resetButton = new JButton ("Reset");
-  
+  protected JButton printButton = new JButton ("Print");
+  /**
+   * newName - String - Stores the name of the user. 
+   */
   private String newName;
+  /**
+   * newScore - int - Represents the current score of the user.
+   */
   private int newScore;
+  /**
+   * newLevel - String - Stores the name of the level the user just finished playing. 
+   */
   private String newLevel;
   
   /**
@@ -76,9 +85,9 @@ public class HighscorePanel extends JPanel
    * user beats the game and reaches the winning screen.
    * This constructor writes the new score to highscores file, and sorts it if necessary. 
    * 
-   * @param newName
-   * @param newScore
-   * @param newLevel
+   * @param newName String - Stores the user's name.
+   * @param newScore int - Represents the user's score.
+   * @param newLevel String - Stores the last difficulty the user played.
    */
   public HighscorePanel (String newName, int newScore, String newLevel)
   {
@@ -90,10 +99,10 @@ public class HighscorePanel extends JPanel
   }
   
   /**
-   * The "createLabels" method. It initializes all indices within each array of JLabels.
+   * The "createLabels" method. It initializes all indices within each array of JLabels using a for loop.
    * 
-   * @param temp
-   * @param x
+   * @param temp String - Stores the text to be added to each index of ranks.
+   * @param x int - For loop counter. 
    */
   private void createLabels()
   {
@@ -111,14 +120,14 @@ public class HighscorePanel extends JPanel
   }
   
   /**
-   * The "readFile" method. It reads in an existing highscores file and stores the information in an array of strings. 
-   * The while loop is used to continuously read through every line of the input file. 
+   * The "readFile" method. It reads in an existing highscores file and stores the information in an array of strings
+   * within a try block. The while loop is used to continuously read through every line of the input file. 
    * 
-   * @param input
-   * @param line
-   * @param index
-   * @param e
-   * @throws
+   * @param input reference - Reference variable to the corresponding BufferedReader object. 
+   * @param line String - Stores the current line of text being read.
+   * @param index int - Represents the current index number being accessed in fileInput.
+   * @param e reference - Reference variable for the corresponding IOException object. 
+   * @exception If an error occurs while trying to access the file to read from. 
    */
   private void readFile()
   {
@@ -148,7 +157,11 @@ public class HighscorePanel extends JPanel
   }
   
   /**
+   * The "assignLabels" method. It uses a loop to assign values to all indices of each JLabel array by splitting the 
+   * Strings within fileInput into tokens. 
    * 
+   * @param token reference - Reference variable to the corresponding StringTokenizer object.
+   * @param index int - Represents the current index to be accessed in each array. 
    */
   private void assignLabels()
   {
@@ -168,7 +181,10 @@ public class HighscorePanel extends JPanel
   
   /**
    * The "fileExists" method. It attempts to read the first line of the highscore file to determine whether
-   * or not the file has been created yet. 
+   * or not the file has been created yet in a try block. 
+   * 
+   * @return Returns true if there is an existing file, returns false if no file is found. 
+   * 
    */
   private boolean fileExists()
   {
@@ -186,14 +202,18 @@ public class HighscorePanel extends JPanel
   
   /**
    * The "writeFile" method. It creates a highscores file which stores the top 10 scores in descending order. 
+   * The try block is used while attempting to write to an output file, the conditional statements determine whether
+   * a blank file should be written or if it will contain entries, and the for loop is used to output multiple
+   * lines of text. 
    * 
    * @param empty boolean - Represents whether the file will contain scores, or just the file header. 
    * @param output reference - Reference variable to the corresponding PrintWriter object.
-   * @param temp
+   * @param temp int - Represents the maximum value for the for loop's stop condition. 
    * @param x int - For loop counter.
    * @param e reference - Reference variable to the corresponding IOException object.
-   * @param ex
-   * @throws
+   * @param ex reference - Reference variable to the corresponding NumberFormatException object. 
+   * @exception IOException If an error occurs during the process of reading from and writing to a file. 
+   * @exception NumberFormatException If an invalid integer is being used. 
    */
   private void writeFile(boolean empty)
   {
@@ -261,12 +281,12 @@ public class HighscorePanel extends JPanel
   
   /**
    * The "displayFile" method. It reads in the current highscores file and displays it by setting the appropriate JLabel 
-   * objects to the current JPanel.
+   * objects to the current JPanel. The for loop is used to set multiple labels in columns. 
    * 
-   * @param nameLabel
-   * @param scoreLabel
-   * @param levelLabel
-   * @param  y
+   * @param nameLabel reference - Reference variable to the corresponding JLabel object.
+   * @param scoreLabel reference - Reference variable to the corresponding JLabel object.
+   * @param levelLabel reference - Reference variable to the corresponding JLabel object.
+   * @param  y int - For loop counter. 
    */
   private void displayFile()
   {
@@ -306,14 +326,28 @@ public class HighscorePanel extends JPanel
     
     constraints.gridy = 11;
     constraints.gridx = 4;
-    add (resetButton, constraints);
+    add (printButton, constraints);
   }
   
   /**
    * The "printScores" method. It prints the current highscores file, formatted into three columns. 
+   * The for loop is used to repeatedly print all score entries (10). 
+   * 
+   * @param printer reference - Reference variable for the corresponding Printer object.
+   * @param x int - For loop counter.
    */
   protected void printScores()
   {
+    Printer printer = new Printer (new Font ("Lucida Sans Typewriter", Font.PLAIN, 14));
+    String temp = "";
+    
+    printer.println ("", fileHeader, "");
+    for (int x = 0; x < MAX_SCORES; x++)
+    {
+      temp = ranks[x] + " " + names[x];
+      printer.println (temp, scores[x].getText(), levels[x].getText());
+    }
+    printer.printUsingDialog();
   }
   
   /**

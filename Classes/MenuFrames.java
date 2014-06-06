@@ -26,6 +26,7 @@ import java.io.IOException;
  * @version 2.5, May 29 2014. (Replaced features menu item with instructions menu item.)
  * @version 2.6, May 30 2014. (Fixed: settings --> main --> play --> main --> settings --> null pointer exception. Rearranged some code and added 4 new methods.)
  * @version 2.7, June 4 2014. (Removed setSettings method because of redundency, changed access level of settings, added code for highscores [should be functional].)
+ * @version 2.8, June 4 2014. (All components of this class are complete. Need to do final testing.)
  */
 public class MenuFrames extends JFrame
 {
@@ -389,6 +390,8 @@ public class MenuFrames extends JFrame
   
   /**
    * The "settingsActionListeners" method. It implements an ActionListener object to each component of the settings panel.
+   * 
+   * @param choice int - Represents the user's choice on the JOptionPane dialog box. 
    */
   private void settingsActionListeners()
   {
@@ -436,11 +439,14 @@ public class MenuFrames extends JFrame
   /**
    * The "scoresActionListener" method. It adds an ActionListener object to the panel's reset button. 
    * 
-   * @param choice int - Represents the user's choice on the JOptionPane dialog box. 
    */
   private void scoresActionListener()
   {
-
+    scoresPanel.printButton.addActionListener (new ActionListener()
+                                                 {
+      public void actionPerformed (ActionEvent e) {
+        scoresPanel.printScores();
+      }});
   }
   
   /**
