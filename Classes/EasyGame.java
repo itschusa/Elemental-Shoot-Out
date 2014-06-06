@@ -30,10 +30,6 @@ public class EasyGame extends LevelScreen
    */
   private ImageIcon instructionImage = new ImageIcon ("../Images/EasyGame.png");;
   /**
-   * gameOverImage - ImageIcon - Stores the game over screen.
-   */
-  private ImageIcon gameOverImage = new ImageIcon ("../Images/GameOver2.png");
-  /**
    * end - boolean - Stores whether the user has won the level.
    */
   private boolean end = false;
@@ -113,17 +109,12 @@ public class EasyGame extends LevelScreen
   }
   
   /**
-   * Updates the elements currently stored in the easy level.
-   * It first updates the player/launcher movement.
-   * If the up key is pressed, the first element of the inventory is moved up to where the launcher is and canMove is set to true.
-   * The inventory will then be shifted to the left.
+   * First, the player and shooting is updated.
    * Then, target-inventory interaction is updated. If there is any target directly infront of an inventory particle, interaction has occurred.
    * Either both are removed or only one is removed, depending on whether the user shot at the correct target.
    * Points are also updated.
    * Finally, all elements with no locations are removed, and all elements are updated.
    * 
-   * @param index - int - Stores the index of the element at the location with row 10 and column 1.
-   * @param dart - GameParticle - Stores the temporary element to be shot with.
    * @param x - int - Increments through for loop.
    * @param inv - GameParticle - Stores the temporary inventory elements.
    * @param tar - GameParticle - Stores the temporary target elements.
@@ -131,37 +122,7 @@ public class EasyGame extends LevelScreen
    */
   public void onUpdate ()
   {
-    if (GameWindow.movement != 0 || GameWindow.movement2 != 0)
-    {
-      //update player
-      getPlayer().update(GameWindow.movement);
-      
-      //if pressed up
-      if (GameWindow.movement2 == 38)
-      {
-        //get index of element of the first inventory slot
-        int index = getInventoryIndex (new Location(1, 10, false));
-        
-        //if there is something there
-        if (index != -1)
-        {
-          //get element that is shot and change its location to 1 row in front of player
-          GameParticle dart = getAllInventory().get(index);
-          dart.setLocation (new Location(getPlayer().getLocation().getColumn(), getPlayer().getLocation().getRow()-1, false));
-          dart.setCanMove (true);
-          
-          //shift the remaining inventory 1 column left
-          for (int x = index+1; x < getAllInventory().size(); x++)
-          {
-            getAllInventory().get(x).setShift (true);
-          }
-        }
-      }
-      
-      //reset key
-      GameWindow.movement = 0;
-      GameWindow.movement2 = 0;
-    }
+    updateShoot ();
     
     //checks for target-inventory interaction
     for (int x = 0; x < getAllInventory().size(); x++)
@@ -199,35 +160,8 @@ public class EasyGame extends LevelScreen
       }
     }
     
-    //removes inventory that have no location from the arraylist
-    ArrayList<GameParticle> inv = new ArrayList<GameParticle>();
-    for (int x = 0; x < getAllInventory().size(); x++)
-    {
-      if (getAllInventory().get(x).getLocation() != null)
-        inv.add (getAllInventory().get(x));
-    }
-    
-    //sets the new inv
-    setAllInventory (inv);
-    
-    //update targets
-    for (int x = 0; x < getAllTargets().size(); x++)
-      getAllTargets().get(x).update();
-    
-    //update inventory
-    for (int x = 0; x < getAllInventory().size(); x++)
-      getAllInventory().get(x).update();
-  }
-  
-  /**
-   * Draws the game over screen. The game loses focus, so the user cannot move the launcher.
-   * 
-   * @param twoDimensional - Graphics2D - The Graphics2D object.
-   */
-  private void gameOver (Graphics2D twoDimensional)
-  {
-    getScreenFactory().loseFocus();
-    twoDimensional.drawImage (gameOverImage.getImage(), 0, 0, gameOverImage.getImageObserver());
+    removeNonexistentInventory ();  
+    updateElements();
   }
   
   /**
@@ -246,7 +180,7 @@ public class EasyGame extends LevelScreen
     
     //tutorial
     if (getAllTargets().size() == 36)
-      twoDimensional.drawImage (instructionImage.getImage(), -100,0,instructionImage.getImageObserver());
+      twoDimensional.drawImage (instructionImage.getImage(), -100, 0, instructionImage.getImageObserver());
     
     //draw player
     getPlayer().draw(twoDimensional);

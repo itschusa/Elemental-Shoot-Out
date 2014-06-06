@@ -5,6 +5,9 @@ import javax.swing.*;
 /**
  * The MediumGame class represents the screen for the medium level.
  * It involves acid-base neutralization.
+ * The player can shoot either alkali metals or ions at the targets.
+ * When a player successfully creates a base, it is added to the end of the inventory.
+ * The player wins once all obstacles and targets are cleared.
  * 
  * @author Anqi Wu
  * @author Chusa Nguyen
@@ -15,7 +18,7 @@ import javax.swing.*;
  * @version 1.4, June 3, 2014. (Modifications due to location class constructor change, removes instead of sets location to null, two keys at once)
  * @version 1.5, June 4, 2014. (Added win and lose screens, can go to difficult level. Added base particles, no functionality.)
  * @version 1.6, June 4, 2014. (Base implementation and having mix and match for alkali and hydroxide, more targets and inventory)
- * @version 1.7, June 5, 2014. (Equal number of hydroxide and alkali metals)
+ * @version 1.7, June 5, 2014. (Equal number of hydroxide and alkali metals, JavaDoc partially)
  */
 public class MediumGame extends LevelScreen
 {        
@@ -24,40 +27,44 @@ public class MediumGame extends LevelScreen
    */
   private ArrayList <AcidCloud> obstacles = new ArrayList<AcidCloud> ();
   /**
-   * gameOverImage - ImageIcon - Stores the game over screen.
+   * end - boolean - Stores whether the user has won the level.
    */
-  private ImageIcon gameOverImage = new ImageIcon ("../Images/GameOver2.png");
   private boolean end = false;
   
   /**
    * Constructs a medium level screen. This creates a random list of targets and inventory.
+   * Acid clouds are also created in the last two rows of targets.
    * 
    * @param screenFactory - ScreenFactory - The ScreenFactory object that stores the current screen.
    * @param newTargets - ArrayList<GameParticle> - Stores the temporary targets.
+   * @param newInventory - Stores the temporary inventory.
    * @param name - String - Stores the temporary names of the elements.
+   * @param count - int - Stores the number of hydroxide ions.
+   * @param count2 - int - Stores the number of alkali ions.
+   * @param which - double - Stores whether to add an alkali ion or a hydroxide ion.
    * @param row - int - Stores the current row of the location to set for the elements.
    * @param col - int - Stores the current column of the location to set for the elements.
    * @param element - int - Stores the temporary index of the current element.
-   * @param newInventory - Stores the temporary inventory.
    */
   public MediumGame (ScreenFactory screenFactory)
   {
     super(screenFactory);
     
     ArrayList<GameParticle> newTargets = new ArrayList<GameParticle>();
+    ArrayList<GameParticle> newInventory = new ArrayList <GameParticle>();
     String name = "";
     int count = 0;
     int count2 = 0;
     double which = 0;
     
     //set targets randomly
-    for (int row = 1; row<5;row++)
+    for (int row = 1; row < 5; row++)
     {
-      for (int col=1; col < 13; col++)
+      for (int col = 1; col < 13; col++)
       {
         int element = (int) (Math.random()*6);
         which = Math.random ();
-        if (which >0.5 && count<24 || count2 > 23)
+        if (which > 0.5 && count < 24 || count2 > 23)
         {
           newTargets.add (new GameParticle("Hydroxide", new Location (col, row, false), -1, 2));
           count++;
@@ -65,24 +72,23 @@ public class MediumGame extends LevelScreen
         else
         {
           name = Database.alkaliMetals[element];
-          System.out.println (element +" "+ name);
-          newTargets.add (new GameParticle(name, new Location(col, row, false),1,2));
+          newTargets.add (new GameParticle(name, new Location(col, row, false), 1, 2));
           count2++;
         }
       }
     }
     
+    //reset count and count2
     count = 0;
     count2 = 0;
     
-    ArrayList<GameParticle> newInventory = new ArrayList <GameParticle>();
     for (int col = 1; col < 49; col++)
     {
       int element = (int)(Math.random()*6);
       which = Math.random ();
-      if (which > 0.5&&element > 5 && count < 24 || count2 > 23)
+      if (which > 0.5 && element > 5 && count < 24 || count2 > 23)
       {
-        newInventory.add (new GameParticle("Hydroxide", new Location (col, 10, false),-1,2));
+        newInventory.add (new GameParticle("Hydroxide", new Location (col, 10, false), -1, 2));
         count++;
       }
       else
@@ -93,6 +99,7 @@ public class MediumGame extends LevelScreen
       }
     }
     
+    //add obstacles
     obstacles.add(new AcidCloud ("Cloud", new Location (1, 4, false), -3, true));
     obstacles.add(new AcidCloud ("Cloud", new Location (9, 4, false), -3, true));
     obstacles.add(new AcidCloud ("Cloud", new Location (8, 5, false), -3, false));
@@ -111,11 +118,12 @@ public class MediumGame extends LevelScreen
   
   /**
    * Updates the elements currently stored in the medium level.
-   * It first updates the player/launcher movement.
-   * If the up key is pressed, the first element of the inventory is moved up to where the launcher is and canMove is set to true.
-   * The inventory will then be shifted to the left.
-   * Then, target-inventory interaction is updated. If there is any target directly infront of an inventory particle, interaction has occurred.
-   * Either both are removed or only one is removed, depending on whether the user shot at the correct target.
+   * It first updates the obstacles.
+   * Then, the player and shooting is updated.
+   * Obstacle-inventory and target-inventory interaction is updated. 
+   * If there is an obstacle in the same location as the inventory particle, either the inventory is removed, or both the inventory and obstacle.
+   * The obstacle is only removed when the inventory is a base.
+   * If there is any target directly infront of an inventory particle, either both are removed or only one is removed, depending on whether the user shot at the correct target.
    * Points are also updated.
    * Finally, all elements with no locations are removed, and all elements are updated.
    * 
@@ -131,6 +139,7 @@ public class MediumGame extends LevelScreen
   public void onUpdate ()
   {
     boolean wasEaten = false;
+    
     //moves the obstacles
     if (!GameWindow.paused)
     {
@@ -146,71 +155,36 @@ public class MediumGame extends LevelScreen
       }
     }
     
-    //if key pressed
-    if (GameWindow.movement != 0 || GameWindow.movement2 != 0)
-    {
-      //update player
-      getPlayer().update(GameWindow.movement);
-      
-      //if pressed up
-      if (GameWindow.movement2 == 38)
-      {
-        //get index of element of the first inventory slot
-        int index = getInventoryIndex(new Location(1,10, false));
-        
-        //if there is something there
-        if (index != -1)
-        {
-          //get element that is shot and change its location to 1 row in front of player
-          //update immediately (no wait)
-          GameParticle dart = getAllInventory().get(index);
-          dart.setLocation (new Location(getPlayer().getLocation().getColumn(), getPlayer().getLocation().getRow()-1, false));
-          dart.setCanMove(true);
-          
-          //shift the remaining inventory 1 column left
-          for (int x = index+1;x<getAllInventory().size();x++)
-            getAllInventory().get(x).setShift (true);
-        }
-      }
-      //reset key
-      GameWindow.movement = 0;
-      GameWindow.movement2 = 0;
-    }
+    updateShoot();
     
     //checks for target-inventory interaction
-    for (int x=0;x<getAllInventory().size();x++)
+    for (int x = 0; x < getAllInventory().size();x++)
     {
       //gets the inventory element
       GameParticle inv = getAllInventory().get(x);
       
       //if the location exists
-      if(inv.getLocation()!=null)
+      if(inv.getLocation() != null)
       {
         //get the index of the target
         int index = getTargetIndex(new Location(inv.getLocation().getXCoord(), inv.getLocation().getYCoord(), true));
         int index2 = getObstacleIndex (new Location(inv.getLocation().getColumn(), inv.getLocation().getRow(), false));
         
         //if hits an acid cloud        
-        if (index2!=-1)
+        if (index2 != -1)
         { 
           if (inv.getCharge() != +3)
           {
-            System.out.println ("-5");
             getAllInventory().remove(x);
-            getPlayer().removePoints(5);
-            //setTempPoints(-5);
-            System.out.println ("Eaten");
-            System.out.println ("Total: "+getPlayer().getCurrentPoints());
+            getPlayer().removePoints(10);
+            setTempPoints(-10);
           }
           else
           {
             obstacles.remove(index2);
             getAllInventory().remove(x);
-            System.out.println ("Removed");
             getPlayer().addPoints (20);
-            //setTempPoints(20);
-            System.out.println ("+20");
-            System.out.println ("Total: "+getPlayer().getCurrentPoints());
+            setTempPoints(20);
           }
           wasEaten = true;
         }
@@ -225,50 +199,33 @@ public class MediumGame extends LevelScreen
             
             if (inv.getCharge() + tar.getCharge() == 0)
             {
-              System.out.println ("+10");
               GameParticle baseParticle = new GameParticle ("Base", new Location (getAllInventory().get(getAllInventory().size()-1).getLocation().getColumn()+1, 10, false), +3, 2);
               getAllInventory().remove (x);
               getAllInventory().add (baseParticle);
               getAllTargets().remove(index);
               getPlayer().addPoints (10);
-              //setTempPoints(10);
-              System.out.println ("Total: "+getPlayer().getCurrentPoints());
+              setTempPoints(10);
             }
             //if wrong target, remove the inventory
             else
             {
-              System.out.println ("-5");
               getAllInventory().remove (x);
               getPlayer().removePoints(5);
-              //setTempPoints(-5);
-              System.out.println ("Total: "+getPlayer().getCurrentPoints());
+              setTempPoints(-5);
             }
           }
         }
       }
     }
     
-    //removes inventory that have no location from the arraylist
-    ArrayList<GameParticle> inv = getAllInventory();
-    for (int x = 0;x<inv.size();x++)
-    {
-      if (inv.get(x).getLocation() == null)
-        inv.remove(x);
-    }
-    
-    //update targets
-    for (int x=0;x<getAllTargets().size();x++)
-      getAllTargets().get(x).update();
-    
-    //update inventory
-    for (int x = 0; x<getAllInventory().size();x++)
-      getAllInventory().get(x).update();
+    removeNonexistentInventory();
+    updateElements();
   }
   
   //returns the obstacle at location in parameters, returns null if not found
   public int getObstacleIndex (Location location)
   {
-    for (int x = 0;x<obstacles.size();x++)
+    for (int x = 0; x <obstacles.size(); x++)
       if (obstacles.get(x).getLocation()!= null && obstacles.get(x).getLocation().getRow() == location.getRow() && obstacles.get(x).getLocation().getColumn() == location.getColumn())
       return x;
     
@@ -276,18 +233,7 @@ public class MediumGame extends LevelScreen
   }
   
   /**
-   * Draws the game over screen.
-   * 
-   * @param twoDimensional - Graphics2D - The Graphics2D object.
-   */
-  private void gameOver (Graphics2D twoDimensional)
-  {
-    getScreenFactory().loseFocus();
-    twoDimensional.drawImage (gameOverImage.getImage(),0,0,gameOverImage.getImageObserver());
-  }
-  
-  /**
-   * Displays the medium level on the jpanel.
+   * Displays the medium level on the JPanel.
    * It draws the wallpaper, player (launcher), inventory, targets and obstacles, respectively.
    * 
    * @param twoDimensional - Graphics2D - The Graphics2D object.

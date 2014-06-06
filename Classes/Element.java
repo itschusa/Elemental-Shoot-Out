@@ -127,14 +127,20 @@ public abstract class Element
   }
   
   /**
-   * Updates the status of the element.
-   */
-  public abstract void update ();
-  
-  /**
-   * Draws the element/icon.
+   * Draws the icon.
    * 
    * @param graphics - Graphics2D - The Graphics2D object.
    */
-  public abstract void draw (Graphics2D graphics);
+  public void draw (Graphics2D graphics)
+  {
+    if (getLocation()== null)
+      return;
+    
+    graphics.drawImage (getIcon().getImage(), getLocation().getXCoord(), getLocation().getYCoord(),getIcon().getImageObserver());
+  }
+  
+  /**
+   * Updates the status of the element.
+   */
+  public abstract void update ();
 }

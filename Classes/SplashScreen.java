@@ -24,15 +24,15 @@ public class SplashScreen extends JWindow
    * constructor also adds two anonymous classes that implement Runnable. The first, closerRunner, closes the splash
    * screen window and creates the game window. The second, waitRunner, pauses the splash screen and then runs 
    * closeRunner.
-   * @param fileName: String - The name of the image to be loaded.
-   * @param waitTime: final int - The time taken before the splash screen closes.
-   * @param label: JLabel - The JLabel which stores the image of the splash screen.
-   * @param screenSize: Dimension - The size of the screen.
-   * @param windowSize: Dimension - The size of the splash screen.
-   * @param closerRunner: final Runnable - Closes the window and creates the game screen window.
-   * @param waitRunner: final Runnable - Pauses the splash screen and runs closerRunner.
-   * @param e: Exception - Catches errors regarding thread sleep, etc.
-   * @param splashThread: Thread - The Thread that stores the Runnable object that is started.
+   * @param fileName - String - The name of the image to be loaded.
+   * @param waitTime - final int - The time taken before the splash screen closes.
+   * @param label - JLabel - The JLabel which stores the image of the splash screen.
+   * @param screenSize - Dimension - The size of the screen.
+   * @param windowSize - Dimension - The size of the splash screen.
+   * @param closerRunner - final Runnable - Closes the window and creates the game screen window.
+   * @param waitRunner - final Runnable - Pauses the splash screen and runs closerRunner.
+   * @param e - Exception - Catches errors regarding thread sleep, etc.
+   * @param splashThread - Thread - The Thread that stores the Runnable object that is started.
    */
   public SplashScreen(String filename, final int waitTime, boolean firstRun)
   {
@@ -97,7 +97,7 @@ public class SplashScreen extends JWindow
   //create menu frames window
   /**
    * Creates a MenuFrames object to display the game screen.
-   * @param showFrames: MenuFrames - The game window.
+   * @param showFrames - MenuFrames - The game window.
    */
   private void createWindow ()
   {

@@ -9,7 +9,7 @@ import javax.swing.*;
  * @version 2.1, June 3 2014 (Deprecated EasyParticle, MediumParticle and DifficultParticle)
  * @version 2.2, June 3 2014 (Removed unecessary code, update moves the particle one pixel at a time)
  * @version 2.3, June 5 2014 (setReverseShift method)
- * @version 2.4, June 5 2014. (JavaDoc)
+ * @version 2.4, June 5 2014. (JavaDoc, removed some methods)
  */
 public class GameParticle extends Element
 {
@@ -89,7 +89,8 @@ public class GameParticle extends Element
   /**
    * Updates the location of the GameParticle.
    * If the GameParticle can move, the location moves up by 1 pixel.
-   * Otherwise, ...
+   * Otherwise, if shift if true, then move the location to the cell to the left. shift is then set to false.
+   * If reverseShift is true, move the location to the cell to the right. reverseShift is then set to false.
    * Overridden from the Element class.
    */
   public void update ()
@@ -102,30 +103,19 @@ public class GameParticle extends Element
       setLocation (new Location (getLocation().getXCoord(), getLocation().getYCoord()-1, true));
       updateBounce();
     }
+    else if (shift)
+    {
+      setLocation(new Location(getLocation().getColumn()-1, getLocation().getRow(), false));
+      shift = false;
+    }
     else
     {
-      if (shift)
+      if (reverseShift)
       {
-        setLocation(new Location(getLocation().getColumn()-1, getLocation().getRow(), false));
-        shift = false;
-      }
-      else
-      {
-        if (reverseShift)
-        {
-          setLocation (new Location (getLocation().getColumn()+1,getLocation().getRow(),false));
-          reverseShift = false;
-        }
+        setLocation (new Location (getLocation().getColumn()+1,getLocation().getRow(), false));
+        reverseShift = false;
       }
     }
-  }
-  
-  public void draw (Graphics2D graphics)
-  {
-    if (getLocation()== null)
-      return;
-    
-    graphics.drawImage (getIcon().getImage(), getLocation().getXCoord(), getLocation().getYCoord(),getIcon().getImageObserver());
   }
   
   /**

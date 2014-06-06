@@ -8,47 +8,51 @@ import java.awt.*;
  * @author Chusa Nguyen
  * @author baseball435 (ScreenFactory class)
  * @version 1.0, May 21 2014. (creates game window)
- * @version 1.1, May 22, 2014. (added keyboard listener, instantiates vs extends JFrame)
+ * @version 1.1, May 22 2014. (added keyboard listener, instantiates vs extends JFrame)
  * @version 1.2, May 26 2014. (Coded keyboard listener, modified window listener.)
- * @version 1.3, May 27, 2014. (bug fix with up key, added closeWindow method)
- * @version 1.4, May 28, 2014. (Added side and pause panels (for every level). Medium game also shows up!)
+ * @version 1.3, May 27 2014. (bug fix with up key, added closeWindow method)
+ * @version 1.4, May 28 2014. (Added side and pause panels (for every level). Medium game also shows up!)
  * @version 1.5, May 30 2014. (Changed access level of paused to public static, added frame and its accessor method. Added argument to constructor param list.)
- * @version 1.6, May 31, 2014. (Added difficult level)
- * @version 1.7, June 4, 2014. (Added keyReleased = for shooting, to eliminate player shooting randomly, win, loseFocus and changeScreen methods)
+ * @version 1.6, May 31 2014. (Added difficult level)
+ * @version 1.7, June 4 2014. (Added keyReleased = for shooting, to eliminate player shooting randomly, win, loseFocus and changeScreen methods)
+ * @version 1.8, June 5 2014. (JavaDoc)
  */
 public class GameWindow
 {
   /**
-   * gameWindow - reference - Reference variable to a new instance of a JFrame object. 
+   * gameWindow - JFrame - Reference variable to a new instance of a JFrame object. 
    */
   private final JFrame gameWindow = new JFrame();
   /**
-   * screenFactory - reference - Reference variable to the corresponding ScreenFactory object.
+   * screenFactory - ScreenFactory - Reference variable to the corresponding ScreenFactory object.
    */
   private final ScreenFactory screenFactory;
   /**
-   * game - reference - Reference variable to the corresponding LevelMap object.
+   * game - LevelMap - Reference variable to the corresponding LevelMap object.
    */
   private final LevelMap game;
   /**
-   * panel - reference - Reference variable to the corresponding SidePanel object.
+   * panel - SidePanel - Reference variable to the corresponding SidePanel object.
    */
   private final SidePanel panel;
   /**
-   * pause - reference - Reference variable to the corresponding PausePanel object.
+   * pause - PausePanel - Reference variable to the corresponding PausePanel object.
    */
   private final PausePanel pause;
   /**
-   * keyboardListener - reference - Reference variable to the corresponding KeyboardListener object.
+   * keyboardListener - KeyboardListener - Reference variable to the corresponding KeyboardListener object.
    */
   private final KeyboardListener keyboardListener;
   /**
    * movement - static int - Represents the direction the user wants to move in. 
    */
   protected static int movement = 0;
+  /**
+   * movement2 - static int - Represents the secondary key the user presses.
+   */
   protected static int movement2 = 0;
   /**
-   * thread - reference - References to the corresponding Thread object.
+   * thread - Thread - References to the corresponding Thread object.
    */
   private Thread thread;
   /**
@@ -56,14 +60,18 @@ public class GameWindow
    */
   public static boolean paused = false;
   /**
-   * frame - reference - Represents the corresponding MenuFrames object. 
+   * frame - MenuFrames - Represents the corresponding MenuFrames object. 
    */
   private MenuFrames frame;
   
-  //constructor, sets title, panel
   /**
    * The class constructor. 
    * It sets the window's title and the appropriate panels.
+   * A 900 by 600 pixel window is created.
+   * A KeyListener is added to get user input.
+   * The appropriate LevelScreen is added and displayed.
+   * A new panel is added to update the game.
+   * SidePanel and PausePanel are added as well. 
    * 
    * @param description  String - Describes the current game level.
    * @param level int - Represents the current level difficulty.
@@ -71,27 +79,35 @@ public class GameWindow
    */
   public GameWindow(String description, int level, MenuFrames frame)
   {
+    //set title
     gameWindow.setTitle ("Elemental Shoot-Out: " + description);
+    //set frame size
     gameWindow.setSize (900,600);
+    //set close operation
     gameWindow.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+    //set window listener
     gameWindow.addWindowListener(new java.awt.event.WindowAdapter() {
       public void windowClosing(java.awt.event.WindowEvent windowEvent) 
       {
         verifyClose();
       }
     });
-    
+    //set focusable
     gameWindow.setFocusable (true);
+    //set resizable
     gameWindow.setResizable (false);
+    //set location (center)
     gameWindow.setLocationRelativeTo (null);
+    
+    //set frame
     this.frame = frame;
-    
+    //create new ScreenFactory, LevelMap, SidePanel and PausePanel
     screenFactory = new ScreenFactory (this);
-    
     game = new LevelMap (this);
     panel = new SidePanel(this);
     pause = new PausePanel (this);
     
+    //add keyboard listener
     keyboardListener = new KeyboardListener(){
       public void keyReleased (KeyEvent event)
       {
@@ -123,30 +139,28 @@ public class GameWindow
       }
     };
     
+    //add keylistener
     gameWindow.addKeyListener (keyboardListener);
     
-    LevelScreen screen = new LevelScreen(getScreenFactory());
+    //create new level screen
+    LevelScreen screen;
+    //easy, medium or hard
     if (level == 1)
-    {
       screen = new EasyGame (getScreenFactory());
-      getScreenFactory().setCurrentScreen (screen);
-    }
     else if (level == 2)
-    {
       screen = new MediumGame (getScreenFactory());
-      getScreenFactory().setCurrentScreen (screen);
-    }
     else
-    {
       screen = new DifficultGame (getScreenFactory());
-      getScreenFactory().setCurrentScreen (screen);
-    }
     
+    //set and show screen (game)
+    getScreenFactory().setCurrentScreen (screen);
     getScreenFactory().showScreen (screen);
     
+    //create a new thread and start it
     thread = new Thread (game);
     thread.start();
     
+    //set panel, layout, background color, add pause panel and side panel, set visible to true
     gameWindow.setContentPane (game);
     gameWindow.setLayout (new BorderLayout());
     gameWindow.setBackground (new java.awt.Color (255,255,255));
@@ -155,40 +169,64 @@ public class GameWindow
     gameWindow.setVisible (true);
   }
   
+  /**
+   * Shows the win screen for the level specified in the parameter.
+   * 
+   * @param level - int - The level that has been won.
+   */
   public void win (int level)
   {
     pause.showWin (level);
   }
   
+  /**
+   * Requests that the side panel be in focus.
+   */
   public void loseFocus()
   {
     panel.requestFocusInWindow();
   }
   
+  /**
+   * Sets the current screen to another LevelScreen depending on the level as specified in the parameter.
+   * Changes the launcher icon as well.
+   * 
+   * @param level - int - The level to show.
+   * @param screen - LevelScreen - The new screen.
+   * @param points - int - The user's points to transfer.
+   */
   public void changeScreen (int level)
   {
+    //no change
     if (level == 0)
       return;
     
-    LevelScreen screen = new LevelScreen(getScreenFactory());
+    //creates a new screen
+    LevelScreen screen = new MediumGame (getScreenFactory());
+    //stores the points
     int points = getScreenFactory().getCurrentScreen().getPlayer().getCurrentPoints();
     
-    if (level == 2)
+    if (level == 2 || level == 3)
     {
-      screen = new MediumGame (getScreenFactory());
-      screen.getPlayer().setIcon (new ImageIcon ("../Images/SockBunny.png"));
-    }
-    else
-    {
-      if (level == 3)
+      //medium
+      if (level == 2)
+        screen.getPlayer().setIcon (new ImageIcon ("../Images/SockBunny.png"));
+      else
       {
-        screen = new DifficultGame (getScreenFactory());
-        screen.getPlayer().setIcon (new ImageIcon ("../Images/HappyLlama.png"));
+        //difficult
+        if (level == 3)
+        {
+          screen = new DifficultGame (getScreenFactory());
+          screen.getPlayer().setIcon (new ImageIcon ("../Images/HappyLlama.png"));
+        }
       }
+      //set new screen
+      getScreenFactory().setCurrentScreen (screen);
+      //add points to screen
+      screen.getPlayer().addPoints (points);
+      //launcher can be used
+      gameWindow.requestFocusInWindow();
     }
-    getScreenFactory().setCurrentScreen (screen);
-    screen.getPlayer().addPoints (points);
-    gameWindow.requestFocusInWindow();
   }
   
   /**
@@ -212,6 +250,7 @@ public class GameWindow
     }
     else
       paused = true;
+    
     pause.pause();
   }
   

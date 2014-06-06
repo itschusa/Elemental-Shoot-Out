@@ -36,6 +36,13 @@ public class CurrentPlayer extends Element
   }
   
   /**
+   * Empty override from the Element class.
+   */
+  public void update()
+  {
+  }
+  
+  /**
    * Checks whether the launcher can move depending on the location of the launcher.
    * It returns true all times except when the launcher is on the two edges of the screen.
    * 
@@ -80,13 +87,6 @@ public class CurrentPlayer extends Element
     }
   }
   
-  /**
-   * Empty override from the Element class.
-   */
-  public void update()
-  {
-  }
-  
   /*
    * Updates the launcher movement depending on the direction as set by the parameters.
    * It checks to see if the launcher can move, and then changes the direction.
@@ -97,16 +97,6 @@ public class CurrentPlayer extends Element
   {
     if (canMove(movement))
       move(movement);
-  }
-  
-  /**
-   * Draws the launcher on the screen.
-   * 
-   * @param graphics - Graphics2D - The Graphics2D object.
-   */
-  public void draw (Graphics2D graphics)
-  {
-    graphics.drawImage (getIcon().getImage(), getLocation().getXCoord(), getLocation().getYCoord(),getIcon().getImageObserver());
   }
   
   /**

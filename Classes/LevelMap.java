@@ -1,9 +1,9 @@
-//JAVADOC
 import javax.swing.*;
 import java.awt.*;
 
 /**
- * The LevelMap class represents the panel. It stores the targets and inventory.
+ * The LevelMap class represents the panel that updates and draws the game.
+ * It also outputs the user's current amount of points, and displays the inventory ring.
  * 
  * @author Anqi Wu
  * @author baseball435
@@ -12,27 +12,48 @@ import java.awt.*;
  * @version 1.2, May 27, 2014. (added temporary main menu button - can close the current window and create the main menu, stacktrace errors vs print errors)
  * @version 1.3, May 28, 2014. (prints total user points)
  * @version 1.4, May 31, 2014. (added ring that tells user which inventory element they are using.)
- * @version 1.5, June 5, 2014. (Somewhat displays how many points were added)
+ * @version 1.5, June 5, 2014. (Somewhat displays how many points were added, JavaDoc)
  */
 public class LevelMap extends JPanel implements Runnable
 {
+  /**
+   * game - GameWindow - Stores the GameWindow of the LevelMap.
+   */
   private final GameWindow game;
+  /**
+   * stop - boolean - Stores whether the thread should be stopped.
+   */
   private boolean stop;
+  /**
+   * ring - ImageIcon - Stores the image of the ring that specifies which inventory in element is used next.
+   */
   private ImageIcon ring = new ImageIcon ("../Images/Ring.png");
   
-  //default constructor
+  /**
+   * Constructs a new panel with the specified GameWindow.
+   * 
+   * @param elemental - GameWindow - The game's window.
+   */
   public LevelMap (GameWindow elemental)
   {
     game = elemental;
     setFocusable (true);
   }
   
+  /**
+   * Stops updating the screen.
+   */
   public void stop()
   {
     stop = true;
   }
   
   //baseball345
+  /**
+   * Updates the screen every 2 milliseconds.
+   * 
+   * @param e - Exception - Catches exceptions.
+   */
   public void run()
   {
     while (!stop)
@@ -50,7 +71,14 @@ public class LevelMap extends JPanel implements Runnable
     }
   }
   
-  //baseball345
+  /**
+   * Paints the game.
+   * The screen, ring, points and status is drawn, respectively.
+   * 
+   * @param g - Graphics - The Graphics object.
+   * @param twoDimensional - Graphics2D - The Graphics2D object.
+   * @param tempPoints - int - The temporary amount of points the user won or lost.
+   */
   public void paintComponent (Graphics g)
   {
     super.paintComponent(g);
@@ -61,16 +89,19 @@ public class LevelMap extends JPanel implements Runnable
     if (game.getScreenFactory().getCurrentScreen() != null)
       game.getScreenFactory().getCurrentScreen().onDraw (twoDimensional);
     
-    twoDimensional.drawImage (ring.getImage(), 30, 479, ring.getImageObserver()); 
-    twoDimensional.drawString("Total Points: "+game.getScreenFactory().getCurrentScreen().getPlayer().getCurrentPoints(), 10,20);
+    twoDimensional.drawImage (ring.getImage(), 30, 479, ring.getImageObserver());
+    twoDimensional.drawString("Total Points: " + game.getScreenFactory().getCurrentScreen().getPlayer().getCurrentPoints(), 10, 20);
+    
     int tempPoints = game.getScreenFactory().getCurrentScreen().getTempPoints();
+    
     if (tempPoints > 0)
-      twoDimensional.drawString ("Fascinating! +"+tempPoints,10,40);
+      twoDimensional.drawString ("Fascinating! +" + tempPoints, 10, 40);
     else
     {
       if (tempPoints < 0)
-        twoDimensional.drawString ("Uh Oh! "+tempPoints,10,40);
+        twoDimensional.drawString ("Uh Oh! " + tempPoints, 10, 40);
     }
+    
     repaint();
   }
 }
