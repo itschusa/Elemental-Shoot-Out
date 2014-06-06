@@ -169,7 +169,7 @@ public class HighscorePanel extends JPanel
     StringTokenizer token;
     int index = 0;
     
-    while (fileInput[index] != null && index < MAX_SCORES)
+    while (index < MAX_SCORES && fileInput[index] != null)
     {
       token = new StringTokenizer (fileInput[index]);
       names[index].setText(token.nextToken());
@@ -348,15 +348,20 @@ public class HighscorePanel extends JPanel
    */
   protected void printScores()
   {
-    Printer printer = new Printer (new Font ("Lucida Sans Typewriter", Font.PLAIN, 14));
+    Printer printer = new Printer (new Font ("Franklin Gothic Book", Font.PLAIN, 14));
     String temp = "";
     
+    printer.println ("", "Elemental Shoot-Out", "");
     printer.println ("", fileHeader, "");
+    printer.println();
+    printer.println ("Name", "Score", "Level");
+    printer.println();
     for (int x = 0; x < MAX_SCORES; x++)
     {
-      temp = ranks[x] + " " + names[x];
+      temp = ranks[x].getText() + " " + names[x].getText();
       printer.println (temp, scores[x].getText(), levels[x].getText());
     }
+    //printer.printImage();
     printer.printUsingDialog();
   }
   

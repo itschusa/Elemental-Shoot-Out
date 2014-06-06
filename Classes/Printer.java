@@ -57,7 +57,7 @@ public class Printer implements Printable
   /**
    * Default margins from the edge of the paper, 72 is the equivalent of 1 inch.
    */
-  private final int MARGINS = 72;
+  private final int MARGINS = 100;
   /**
    * Font for the text to be printed.
    */

@@ -86,7 +86,7 @@ public class MediumGame extends LevelScreen
     {
       int element = (int)(Math.random()*6);
       which = Math.random ();
-      if (which > 0.5 && element > 5 && count < 24 || count2 > 23)
+      if (which > 0.5 && count < 24 || count2 > 23)
       {
         newInventory.add (new GameParticle("Hydroxide", new Location (col, 10, false), -1, 2));
         count++;

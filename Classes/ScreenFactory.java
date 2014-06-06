@@ -41,9 +41,4 @@ public class ScreenFactory
   {
     game.loseFocus();
   }
-  
-//  public KeyboardListener getListener()
-//  {
-//    return game.getKeyboardListener();
-//  }
 }
