@@ -198,7 +198,7 @@ public class MediumGame extends LevelScreen
             System.out.println ("-5");
             getAllInventory().remove(x);
             getPlayer().removePoints(5);
-            setTempPoints(-5);
+            //setTempPoints(-5);
             System.out.println ("Eaten");
             System.out.println ("Total: "+getPlayer().getCurrentPoints());
           }
@@ -208,7 +208,7 @@ public class MediumGame extends LevelScreen
             getAllInventory().remove(x);
             System.out.println ("Removed");
             getPlayer().addPoints (20);
-            setTempPoints(20);
+            //setTempPoints(20);
             System.out.println ("+20");
             System.out.println ("Total: "+getPlayer().getCurrentPoints());
           }
@@ -231,7 +231,7 @@ public class MediumGame extends LevelScreen
               getAllInventory().add (baseParticle);
               getAllTargets().remove(index);
               getPlayer().addPoints (10);
-              setTempPoints(10);
+              //setTempPoints(10);
               System.out.println ("Total: "+getPlayer().getCurrentPoints());
             }
             //if wrong target, remove the inventory
@@ -240,7 +240,7 @@ public class MediumGame extends LevelScreen
               System.out.println ("-5");
               getAllInventory().remove (x);
               getPlayer().removePoints(5);
-              setTempPoints(-5);
+              //setTempPoints(-5);
               System.out.println ("Total: "+getPlayer().getCurrentPoints());
             }
           }
@@ -312,7 +312,7 @@ public class MediumGame extends LevelScreen
       obstacles.get(x).draw(twoDimensional);
     
     //game over or win
-    if (getAllInventory().size() == 0)
+    if (getAllInventory().size() == 0 || obstacles.size() == 0)
     {
       if (!end && getAllTargets().size() == 0)
       {

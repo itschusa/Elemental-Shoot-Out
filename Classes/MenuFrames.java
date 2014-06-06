@@ -46,13 +46,9 @@ public class MenuFrames extends JFrame
    */
   private SettingsPanel settingsPanel;
   /**
-   * scorePanel - reference - Reference variable to the object created by the HighscorePanel class.
-   */
-  private HighscorePanel scorePanel;
-  /**
    * scoresPanel - reference - Reference variable to the object created by the HighscorePanel which extends JPanel. 
    */
-  private HighscorePanel scoresPanel;
+  private HighscorePanel scoresPanel = new HighscorePanel();
   /**
    * panelNum - int - Represents the current panel (1 = main, 2 = level selection, 3 = instructions, 4 = settings, 5 = highscores).
    */
@@ -409,6 +405,19 @@ public class MenuFrames extends JFrame
         repaint();
         validate();
       }});
+    settingsPanel.resetButton.addActionListener(new ActionListener()
+                                                  {
+      public void actionPerformed (ActionEvent e) {
+        int choice = JOptionPane.CANCEL_OPTION;
+        choice = JOptionPane.showConfirmDialog (new JOptionPane(), "Would you like to erase all current scores?", 
+                                                "Confirm Reset", JOptionPane.YES_NO_OPTION);
+        if (choice == JOptionPane.YES_OPTION)
+        {
+          scoresPanel.resetScores();
+        }
+        repaint();
+        revalidate();
+      }});
   }
   
   /**
@@ -431,22 +440,7 @@ public class MenuFrames extends JFrame
    */
   private void scoresActionListener()
   {
-    scoresPanel.resetButton.addActionListener(new ActionListener()
-                                                {
-      public void actionPerformed (ActionEvent e) {
-        int choice = JOptionPane.CANCEL_OPTION;
-        choice = JOptionPane.showConfirmDialog (new JOptionPane(), "Would you like to erase all current scores?", 
-                                                "Confirm Reset", JOptionPane.YES_NO_OPTION);
-        if (choice == JOptionPane.YES_OPTION)
-        {
-          scoresPanel.resetScores();
-          remove(scoresPanel);
-          scoresPanel = new HighscorePanel();
-          add(scoresPanel);
-        }
-        repaint();
-        revalidate();
-      }});
+
   }
   
   /**

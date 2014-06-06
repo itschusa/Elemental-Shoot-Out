@@ -7,6 +7,7 @@ import javax.swing.*;
  * @version 1.0, May 25 2014. (Created class to instantiate and access Sound class.)
  * @version 1.1, May 26 2014. (Split toggle method into two to fix glitches - song would not start/stop properly and overlapped.)
  * @version 1.2, May 30 2014. (Created a method to initialize clip in a separate method, added musicInitialized and getPanel method.)
+ * @version 1.3, June 5 2014. (Created 
  */
 public class SettingsPanel extends JPanel
 {
@@ -29,7 +30,15 @@ public class SettingsPanel extends JPanel
   /**
    * musicInitialized - static boolean - Represents whether or not the AudioClip object from the Sound class has been instantiated yet. 
    */
-  protected static boolean musicInitialized = false;
+  protected static boolean musicInitialized = false;  
+  /**
+   * constraints - reference - Reference variable for the corresponding GridBagConstraints object.
+   */
+  private GridBagConstraints constraints = new GridBagConstraints();
+  /**
+   * resetButton - reference - Reference variable for the corresponding JButton object. 
+   */
+  protected JButton resetButton = new JButton ("Reset Scores");
   
   /**
    * The constructors. It sets the properties of this JPanel and adds components to it. 
@@ -46,15 +55,36 @@ public class SettingsPanel extends JPanel
    */
   private void setInitialStates()
   {
+    JLabel titleImage = new JLabel (new ImageIcon ("../Images/SettingsTitle.png"));
+    JLabel soundLabel = new JLabel ("Sound On/Off:");
     musicOn.setContentAreaFilled(false);
     musicOn.setBorder (null);    
     musicOn.setRolloverIcon(new ImageIcon ("../Images/volume_2Roll.png"));
     musicOff.setContentAreaFilled(false);
     musicOff.setBorder (null);
     musicOff.setRolloverIcon(new ImageIcon ("../Images/volume_OffRoll.png"));
-    add(musicOn);
-    add(musicOff);
+    
+    constraints.gridwidth = 6;
+    constraints.gridy = 0;
+    constraints.gridx = 0;
+    add (titleImage, constraints);    
+    constraints.insets = new Insets (5, 10, 5, 10);
+    constraints.gridy = 1;
+    constraints.gridx = 0;
+    constraints.gridwidth = 2;
+    add (soundLabel, constraints);
+    
+    constraints.gridwidth = 1;
+    constraints.gridx = 2;
+    add(musicOn, constraints);
+    constraints.gridx = 3;
+    add(musicOff, constraints);
     musicOff.setEnabled(false);
+    
+    constraints.gridy = 3;
+    constraints.gridx = 4;
+    constraints.gridwidth = 2;
+    add (resetButton, constraints);
   }
   
   /**
