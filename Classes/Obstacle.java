@@ -1,14 +1,17 @@
+import javax.swing.*;
+
 /**
- * The "AcidCloud" class. This class creates objects to act as obstacles for the medium difficulty. 
- * The acid clouds move along a predefined path on the game screen. It is, by extension, a MediumParticle. 
+ * The "Obstacle" class. This class creates objects to act as obstacles for the medium and difficult levels. 
+ * The obstacles move along a predefined path on the game screen. It is, by extension, a GameParticle. 
  * 
  * @author Chusa Nguyen
  * @author Anqi Wu
  * @version 1.0, May 29 2014. 
  * @version 1.1, June 3 2014. (added currentStep (5 step wait), so clouds move slower)
  * @version 1.2, June 5 2014. (JavaDoc is current)
+ * @version 2.0, June 8 2014. (Now obstacle instead if acidcloud, added glow for difficult)
  */
-public class AcidCloud extends GameParticle
+public class Obstacle extends GameParticle
 {
   /**
    * steps - int - Counter which keeps track of the number of columns the acid cloud has moved.
@@ -26,9 +29,10 @@ public class AcidCloud extends GameParticle
    * currentStep - int - Stores the current number of steps after it was updated.
    */
   private int currentStep = 0;
+  private boolean glow;
   
   /**
-   * The class constructor. It creates an acid cloud object with the specified name, at a specified location 
+   * The class constructor. It creates an obstacle object with the specified name, at a specified location 
    * and a given charge, as well as set its initial direction of movement.
    * 
    * @param newName - String - String representation of this object's name.
@@ -36,14 +40,25 @@ public class AcidCloud extends GameParticle
    * @param charge - int - The charge of the AcidCloud.
    * @param forwards boolean - Determines whether the first step will be forwards or backwards.
    */
-  public AcidCloud (String newName, Location newLocation, int charge, boolean forwards)
+  public Obstacle (String newName, Location newLocation, int charge, boolean forwards, int level)
   {
-    super(newName, newLocation,  charge, 2);
+    super(newName, newLocation,  charge, level);
     this.forwards = forwards;
     if (forwards)
       steps = 0;
     else
       steps = 3;
+  }
+  
+  public void glow()
+  {
+    setIcon (new ImageIcon ("../Images/Difficult/Absorber2.png"));
+    glow = true;
+  }
+  
+  public boolean getGlow ()
+  {
+    return glow;
   }
   
   /**

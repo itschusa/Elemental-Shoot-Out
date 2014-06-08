@@ -13,9 +13,14 @@ import javax.swing.*;
  * @version 1.2, June 3 2014. (Modifications due to location class constructor change, removes instead of sets location to null, two keys at once)
  * @version 1.3, June 4 2014. (Added win and lose screens)
  * @version 1.4, June 5 2014. (Added more targets and inventory, current JavaDoc)
+ * @version 1.5, June 8 2014. (Added absorbers)
  */
 public class DifficultGame extends LevelScreen
 {          
+  /**
+   * obstacles - ArrayList<Obstacle> - Stores the absorber objects.
+   */
+  private ArrayList <Obstacle> obstacles = new ArrayList<Obstacle> ();
   /**
    * end - boolean - Stores whether the user has won the level.
    */
@@ -66,7 +71,6 @@ public class DifficultGame extends LevelScreen
           name = Database.chargePositiveThree[element];
         }
         
-        System.out.println (name);
         newTargets.add (new GameParticle(name, new Location(col, row, false), charge, 3));
       }
     }
@@ -92,9 +96,16 @@ public class DifficultGame extends LevelScreen
         name = Database.chargeNegativeThree[element];
       }
       
-      System.out.println (name);
       newInventory.add (new GameParticle(name, new Location(col, 10, false), charge, 3));
     }
+    
+    //add obstacles
+    obstacles.add(new Obstacle ("Absorber", new Location (4, 1, false), -4, false, 3));
+    obstacles.add(new Obstacle ("Absorber", new Location (9, 2, false), -4, true, 3));
+    obstacles.add(new Obstacle ("Absorber", new Location (5, 4, false), -4, false, 3));
+    obstacles.add(new Obstacle ("Absorber", new Location (7, 4, false), -4, true, 3));
+    obstacles.add(new Obstacle ("Absorber", new Location (6, 5, false), -4, false, 3));
+    obstacles.add(new Obstacle ("Absorber", new Location (2, 5, false), -4, true, 3));
     
     //save changes
     super.setAllTargets (newTargets);
@@ -123,7 +134,22 @@ public class DifficultGame extends LevelScreen
    * @param inv - ArrayList<GameParticle> - Stores all inventory with location not equal to null.
    */
   public void onUpdate ()
-  {
+  {    
+    //moves the obstacles
+    if (!GameWindow.paused)
+    {
+      for (int x = 0; x < obstacles.size(); x++)
+      {
+        if (obstacles.get(x).getUpdateCount() < 100)
+          obstacles.get(x).setUpdateCount(obstacles.get(x).getUpdateCount() + 1);
+        else
+        {
+          obstacles.get(x).setUpdateCount(0);
+          obstacles.get(x).update();
+        }
+      }
+    }
+    
     updateShoot();
     
     //checks for target-inventory interaction
@@ -137,28 +163,45 @@ public class DifficultGame extends LevelScreen
       {
         //get the index of the target
         int index = getTargetIndex(new Location(inv.getLocation().getXCoord(), inv.getLocation().getYCoord(), true));
+        int index2 = getObstacleIndex (new Location(inv.getLocation().getColumn(), inv.getLocation().getRow(), false));
         
-        //if there is a target
-        if (index != -1)
+        if (index2 != -1)
         {
-          //get target
-          GameParticle tar = getAllTargets().get(index);
-          System.out.println ("Inv: "+inv.getCharge());
-          System.out.println ("Tar: "+tar.getCharge());
-          
-          if (inv.getCharge() + tar.getCharge() == 0)
+          getAllInventory().remove(x);
+          if (obstacles.get(index2).getGlow())
           {
-            getAllInventory().remove(x);
-            getAllTargets().remove(index);
-            getPlayer().addPoints (10);
-            setTempPoints(10);
+            getPlayer().removePoints(20);
+            setTempPoints(-20);
           }
-          //if wrong target, remove the inventory
           else
           {
-            getAllInventory().remove(x);
-            getPlayer().removePoints(5);
-            setTempPoints(-5);
+            getPlayer().removePoints(10);
+            setTempPoints(-10);
+            obstacles.get(index2).glow();
+          }
+        }
+        else
+        {
+          //if there is a target
+          if (index != -1)
+          {
+            //get target
+            GameParticle tar = getAllTargets().get(index);
+            
+            if (inv.getCharge() + tar.getCharge() == 0)
+            {
+              getAllInventory().remove(x);
+              getAllTargets().remove(index);
+              getPlayer().addPoints (15);
+              setTempPoints(15);
+            }
+            //if wrong target, remove the inventory
+            else
+            {
+              getAllInventory().remove(x);
+              getPlayer().removePoints(10);
+              setTempPoints(10);
+            }
           }
         }
       }
@@ -168,6 +211,15 @@ public class DifficultGame extends LevelScreen
     updateElements();
   }
   
+  //returns the obstacle at location in parameters, returns null if not found
+  public int getObstacleIndex (Location location)
+  {
+    for (int x = 0; x <obstacles.size(); x++)
+      if (obstacles.get(x).getLocation()!= null && obstacles.get(x).getLocation().getRow() == location.getRow() && obstacles.get(x).getLocation().getColumn() == location.getColumn())
+      return x;
+    
+    return -1;
+  }
   /**
    * Displays the difficult level on the Panel.
    * It draws the wallpaper, player (launcher), inventory and targets, respectively.
@@ -192,6 +244,9 @@ public class DifficultGame extends LevelScreen
     //draw targets
     for (int x = 0; x < getAllTargets().size(); x++)
       getAllTargets().get(x).draw(twoDimensional);
+    
+    for (int x = 0; x < obstacles.size(); x++)
+      obstacles.get(x).draw(twoDimensional);
     
     //game over or win
     if (getAllInventory().size() == 0)

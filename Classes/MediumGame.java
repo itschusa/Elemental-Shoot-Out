@@ -11,21 +11,22 @@ import javax.swing.*;
  * 
  * @author Anqi Wu
  * @author Chusa Nguyen
- * @version 1.0, May 28, 2014. (alkali metals and hydroxide elements update - repeat of EasyGame)
+ * @version 1.0, May 28 2014. (alkali metals and hydroxide elements update - repeat of EasyGame)
  * @version 1.1, May 30 2014. (Added code to create and update acid cloud obstacles.)
- * @version 1.2, May 31, 2014 (Creates all inventory, and only displays first 12. No alkaline metals yet.)
- * @version 1.3, June 2, 2014. (JavaDoc)
- * @version 1.4, June 3, 2014. (Modifications due to location class constructor change, removes instead of sets location to null, two keys at once)
- * @version 1.5, June 4, 2014. (Added win and lose screens, can go to difficult level. Added base particles, no functionality.)
- * @version 1.6, June 4, 2014. (Base implementation and having mix and match for alkali and hydroxide, more targets and inventory)
- * @version 1.7, June 5, 2014. (Equal number of hydroxide and alkali metals, JavaDoc partially)
+ * @version 1.2, May 31 2014 (Creates all inventory, and only displays first 12. No alkaline metals yet.)
+ * @version 1.3, June 2 2014. (JavaDoc)
+ * @version 1.4, June 3 2014. (Modifications due to location class constructor change, removes instead of sets location to null, two keys at once)
+ * @version 1.5, June 4 2014. (Added win and lose screens, can go to difficult level. Added base particles, no functionality.)
+ * @version 1.6, June 4 2014. (Base implementation and having mix and match for alkali and hydroxide, more targets and inventory)
+ * @version 1.7, June 5 2014. (Equal number of hydroxide and alkali metals, JavaDoc partially)
+ * @version 1.8, June 8 2014. (More KISS)
  */
 public class MediumGame extends LevelScreen
 {        
   /**
-   * obstacles - ArrayList<AcidCloud> - Stores the acid cloud objects.
+   * obstacles - ArrayList<Obstacle> - Stores the acid cloud objects.
    */
-  private ArrayList <AcidCloud> obstacles = new ArrayList<AcidCloud> ();
+  private ArrayList <Obstacle> obstacles = new ArrayList<Obstacle> ();
   /**
    * end - boolean - Stores whether the user has won the level.
    */
@@ -100,9 +101,9 @@ public class MediumGame extends LevelScreen
     }
     
     //add obstacles
-    obstacles.add(new AcidCloud ("Cloud", new Location (1, 4, false), -3, true));
-    obstacles.add(new AcidCloud ("Cloud", new Location (9, 4, false), -3, true));
-    obstacles.add(new AcidCloud ("Cloud", new Location (8, 5, false), -3, false));
+    obstacles.add(new Obstacle ("Cloud", new Location (1, 4, false), -3, true, 2));
+    obstacles.add(new Obstacle ("Cloud", new Location (9, 4, false), -3, true, 2));
+    obstacles.add(new Obstacle ("Cloud", new Location (8, 5, false), -3, false, 2));
     
     //save changes
     super.setAllTargets (newTargets);
@@ -134,12 +135,9 @@ public class MediumGame extends LevelScreen
    * @param tar - GameParticle - Stores the temporary target elements.
    * @param tar - ArrayList<GameParticle> - Stores all targets with location not equal to null. 
    * @param inv - ArrayList<GameParticle> - Stores all inventory with location not equal to null.
-   * @param wasEaten - boolean - Represents whether or not the "dart" was "eaten" by an acid cloud. 
    */
   public void onUpdate ()
-  {
-    boolean wasEaten = false;
-    
+  {  
     //moves the obstacles
     if (!GameWindow.paused)
     {
@@ -186,11 +184,8 @@ public class MediumGame extends LevelScreen
             getPlayer().addPoints (20);
             setTempPoints(20);
           }
-          wasEaten = true;
         }
-        
-        //if there is a target
-        if (!wasEaten)
+        else
         {
           if (index!=-1)
           {
@@ -247,7 +242,7 @@ public class MediumGame extends LevelScreen
     getPlayer().draw(twoDimensional);
     
     //draw inventory
-    for (int x = 0; x<12&&x<getAllInventory().size();x++)
+    for (int x = 0; x < 12 && x < getAllInventory().size(); x++)
       getAllInventory().get(x).draw(twoDimensional);
     
     //draw targets
