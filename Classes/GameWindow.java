@@ -6,7 +6,7 @@ import java.awt.*;
  * 
  * @author Anqi Wu
  * @author Chusa Nguyen
- * @author baseball435 (ScreenFactory class)
+ * @author baseball435 of Youtube(ScreenFactory class)
  * @version 1.0, May 21 2014. (creates game window)
  * @version 1.1, May 22 2014. (added keyboard listener, instantiates vs extends JFrame)
  * @version 1.2, May 26 2014. (Coded keyboard listener, modified window listener.)
@@ -17,6 +17,7 @@ import java.awt.*;
  * @version 1.7, June 4 2014. (Added keyReleased = for shooting, to eliminate player shooting randomly, win, loseFocus and changeScreen methods)
  * @version 1.8, June 5 2014. (JavaDoc)
  * @version 1.9, June 6 2014. (Added username prompt to create score record.)
+ * @version 2.0, June 8 2014. (Added getLevel method, modified key listener implementation to prevent program crashes.)
  */
 public class GameWindow
 {
@@ -117,15 +118,21 @@ public class GameWindow
     keyboardListener = new KeyboardListener(){
       public void keyReleased (KeyEvent event)
       {
-        pressedKeys[event.getKeyCode()] = false;
-        releasedKeys[event.getKeyCode()] = true;
-        act();
+        if (event.getKeyCode() < 256)
+        {
+          pressedKeys[event.getKeyCode()] = false;
+          releasedKeys[event.getKeyCode()] = true;
+          act();
+        }
       }
       
       public void keyPressed (KeyEvent event)
       {
-        pressedKeys[event.getKeyCode()] = true;
-        act();
+        if (event.getKeyCode() < 256)
+        {
+          pressedKeys[event.getKeyCode()] = true;
+          act();
+        }
       }
       
       public void act()
@@ -343,7 +350,7 @@ public class GameWindow
     else
       level = "Difficult";
     
-    while (true)
+    while (true)//add option to not enter name to scores.
     {
       username = (String)JOptionPane.showInputDialog("Enter your name. \n(Note: Maximum 10 characters, no spaces.)");
       if (username == null)
@@ -353,5 +360,15 @@ public class GameWindow
     }
     new HighscorePanel (username, getScreenFactory().getCurrentScreen().getPlayer().getCurrentPoints(), level);
     return true;
+  }
+  
+  /**
+   * The "getLevel" method, which returns the current level of the game being played.
+   * 
+   * @return Returns the numeric representation of the game's level. 
+   */
+  protected int getLevel()
+  {
+    return gameLevel;
   }
 }

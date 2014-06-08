@@ -6,6 +6,7 @@ import java.awt.*;
  * It also outputs the user's current amount of points, and displays the inventory ring.
  * 
  * @author Anqi Wu
+ * @author Chusa Nguyen
  * @author baseball435
  * @version 1.0, May 21 2014. (the game window that stores arraylist of particles)
  * @version 1.1, May 22, 2014. (now implements Runnable, which updates/paints the current screen)
@@ -13,6 +14,7 @@ import java.awt.*;
  * @version 1.3, May 28, 2014. (prints total user points)
  * @version 1.4, May 31, 2014. (added ring that tells user which inventory element they are using.)
  * @version 1.5, June 5, 2014. (Somewhat displays how many points were added, JavaDoc)
+ * @version 1.6, June 8 2014. (Displays a random fact every 60 points.)
  */
 public class LevelMap extends JPanel implements Runnable
 {
@@ -78,12 +80,14 @@ public class LevelMap extends JPanel implements Runnable
    * @param g - Graphics - The Graphics object.
    * @param twoDimensional - Graphics2D - The Graphics2D object.
    * @param tempPoints - int - The temporary amount of points the user won or lost.
+   * @param index - int - The index number of the fact to be printed. 
    */
   public void paintComponent (Graphics g)
   {
     super.paintComponent(g);
     
     Graphics2D twoDimensional = (Graphics2D) g;
+    int index = 0;
     twoDimensional.setRenderingHint (RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     
     if (game.getScreenFactory().getCurrentScreen() != null)
@@ -100,6 +104,12 @@ public class LevelMap extends JPanel implements Runnable
     {
       if (tempPoints < 0)
         twoDimensional.drawString ("Uh Oh! " + tempPoints, 10, 40);
+    }
+    
+    if (/**game.getScreenFactory().getCurrentScreen().getPlayer().getCurrentPoints() > 0 &&*/ game.getScreenFactory().getCurrentScreen().getPlayer().getCurrentPoints() % 60 == 0)
+    {
+      index = (int)(Math.random()*10);
+      twoDimensional.drawString(Database.factList[game.getLevel() - 1][index], 400, 400);
     }
     
     repaint();

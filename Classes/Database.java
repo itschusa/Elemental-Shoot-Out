@@ -12,6 +12,7 @@ import javax.swing.*;
  * @version 1.4, May 30 2014. (Added acid cloud obstacle.)
  * @version 1.5, May 31 2014. (Added all difficult level names, easy element icons upgraded)
  * @version 1.6, June 3 2014. (Added base icon for medium.)
+ * @version 
  */
 public class Database
 {
@@ -95,4 +96,11 @@ public class Database
    * chargePositiveThree - String [] - Stores an array of strings, where each string is the name of a particle with a charge of +3.
    */
   public static String[] chargePositiveThree = new String[] {"Iron","3Lithium","Aluminum"};
+  /**
+   * factList - String [][] - Stores a 2d array of strings, where each string is a chemistry fact.
+   */
+  public static String[][] factList = new String [][]{{"Fact 1.1", "Fact 1.2", "Fact 1.3", "Fact 1.4", "Fact 1.5", "Fact 1.6", "Fact 1.7", "Fact 1.8", "Fact 1.9", "Fact 1.0"},
+    {"Fact 2.1", "Fact 2.2", "Fact 2.3", "Fact 2.4", "Fact 2.5", "Fact 2.6", "Fact 2.7", "Fact 2.8", "Fact 2.9", "Fact 2.0"},
+    {"Fact 3.1", "Fact 3.2", "Fact 3.3", "Fact 3.4", "Fact 3.5", "Fact 3.6", "Fact 3.7", "Fact 3.8", "Fact 3.9", "Fact 3.0"}};
+    
 }
