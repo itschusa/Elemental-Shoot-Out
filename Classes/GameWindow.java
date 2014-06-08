@@ -159,7 +159,6 @@ public class GameWindow
       screen = new DifficultGame (getScreenFactory());
     
     //set and show screen (game)
-    getScreenFactory().setCurrentScreen (screen);
     getScreenFactory().showScreen (screen);
     
     //create a new thread and start it
@@ -228,7 +227,7 @@ public class GameWindow
         }
       }
       //set new screen
-      getScreenFactory().setCurrentScreen (screen);
+      getScreenFactory().showScreen (screen);
       //add points to screen
       screen.getPlayer().addPoints (points);
       //launcher can be used
