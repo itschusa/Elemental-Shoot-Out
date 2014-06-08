@@ -51,9 +51,13 @@ public class LevelsPanel extends JPanel
    * difficultButton - reference - Reference variable to the corresponding JButton object.
    */
   protected JButton difficultButton = new JButton (hard);
+  /**
+   * menuButton - reference - Reference variable to the corresponding JButton object. 
+   */
+  protected JButton menuButton = new JButton ("Return to Menu");
   
   /**
-   * The class constructor. It set's the panel's layout, background colour, and calls the method to set the buttons. 
+   * The class constructor. It set's the panel's layout, background colour, title, and calls the method to set the buttons. 
    */
   public LevelsPanel()
   {
@@ -100,5 +104,9 @@ public class LevelsPanel extends JPanel
     
     constraints.gridx = 3;
     add(difficultButton, constraints);
+    
+    constraints.gridx = 3;
+    constraints.gridy = 2;
+    add (menuButton, constraints);
   }
 }

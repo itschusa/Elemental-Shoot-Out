@@ -7,7 +7,7 @@ import javax.swing.*;
  * @version 1.0, May 25 2014. (Created class to instantiate and access Sound class.)
  * @version 1.1, May 26 2014. (Split toggle method into two to fix glitches - song would not start/stop properly and overlapped.)
  * @version 1.2, May 30 2014. (Created a method to initialize clip in a separate method, added musicInitialized and getPanel method.)
- * @version 1.3, June 5 2014. (Created 
+ * @version 1.3, June 8 2014. (Added menu button.) 
  */
 public class SettingsPanel extends JPanel
 {
@@ -39,6 +39,10 @@ public class SettingsPanel extends JPanel
    * resetButton - reference - Reference variable for the corresponding JButton object. 
    */
   protected JButton resetButton = new JButton ("Reset Scores");
+  /**
+   * menuButton - reference - Reference variable for the corresponding JButton object. 
+   */
+  protected JButton menuButton = new JButton ("Return to Menu");
   
   /**
    * The constructors. It sets the properties of this JPanel and adds components to it. 
@@ -84,7 +88,10 @@ public class SettingsPanel extends JPanel
     constraints.gridy = 3;
     constraints.gridx = 4;
     constraints.gridwidth = 2;
+    constraints.fill = constraints.HORIZONTAL;
     add (resetButton, constraints);
+    constraints.gridy = 4;
+    add (menuButton, constraints);
   }
   
   /**

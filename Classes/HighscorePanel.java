@@ -10,6 +10,7 @@ import java.util.StringTokenizer;
  * @author Chusa Nguyen
  * @version 1.1, June 4 2014. (Completed basic implementation. Missing: printer functionality, completed javadoc.)
  * @version 1.2, June 5 2014. (Completed javadoc. Need to test printer functionality.)
+ * @version 1.3, June 8 2014. (Added menu button.)
  */
 public class HighscorePanel extends JPanel
 {
@@ -52,7 +53,7 @@ public class HighscorePanel extends JPanel
   /**
    * resetButton - reference - Reference variable for the corresponding JButton object. 
    */
-  protected JButton printButton = new JButton ("Print");
+  protected JButton printButton = new JButton ("Print Scores");
   /**
    * newName - String - Stores the name of the user. 
    */
@@ -65,6 +66,10 @@ public class HighscorePanel extends JPanel
    * newLevel - String - Stores the name of the level the user just finished playing. 
    */
   private String newLevel;
+  /**
+   * menuButton - reference - References to the specified JButton object. 
+   */
+  protected JButton menuButton = new JButton ("Return to Menu");
   
   /**
    * The default class constructor. 
@@ -336,7 +341,10 @@ public class HighscorePanel extends JPanel
     constraints.gridy = 12;
     constraints.gridx = 4;
     constraints.gridwidth = 1;
+    constraints.fill = constraints.HORIZONTAL;
     add (printButton, constraints);
+    constraints.gridy = 13;
+    add (menuButton, constraints);
   }
   
   /**

@@ -27,6 +27,7 @@ import java.io.IOException;
  * @version 2.6, May 30 2014. (Fixed: settings --> main --> play --> main --> settings --> null pointer exception. Rearranged some code and added 4 new methods.)
  * @version 2.7, June 4 2014. (Removed setSettings method because of redundency, changed access level of settings, added code for highscores [should be functional].)
  * @version 2.8, June 4 2014. (All components of this class are complete. Need to do final testing.)
+ * @version 2.9, June 8 2014. (Added actionlisteners to all menu buttons of each panel.)
  */
 public class MenuFrames extends JFrame
 {
@@ -177,6 +178,8 @@ public class MenuFrames extends JFrame
   /**
    * The "menuBarActionListeners" method. It attaches an ActionListener object to each item contained in
    * the menu bar. 
+   * 
+   * @param e reference - Reference variable for the specified ActionEvent object. 
    */
   private void menuBarActionListeners()
   {
@@ -214,6 +217,8 @@ public class MenuFrames extends JFrame
   
   /**
    * The "keyBindings" method. It uses input and action maps to attach actions to specified keys.
+   * 
+   * @param e reference - Reference variable for the specified ActionEvent object. 
    */
   private void keyBindings()
   {
@@ -250,7 +255,7 @@ public class MenuFrames extends JFrame
     else if (panelNum == 3)
       remove (instructionsPanel);
     else if (panelNum == 4)
-      remove (settingsPanel);
+      removeSettings();
     else 
       if (scoresPanel != null)
       remove (scoresPanel);
@@ -265,6 +270,8 @@ public class MenuFrames extends JFrame
   /**
    * The "menuPanelActionListeners" method. It attaches an ActionListener object to each component (JButton)
    * on the panel.
+   * 
+   * @param e reference - Reference variable for the specified ActionEvent object. 
    */
   private void menuPanelActionListeners()
   {
@@ -314,6 +321,8 @@ public class MenuFrames extends JFrame
   
   /**
    * The "levelsPanelActionListeners" method, which adds an ActionListener object to each component on the panel.
+   * 
+   * @param e reference - Reference variable for the specified ActionEvent object. 
    */
   private void levelsPanelActionListeners()
   {
@@ -344,6 +353,12 @@ public class MenuFrames extends JFrame
         new GameWindow("Hard Level",3, getMenuFrame());
       }
     }); 
+    difficultiesPanel.menuButton.addActionListener (new ActionListener ()
+                                                      {
+      public void actionPerformed (ActionEvent e)
+      {
+        mainMenuPanel();
+      }});
   }
   
   /**
@@ -367,6 +382,12 @@ public class MenuFrames extends JFrame
       validate();
     }
     repaint();
+    instructionsPanel.menuButton.addActionListener (new ActionListener ()
+                                                      {
+      public void actionPerformed (ActionEvent e)
+      {
+        mainMenuPanel();
+      }});
   }
   
   /**
@@ -381,10 +402,10 @@ public class MenuFrames extends JFrame
       musicPanelUncreated = false;
       settingsPanel = new SettingsPanel();
       if (!SettingsPanel.musicInitialized)
-      settingsPanel.initializeClip();
+        settingsPanel.initializeClip();
+      settingsActionListeners();
     }
     add (settingsPanel);
-    settingsActionListeners();
     validate();
   } 
   
@@ -392,6 +413,7 @@ public class MenuFrames extends JFrame
    * The "settingsActionListeners" method. It implements an ActionListener object to each component of the settings panel.
    * 
    * @param choice int - Represents the user's choice on the JOptionPane dialog box. 
+   * @param e reference - Reference variable for the specified ActionEvent object. 
    */
   private void settingsActionListeners()
   {
@@ -421,6 +443,12 @@ public class MenuFrames extends JFrame
         repaint();
         revalidate();
       }});
+      settingsPanel.menuButton.addActionListener (new ActionListener ()
+                                                      {
+      public void actionPerformed (ActionEvent e)
+      {
+        mainMenuPanel();
+      }});
   }
   
   /**
@@ -439,6 +467,7 @@ public class MenuFrames extends JFrame
   /**
    * The "scoresActionListener" method. It adds an ActionListener object to the panel's reset button. 
    * 
+   * @param e reference - Reference variable to the specified ActionEvent object. 
    */
   private void scoresActionListener()
   {
@@ -446,6 +475,12 @@ public class MenuFrames extends JFrame
                                                  {
       public void actionPerformed (ActionEvent e) {
         scoresPanel.printScores();
+      }});
+    scoresPanel.menuButton.addActionListener (new ActionListener ()
+                                                      {
+      public void actionPerformed (ActionEvent e)
+      {
+        mainMenuPanel();
       }});
   }
   
