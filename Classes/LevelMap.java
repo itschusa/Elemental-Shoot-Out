@@ -127,13 +127,19 @@ public class LevelMap extends JPanel implements Runnable
   }
   
   /**
-   * The "incrementCounter" method, which increments the value of countPrinted by 1. It resets the value of countPrinted
-   * if it becomes larger than 9, the last index of factsPrinted.
+   * The "incrementCounter" method, which increments the value of countPrinted by 1. If 9 facts have already been printed,
+   * the value of countPrinted is reset to 0 and all indices of factsPrinted are set to false.
+   * 
+   * @param x int - For loop counter.
    */
   public void incrementCounter()
   {
     countPrinted ++;
     if (countPrinted > 9)
+    {
       countPrinted = 0;
+      for (int x = 0; x < 10; x++)
+        factsPrinted[x] = false;
+    }
   }
 }
