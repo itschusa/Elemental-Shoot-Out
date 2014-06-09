@@ -12,7 +12,7 @@ import javax.swing.*;
  * @version 1.4, May 30 2014. (Added acid cloud obstacle.)
  * @version 1.5, May 31 2014. (Added all difficult level names, easy element icons upgraded)
  * @version 1.6, June 3 2014. (Added base icon for medium.)
- * @version 
+ * @version 1.7, June 8 2014. (Added facts, missing facts for easy, currently using placeholders for testing purposes.)
  */
 public class Database
 {
@@ -97,10 +97,19 @@ public class Database
    */
   public static String[] chargePositiveThree = new String[] {"Iron","3Lithium","Aluminum"};
   /**
-   * factList - String [][] - Stores a 2d array of strings, where each string is a chemistry fact.
+   * factList - String [][] - Stores a 2D array of strings, where each string is a chemistry fact. First dimension represents level number, second represents fact number.
    */
-  public static String[][] factList = new String [][]{{"Fact 1.1", "Fact 1.2", "Fact 1.3", "Fact 1.4", "Fact 1.5", "Fact 1.6", "Fact 1.7", "Fact 1.8", "Fact 1.9", "Fact 1.0"},
-    {"Fact 2.1", "Fact 2.2", "Fact 2.3", "Fact 2.4", "Fact 2.5", "Fact 2.6", "Fact 2.7", "Fact 2.8", "Fact 2.9", "Fact 2.0"},
-    {"Fact 3.1", "Fact 3.2", "Fact 3.3", "Fact 3.4", "Fact 3.5", "Fact 3.6", "Fact 3.7", "Fact 3.8", "Fact 3.9", "Fact 3.0"}};
+  public static String[][] factList = new String [][]{
+    {"Nuclear reactions involve changes to an atom's neutrons and protons, not it's electrons!", 
+      "Nuclear reactions are grouped into two main types: nuclear fusion and nuclear fission.", "Fact 1.3", "Fact 1.4", "Fact 1.5", "Fact 1.6", "Fact 1.7", "Fact 1.8", "Fact 1.9", "Fact 1.0"},
+      {"Acids have a pH value that is less than 7.", "Bases have a pH value that is greater than 7.", "There are two types of acids: binary acids and oxyacids.", 
+        "The chemical formula of a base will end with Hydroxide or Bicarbonate.", "Common acids include orange juice, vinegar and stomach acid.", "Common bases include milk and baking soda.", 
+        "Acids usually taste sour.", "Bases usually taste bitter.", "Carbon dioxide is a product of neutralization when the base is a bicarbonate.", "Products of a neutralization reaction: Water and a salt."},
+        {"Ionic compounds are made up of two parts: a cation and an anion.", "Ionic bonds: the metal atom donates electrons, the non-metal recieves electrons.", 
+          "Ionic compounds are almost always solid at room temperature.", "Negative ions are called anions. Non-metal ions are anions.", "Positive ions are called cations. Metal atoms are cations.", 
+          "When naming ionic compounds, always name the positive ion first.", "Compounds must have a net (overall) charge of zero.", 
+          "Ionic compounds generally have high melting points because of their lattice structure.", "Ionic compounds tend to be highly soluble in water, and their solutions are conductive.", 
+          "Acids and bases are special types of ionic compounds."}
+  };
     
 }

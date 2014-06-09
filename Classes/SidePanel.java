@@ -11,6 +11,7 @@ import java.awt.event.*;
  * @version 1.1, May 30 2014. (Fixed null pointer exception described in MenuFrames and added ActionListener to sound.)
  * @version 1.2, June 4, 2014. (Music now does not lose focus of the game.)
  * @version 1.3, June 6, 2014. (Prompts user for name before returning to main menu. Option to cancel and return to game if main menu clicked.)
+ * @version 1.4, June 8 2014. (Moved component implementation from constructor to private method.)
  */
 public class SidePanel extends JPanel
 {
@@ -52,7 +53,18 @@ public class SidePanel extends JPanel
     
     setPreferredSize(new Dimension(200,600));
     setBackground(new Color(0,0,0,125));
+    setLayout (new GridBagLayout());
     
+    setComponents();
+  }
+  
+  
+  /**
+   * The "setComponents" method, which declares and adds the various components to the panel.
+   * This method creates each JButton, adds ActionListener objects, and declares their specifications (location, size, etc).
+   */
+  private void setComponents()
+  {
     JButton mainMenu = new JButton (menuIcon);
     mainMenu.setPreferredSize(new Dimension (64, 64));
     mainMenu.setContentAreaFilled(false);
@@ -70,8 +82,6 @@ public class SidePanel extends JPanel
     soundButton.setContentAreaFilled(false);
     soundButton.setBorder (null);
     soundButton.setRolloverIcon (new ImageIcon ("../Images/volume_icon_roll.png"));
-    
-    setLayout (new GridBagLayout());
     
     constraints.insets = new Insets (10, 10, 10, 10);
     constraints.gridx = 1;

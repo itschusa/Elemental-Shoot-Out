@@ -7,6 +7,7 @@
  * @version 1.1, May 28 2014. (Panda Company - changed Screen to LevelScreen)
  * @version 1.2, June 4 2014. (Added win and loseFocus methods)
  * @version 1.3, June 8 2014. (JavaDoc, removed setCurrentScreen)
+ * @version 1.4, June 8 2014. (Added getGame.)
  */
 public class ScreenFactory
 {
@@ -42,6 +43,8 @@ public class ScreenFactory
   
   /**
    * Returns the current LevelScreen.
+   * 
+   * @return Returns the current LevelScreen instance.
    */
   public LevelScreen getCurrentScreen ()
   {
@@ -62,5 +65,15 @@ public class ScreenFactory
   public void loseFocus ()
   {
     game.loseFocus();
+  }
+  
+  /**
+   * Returns the current gameWindow.
+   * 
+   * @param Returns the current GameWindow instance.
+   */
+  public GameWindow getGame()
+  {
+    return game;
   }
 }

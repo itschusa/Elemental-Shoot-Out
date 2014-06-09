@@ -14,6 +14,7 @@ import javax.swing.*;
  * @version 1.3, June 4 2014. (Added win and lose screens)
  * @version 1.4, June 5 2014. (Added more targets and inventory, current JavaDoc)
  * @version 1.5, June 8 2014. (Added absorbers)
+ * @version 2.0, June 8 2014. (Displays facts.)
  */
 public class DifficultGame extends LevelScreen
 {          
@@ -193,6 +194,8 @@ public class DifficultGame extends LevelScreen
               getAllInventory().remove(x);
               getAllTargets().remove(index);
               getPlayer().addPoints (15);
+              if (getPlayer().getCurrentPoints() > 0 && getPlayer().getCurrentPoints() %60 == 0)
+                getScreenFactory().getGame().getMap().incrementCounter();
               setTempPoints(15);
             }
             //if wrong target, remove the inventory

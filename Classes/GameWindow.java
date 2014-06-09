@@ -17,7 +17,7 @@ import java.awt.*;
  * @version 1.7, June 4 2014. (Added keyReleased = for shooting, to eliminate player shooting randomly, win, loseFocus and changeScreen methods)
  * @version 1.8, June 5 2014. (JavaDoc)
  * @version 1.9, June 6 2014. (Added username prompt to create score record.)
- * @version 2.0, June 8 2014. (Added getLevel method, modified key listener implementation to prevent program crashes.)
+ * @version 2.0, June 8 2014. (Added getLevel method, modified key listener implementation to prevent program crashes. Added getMap and option to not save scores.)
  */
 public class GameWindow
 {
@@ -315,7 +315,7 @@ public class GameWindow
   private void verifyClose()
   {
     int choice = JOptionPane.CANCEL_OPTION;
-    choice = JOptionPane.showConfirmDialog (new JOptionPane(), "Would you like to exit this game?", "Confirm Quit",
+    choice = JOptionPane.showConfirmDialog (new JOptionPane(), "Would you like to exit this game?\nNote: Current score will not be saved.", "Confirm Quit",
                                             JOptionPane.YES_NO_OPTION);
     if (choice == JOptionPane.YES_OPTION)
       System.exit(0);
@@ -337,28 +337,37 @@ public class GameWindow
    * 
    * @param username String - Stores the user's name.
    * @param level String - String representation of the current game level.
+   * @param choice int - Represents whether or not the user would like to save their score.
    * @return Returns false if the user chooses to cancel (not return to main menu), true if an acceptable name is entered.
    */
   protected boolean askName()
   {
     String username = "";
     String level;
+    int choice = JOptionPane.CANCEL_OPTION;
     if (gameLevel == 1)
       level = "Easy";
     else if (gameLevel == 2)
       level = "Medium";
     else
       level = "Difficult";
-    
-    while (true)//add option to not enter name to scores.
+
+    choice = JOptionPane.showConfirmDialog (new JOptionPane(), "Would you like to save your current score?", "Confirm Save",
+                                            JOptionPane.YES_NO_CANCEL_OPTION);
+    if (choice == JOptionPane.CANCEL_OPTION)
+      return false;
+    if (choice == JOptionPane.YES_OPTION)
     {
-      username = (String)JOptionPane.showInputDialog("Enter your name. \n(Note: Maximum 10 characters, no spaces.)");
-      if (username == null)
-        return false;
-      if (!username.equals("") && username.length() <= 10 && !username.contains(" "))
-        break;
+      while (true)
+      {
+        username = (String)JOptionPane.showInputDialog("Enter your name. \n(Note: Maximum 10 characters, no spaces.)");
+        if (username == null)
+          return false;
+        if (!username.equals("") && username.length() <= 10 && !username.contains(" "))
+          break;
+      }
+      new HighscorePanel (username, getScreenFactory().getCurrentScreen().getPlayer().getCurrentPoints(), level);
     }
-    new HighscorePanel (username, getScreenFactory().getCurrentScreen().getPlayer().getCurrentPoints(), level);
     return true;
   }
   
@@ -370,5 +379,15 @@ public class GameWindow
   protected int getLevel()
   {
     return gameLevel;
+  }
+  
+  /**
+   * The "getMap" method, which returns the current instance of the LevelMap which was created.
+   * 
+   * @return Returns the current LevelMap instance.
+   */
+  protected LevelMap getMap()
+  {
+    return game;
   }
 }

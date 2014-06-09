@@ -30,6 +30,15 @@ public class LevelMap extends JPanel implements Runnable
    * ring - ImageIcon - Stores the image of the ring that specifies which inventory in element is used next.
    */
   private ImageIcon ring = new ImageIcon ("../Images/Ring.png");
+  /**
+   * index - int - The index number of the fact to be printed. 
+   */
+  private int index = 0;
+  
+  
+  private boolean[] factsPrinted = new boolean[10];
+  private int countPrinted = 0;
+  
   
   /**
    * Constructs a new panel with the specified GameWindow.
@@ -80,14 +89,12 @@ public class LevelMap extends JPanel implements Runnable
    * @param g - Graphics - The Graphics object.
    * @param twoDimensional - Graphics2D - The Graphics2D object.
    * @param tempPoints - int - The temporary amount of points the user won or lost.
-   * @param index - int - The index number of the fact to be printed. 
    */
   public void paintComponent (Graphics g)
   {
     super.paintComponent(g);
     
     Graphics2D twoDimensional = (Graphics2D) g;
-    int index = 0;
     twoDimensional.setRenderingHint (RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     
     if (game.getScreenFactory().getCurrentScreen() != null)
@@ -106,12 +113,27 @@ public class LevelMap extends JPanel implements Runnable
         twoDimensional.drawString ("Uh Oh! " + tempPoints, 10, 40);
     }
     
-    if (/**game.getScreenFactory().getCurrentScreen().getPlayer().getCurrentPoints() > 0 &&*/ game.getScreenFactory().getCurrentScreen().getPlayer().getCurrentPoints() % 60 == 0)
+    if (game.getScreenFactory().getCurrentScreen().getPlayer().getCurrentPoints() > 0 && game.getScreenFactory().getCurrentScreen().getPlayer().getCurrentPoints() % 60 == 0)
     {
-      index = (int)(Math.random()*10);
-      twoDimensional.drawString(Database.factList[game.getLevel() - 1][index], 400, 400);
+      if (!factsPrinted[countPrinted])
+      {
+        index = (int)(Math.random()*10);
+        factsPrinted [countPrinted] = true;
+      }
+      twoDimensional.drawString(Database.factList[game.getLevel() - 1][index], 100, 450);
     }
     
     repaint();
+  }
+  
+  /**
+   * The "incrementCounter" method, which increments the value of countPrinted by 1. It resets the value of countPrinted
+   * if it becomes larger than 9, the last index of factsPrinted.
+   */
+  public void incrementCounter()
+  {
+    countPrinted ++;
+    if (countPrinted > 9)
+      countPrinted = 0;
   }
 }

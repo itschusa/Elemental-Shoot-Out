@@ -20,6 +20,7 @@ import javax.swing.*;
  * @version 1.6, June 4 2014. (Base implementation and having mix and match for alkali and hydroxide, more targets and inventory)
  * @version 1.7, June 5 2014. (Equal number of hydroxide and alkali metals, JavaDoc partially)
  * @version 1.8, June 8 2014. (More KISS)
+ * @version 2.0, June 8 2014. (Displays facts.)
  */
 public class MediumGame extends LevelScreen
 {        
@@ -199,6 +200,8 @@ public class MediumGame extends LevelScreen
               getAllInventory().add (baseParticle);
               getAllTargets().remove(index);
               getPlayer().addPoints (10);
+              if (getPlayer().getCurrentPoints() > 0 && getPlayer().getCurrentPoints() %60 == 0)
+                getScreenFactory().getGame().getMap().incrementCounter();
               setTempPoints(10);
             }
             //if wrong target, remove the inventory

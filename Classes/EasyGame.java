@@ -22,6 +22,7 @@ import javax.swing.*;
  * @version 1.8, June 3 2014. (Modifications due to location class constructor change, removes instead of sets location to null, two keys at once)
  * @version 1.9, June 4 2014. (Modified win and lose screens, once a player wins, they will be taken to the next level)
  * @version 1.10, June 5 2014. (Sends tempPoints to super, JavaDoc is current)
+ * @version 2.0, June 8 2014. (Displays facts.)
  */
 public class EasyGame extends LevelScreen
 {        
@@ -148,6 +149,8 @@ public class EasyGame extends LevelScreen
             getAllTargets().remove(index);
             getPlayer().addPoints (10);
             setTempPoints (10);
+            if (getPlayer().getCurrentPoints() > 0 && getPlayer().getCurrentPoints() %60 == 0)
+              getScreenFactory().getGame().getMap().incrementCounter();
           }
           //if wrong target, remove the inventory
           else
