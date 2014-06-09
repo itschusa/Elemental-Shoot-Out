@@ -9,7 +9,6 @@ import java.awt.Point;
 import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.io.IOException;
 
 /** Helper class desinged to make printing easier. Basic principle is that this class will act like an output stream allowing
   * for text and graphics be outputted on it. Text are displayed on a line by line format (location of the beginning of the

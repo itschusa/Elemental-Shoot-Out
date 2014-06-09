@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.awt.*;
-import javax.swing.*;
 
 /**
  * The MediumGame class represents the screen for the medium level.

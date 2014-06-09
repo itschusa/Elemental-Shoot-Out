@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.awt.*;
-import javax.swing.*;
 
 /**
  * The DifficultGame class represents the screen for the difficult level.
@@ -47,7 +46,11 @@ public class DifficultGame extends LevelScreen
     ArrayList<GameParticle> newTargets = new ArrayList<GameParticle>();
     ArrayList<GameParticle> newInventory = new ArrayList <GameParticle>();
     String name = "";
-    int charge, element = 0;
+    int charge = 0;
+    int element = 0;
+    int count = 0;
+    int count2 = 0;
+    int count3 = 0;
     
     //set targets randomly
     for (int row = 1; row < 6; row++)
@@ -56,48 +59,72 @@ public class DifficultGame extends LevelScreen
       {
         charge = (int) (Math.random()*3)+1;
         
-        if (charge == 1)
+        if (count < 20 && (charge == 1 || count2 > 19 || count3 > 19))
         {
+          charge = 1;
           element = (int)(Math.random()*Database.chargePositiveOne.length);
           name = Database.chargePositiveOne[element];
+          count++;
         }
-        else if (charge == 2)
+        else if (count2 < 20 && (charge == 2 || count > 19 || count3 > 19))
         {
+          charge = 2;
           element = (int)(Math.random()*Database.chargePositiveTwo.length);
           name = Database.chargePositiveTwo[element];
+          count2++;
         }
         else
         {
-          element = (int)(Math.random()*Database.chargePositiveThree.length);
-          name = Database.chargePositiveThree[element];
+          if (count3 < 20 && (charge == 3 || count > 19 || count2 > 19))
+          {
+            charge = 3;
+            element = (int)(Math.random()*Database.chargePositiveThree.length);
+            name = Database.chargePositiveThree[element];
+            count3++;
+          }
         }
         
         newTargets.add (new GameParticle(name, new Location(col, row, false), charge, 3));
+        System.out.println (name + " "+ charge);
       }
     }
+    
+    count = 0;
+    count2 = 0;
+    count3 = 0;
     
     //sets the inventory randomly
     for (int col = 1; col < 61; col++)
     {
       charge = -((int) (Math.random()*3))-1;
       
-      if (charge == -1)
+      if (count < 20 && (charge == -1 || count2 > 19 || count3 > 19))
       {
+        charge = -1;
         element = (int)(Math.random()*Database.chargeNegativeOne.length);
         name = Database.chargeNegativeOne[element];
+        count++;
       }
-      else if (charge == -2)
+      else if (count2 < 20 && (charge == -2 || count > 19 || count3 > 19))
       {
+        charge = -2;
         element = (int)(Math.random()*Database.chargeNegativeTwo.length);
         name = Database.chargeNegativeTwo[element];
+        count2++;
       }
       else
       {
-        element = (int)(Math.random()*Database.chargeNegativeThree.length);
-        name = Database.chargeNegativeThree[element];
+        if (count3 < 20 && (charge == -3 || count > 19 || count2 > 19))
+        {
+          charge = -3;
+          element = (int)(Math.random()*Database.chargeNegativeThree.length);
+          name = Database.chargeNegativeThree[element];
+          count3++;
+        }
       }
       
       newInventory.add (new GameParticle(name, new Location(col, 10, false), charge, 3));
+      System.out.println (name + " "+ charge);
     }
     
     //add obstacles

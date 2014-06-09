@@ -88,7 +88,7 @@ public class SettingsPanel extends JPanel
     constraints.gridy = 3;
     constraints.gridx = 4;
     constraints.gridwidth = 2;
-    constraints.fill = constraints.HORIZONTAL;
+    constraints.fill = GridBagConstraints.HORIZONTAL;
     add (resetButton, constraints);
     constraints.gridy = 4;
     add (menuButton, constraints);

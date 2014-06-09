@@ -189,7 +189,7 @@ public class GameWindow
   public void win (int level)
   {
     pause.showWin (level);
-    gameLevel = level + 1;//if they win, game level is now next level
+    gameLevel = level;//if they win, game level is now next level
   }
   
   /**

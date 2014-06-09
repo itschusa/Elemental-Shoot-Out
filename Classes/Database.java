@@ -101,7 +101,11 @@ public class Database
    */
   public static String[][] factList = new String [][]{
     {"Nuclear reactions involve changes to an atom's neutrons and protons, not it's electrons!", 
-      "Nuclear reactions are grouped into two main types: nuclear fusion and nuclear fission.", "Fact 1.3", "Fact 1.4", "Fact 1.5", "Fact 1.6", "Fact 1.7", "Fact 1.8", "Fact 1.9", "Fact 1.0"},
+      "Nuclear reactions are grouped into two main types: nuclear fusion and nuclear fission.", "Nuclear power plants use nuclear fission to create energy!", 
+      "Nuclear reactions produce 1 million times more energy than chemical reactions.", "Fission is the process of splitting a heavier nucleus into lighter nuclei.", 
+      "Nuclear fusion is the process where lighter nuclei combine to form a more stable heavier nucleus.", "Some types of radioactive decay include alpha decay, beta decay and gamma decay!", 
+      "Nuclear fusion in elements before iron releases energy and becomes more stable.", "Nuclear fusion in elements after iron consumes energy and becomes less stable.", 
+      "Fusion weapons are also known as hydrogen bombs!"},
       {"Acids have a pH value that is less than 7.", "Bases have a pH value that is greater than 7.", "There are two types of acids: binary acids and oxyacids.", 
         "The chemical formula of a base will end with Hydroxide or Bicarbonate.", "Common acids include orange juice, vinegar and stomach acid.", "Common bases include milk and baking soda.", 
         "Acids usually taste sour.", "Bases usually taste bitter.", "Carbon dioxide is a product of neutralization when the base is a bicarbonate.", "Products of a neutralization reaction: Water and a salt."},

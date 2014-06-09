@@ -1,6 +1,3 @@
-import javax.swing.*;
-import java.awt.*;
-
 /**
  * The CurrentPlayer class stores the score of the player.
  * 
