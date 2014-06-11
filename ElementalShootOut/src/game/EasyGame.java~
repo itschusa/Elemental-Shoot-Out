@@ -25,6 +25,7 @@ import javax.swing.*;
  * @version 1.9, June 4 2014. (Modified win and lose screens, once a player wins, they will be taken to the next level)
  * @version 1.10, June 5 2014. (Sends tempPoints to super, JavaDoc is current)
  * @version 2.0, June 8 2014. (Displays facts.)
+ * @version 2.1, June 10 2014. (JavaDoc)
  */
 public class EasyGame extends LevelScreen
 {        
@@ -121,7 +122,7 @@ public class EasyGame extends LevelScreen
    * @param x - int - Increments through for loop.
    * @param inv - GameParticle - Stores the temporary inventory elements.
    * @param tar - GameParticle - Stores the temporary target elements.
-   * @param inv - ArrayList<GameParticle> - Stores all inventory with location not equal to null.
+   * @param index - int - Stores the index of the target in the same location as the current inventory.
    */
   public void onUpdate ()
   {
@@ -144,6 +145,7 @@ public class EasyGame extends LevelScreen
         {
           //get targer
           GameParticle tar = getAllTargets().get(index);
+          
           //stable and stable || unstable and neutron <-- remove both inventory and target
           if (inv.getName().equals(tar.getName()) || inv.getName().equals("Neutron") && tar.getName().equals("Unstable"))
           {
@@ -151,6 +153,7 @@ public class EasyGame extends LevelScreen
             getAllTargets().remove(index);
             getPlayer().addPoints (10);
             setTempPoints (10);
+            
             if (getPlayer().getCurrentPoints() > 0 && getPlayer().getCurrentPoints() %60 == 0)
               getScreenFactory().getGame().getMap().incrementCounter();
           }

@@ -6,7 +6,7 @@ import java.awt.*;
 /**
  * The DifficultGame class represents the screen for the difficult level.
  * The gameplay involves shooting anions (negative ions) at cations (positive ions) and vice versa to create ionic compounds.
- * All the targets and inventory are set randomly, so the level is very unlikely to be won.
+ * All charges can be matched up exactly.
  * 
  * @author Anqi Wu
  * @version 1.0, May 31 2014. (Creates the game with difficult particles. No win/game over screen)
@@ -16,6 +16,7 @@ import java.awt.*;
  * @version 1.4, June 5 2014. (Added more targets and inventory, current JavaDoc)
  * @version 1.5, June 8 2014. (Added absorbers)
  * @version 2.0, June 8 2014. (Displays facts.)
+ * @version 2.1, June 10 2014. (JavaDoc)
  */
 public class DifficultGame extends LevelScreen
 {          
@@ -32,10 +33,14 @@ public class DifficultGame extends LevelScreen
    * Constructs a difficult level screen. This creates a random list of targets and inventory with charges from -3 to +3.
    * 
    * @param screenFactory - ScreenFactory - The ScreenFactory object that stores the current screen.
+   * 
    * @param newTargets - ArrayList<GameParticle> - Stores the temporary targets.
    * @param newInventory - ArrayList<GameParticle> - Stores the temporary inventory.
    * @param name - String - Stores the temporary names of the elements.
    * @param charge - int - Stores the temporary charge of the element.
+   * @param count - int - Stores the number of charge 1/-1 elements.
+   * @param count2 - int - Stores the number of charge 2/-2 elements.
+   * @param count3 - int - Stores the number of charge 3/-3 elements.
    * @param element - int - Stores the temporary index of the current element.
    * @param row - int - Stores the current row of the location to set for the elements.
    * @param col - int - Stores the current column of the location to set for the elements.
@@ -154,12 +159,12 @@ public class DifficultGame extends LevelScreen
    * Points are also updated. 10 points are added if the charges add to 0. 5 points are deducted if they do not add to 0.
    * Finally, all elements with no locations are removed, and all elements are updated.
    * 
-   * @param index - int - Stores the index of the element at the location with row 10 and column 1.
+   * @param index - int - Stores the index of the target at the same location as the current inventory.
+   * @param index2 - int - Stores the index of the obstacle at the same location as the current inventory.
    * @param dart - GameParticle - Stores the temporary element to be shot with.
    * @param x - int - Increments through for loop.
    * @param inv - GameParticle - Stores the temporary inventory elements.
    * @param tar - GameParticle - Stores the temporary target elements.
-   * @param inv - ArrayList<GameParticle> - Stores all inventory with location not equal to null.
    */
   public void onUpdate ()
   {    
@@ -221,8 +226,10 @@ public class DifficultGame extends LevelScreen
               getAllInventory().remove(x);
               getAllTargets().remove(index);
               getPlayer().addPoints (15);
+              
               if (getPlayer().getCurrentPoints() > 0 && getPlayer().getCurrentPoints() %60 == 0)
                 getScreenFactory().getGame().getMap().incrementCounter();
+              
               setTempPoints(15);
             }
             //if wrong target, remove the inventory
@@ -230,7 +237,7 @@ public class DifficultGame extends LevelScreen
             {
               getAllInventory().remove(x);
               getPlayer().removePoints(10);
-              setTempPoints(10);
+              setTempPoints(-10);
             }
           }
         }
@@ -241,12 +248,21 @@ public class DifficultGame extends LevelScreen
     updateElements();
   }
   
-  //returns the obstacle at location in parameters, returns null if not found
+  /**
+   * Returns the obstacle at the location in the parameter.
+   * It returns null if not found.
+   * 
+   * @param location - Location - The location of the obstacle to find.
+   * @param x - int - Increments through for loop.
+   * @return An int that represents the index of the obstacle.
+   */
   public int getObstacleIndex (Location location)
   {
     for (int x = 0; x <obstacles.size(); x++)
+    {
       if (obstacles.get(x).getLocation()!= null && obstacles.get(x).getLocation().getRow() == location.getRow() && obstacles.get(x).getLocation().getColumn() == location.getColumn())
-      return x;
+        return x;
+    }
     
     return -1;
   }

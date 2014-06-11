@@ -158,7 +158,6 @@ public class HighscorePanel extends JPanel
     }
     catch(IOException e)
     {
-      System.out.println (e);
       writeFile(true);
     }
   }
@@ -278,11 +277,9 @@ public class HighscorePanel extends JPanel
     }
     catch(IOException e)
     {
-      System.out.println(e);
     }
     catch(NumberFormatException ex)
     {
-      System.out.println (ex);
     }
   }
   

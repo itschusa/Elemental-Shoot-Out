@@ -221,7 +221,8 @@ public class MenuFrames extends JFrame
     
     instructionsItem.addActionListener(new ActionListener(){
       public void actionPerformed (ActionEvent e) {
-        instructions();
+        if (panelNum != 3)
+          instructions();
       }});
   }
   

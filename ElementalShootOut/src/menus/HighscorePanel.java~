@@ -303,7 +303,7 @@ public class HighscorePanel extends JPanel
     JLabel nameLabel = new JLabel ("Name");
     JLabel scoreLabel = new JLabel ("Score");
     JLabel levelLabel = new JLabel ("Level");
-    JLabel titleLabel = new JLabel (new ImageIcon ("../Images/Highscores.png"));
+    JLabel titleLabel = new JLabel (new ImageIcon ("Images/Highscores.png"));
     
     //set arrays of JLabels 
     for (int y = 0; y < MAX_SCORES; y++)

@@ -183,24 +183,11 @@ public class EasyGame extends LevelScreen
    */
   public void onDraw (Graphics2D twoDimensional)
   {
-    //draw background
-    twoDimensional.drawImage (getWallpaper().getImage(), 0, 0, getWallpaper().getImageObserver()); 
+    super.onDraw (twoDimensional);
     
     //tutorial
     if (getAllTargets().size() == 36)
       twoDimensional.drawImage (instructionImage.getImage(), -100, 0, instructionImage.getImageObserver());
-    
-    //draw player
-    getPlayer().draw(twoDimensional);
-    
-    //draw inventory
-    for (int x = 0; x < 12 && x < getAllInventory().size(); x++)
-      getAllInventory().get(x).draw(twoDimensional);
-    
-    //draw targets
-    for (int x = 0; x < getAllTargets().size(); x++)
-      getAllTargets().get(x).draw(twoDimensional);
-    
     
     //game over or win
     if (getAllInventory().size() == 0)

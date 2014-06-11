@@ -123,16 +123,20 @@ public class MenuFrames extends JFrame
   /**
    * The "frameSpecifications" method. It sets the specifications of the JFrame window by defining its size,
    * visibility, resizability, and what should be done by default should the exit button be clicked.
+   * An anonymous class that extends WindowAdapter listens for when the user wants to close the window and then it does
+   * the same thing as if the menu item was clicked.
    */
   private void frameSpecifications ()
   {
     setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+    
     addWindowListener(new java.awt.event.WindowAdapter() {
       public void windowClosing(java.awt.event.WindowEvent windowEvent) 
       {
         closeItem.doClick();
       }
     });
+    
     setVisible (true);
     requestFocus();
     toFront();
@@ -193,14 +197,17 @@ public class MenuFrames extends JFrame
           mainMenuPanel();
         }
       }}); 
+    
     closeItem.addActionListener (new ActionListener(){
       public void actionPerformed (ActionEvent e)      {
         verifyClose();
       }}); 
+    
     aboutItem.addActionListener(new ActionListener(){
       public void actionPerformed (ActionEvent e)      {
         new SplashScreen ("Images/SplashSMALLER.png", 5000, false);
       }});
+    
     helpItem.addActionListener(new ActionListener(){
       public void actionPerformed (ActionEvent e)      {
         try
@@ -209,9 +216,9 @@ public class MenuFrames extends JFrame
         }
         catch (IOException ex)
         {
-          System.out.println (ex);
         }
-      }});    
+      }});  
+    
     instructionsItem.addActionListener(new ActionListener(){
       public void actionPerformed (ActionEvent e) {
         instructions();
@@ -335,7 +342,7 @@ public class MenuFrames extends JFrame
       { 
         setVisible(false);
         mainMenuPanel();
-        new GameWindow("Easy Level",1, getMenuFrame());
+        new GameWindow("Easy Level", 1, getMenuFrame());
       }
     }); 
     difficultiesPanel.mediumButton.addActionListener (new ActionListener ()
@@ -344,7 +351,7 @@ public class MenuFrames extends JFrame
       { 
         setVisible(false);
         mainMenuPanel();
-        new GameWindow("Medium Level",2,getMenuFrame());
+        new GameWindow("Medium Level", 2,getMenuFrame());
       }
     }); 
     difficultiesPanel.difficultButton.addActionListener (new ActionListener ()
@@ -353,7 +360,7 @@ public class MenuFrames extends JFrame
       { 
         setVisible(false);
         mainMenuPanel();
-        new GameWindow("Hard Level",3, getMenuFrame());
+        new GameWindow("Hard Level", 3, getMenuFrame());
       }
     }); 
     difficultiesPanel.menuButton.addActionListener (new ActionListener ()

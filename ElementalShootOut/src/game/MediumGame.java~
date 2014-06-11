@@ -22,6 +22,7 @@ import java.awt.*;
  * @version 1.7, June 5 2014. (Equal number of hydroxide and alkali metals, JavaDoc partially)
  * @version 1.8, June 8 2014. (More KISS)
  * @version 2.0, June 8 2014. (Displays facts.)
+ * @version 2.1, June 10 2014. (JavaDoc)
  */
 public class MediumGame extends LevelScreen
 {        
@@ -67,6 +68,7 @@ public class MediumGame extends LevelScreen
       {
         int element = (int) (Math.random()*6);
         which = Math.random ();
+        
         if (which > 0.5 && count < 24 || count2 > 23)
         {
           newTargets.add (new GameParticle("Hydroxide", new Location (col, row, false), -1, 2));
@@ -89,6 +91,7 @@ public class MediumGame extends LevelScreen
     {
       int element = (int)(Math.random()*6);
       which = Math.random ();
+      
       if (which > 0.5 && count < 24 || count2 > 23)
       {
         newInventory.add (new GameParticle("Hydroxide", new Location (col, 10, false), -1, 2));
@@ -130,13 +133,11 @@ public class MediumGame extends LevelScreen
    * Points are also updated.
    * Finally, all elements with no locations are removed, and all elements are updated.
    * 
-   * @param index - int - Stores the index of the element at the location with row 10 and column 1.
-   * @param dart - GameParticle - Stores the temporary element to be shot with.
+   * @param index - int - Stores the index of the target at the same location as the current inventory element.
+   * @param index2 - int - Stores the index of the obstacle at the same location as the current inventory element.
    * @param inv - GameParticle - Stores the temporary inventory elements.
-   * @param x - int - Increments through for loop.
    * @param tar - GameParticle - Stores the temporary target elements.
-   * @param tar - ArrayList<GameParticle> - Stores all targets with location not equal to null. 
-   * @param inv - ArrayList<GameParticle> - Stores all inventory with location not equal to null.
+   * @param x - int - Increments through for loop.
    */
   public void onUpdate ()
   {  
@@ -201,8 +202,10 @@ public class MediumGame extends LevelScreen
               getAllInventory().add (baseParticle);
               getAllTargets().remove(index);
               getPlayer().addPoints (10);
+              
               if (getPlayer().getCurrentPoints() > 0 && getPlayer().getCurrentPoints() %60 == 0)
                 getScreenFactory().getGame().getMap().incrementCounter();
+              
               setTempPoints(10);
             }
             //if wrong target, remove the inventory
@@ -221,12 +224,21 @@ public class MediumGame extends LevelScreen
     updateElements();
   }
   
-  //returns the obstacle at location in parameters, returns null if not found
+  /**
+   * Returns the obstacle at the location in the parameter.
+   * It returns null if not found.
+   * 
+   * @param location - Location - The location of the obstacle to find.
+   * @param x - int - Increments through for loop.
+   * @return An int that represents the index of the obstacle.
+   */
   public int getObstacleIndex (Location location)
   {
     for (int x = 0; x <obstacles.size(); x++)
+    {
       if (obstacles.get(x).getLocation()!= null && obstacles.get(x).getLocation().getRow() == location.getRow() && obstacles.get(x).getLocation().getColumn() == location.getColumn())
-      return x;
+        return x;
+    }
     
     return -1;
   }
@@ -236,6 +248,7 @@ public class MediumGame extends LevelScreen
    * It draws the wallpaper, player (launcher), inventory, targets and obstacles, respectively.
    * 
    * @param twoDimensional - Graphics2D - The Graphics2D object.
+   * @param x - int - Increments through for loop.
    */
   public void onDraw (Graphics2D twoDimensional)
   {
@@ -250,7 +263,7 @@ public class MediumGame extends LevelScreen
       getAllInventory().get(x).draw(twoDimensional);
     
     //draw targets
-    for (int x=0;x<getAllTargets().size();x++)
+    for (int x = 0 ; x < getAllTargets().size(); x++)
       getAllTargets().get(x).draw(twoDimensional);
     
     for (int x = 0; x < obstacles.size(); x++)
