@@ -8,11 +8,12 @@ import java.awt.*;
  * @author Anqi Wu
  * @author Chusa Nguyen
  * @author baseball435
- * @version 1.0, May 21, 2014. (Methods of the LevelMap class)
- * @version 1.1, May 22, 2014. (Moved all methods over to this class, added getWallpaper method, extends Screen)
+ * @version 1.0, May 21 2014. (Methods of the LevelMap class)
+ * @version 1.1, May 22 2014. (Moved all methods over to this class, added getWallpaper method, extends Screen)
  * @version 1.2, May 26 2014. (Instantiates CurrentPlayer, added related methods.)
- * @version 1.3, May 27, 2014. (getInventoryIndex works! +changed from get element to get index)
- * @version 1.4, June 5, 2014. (Added tempPoints variable and method, JavaDoc)
+ * @version 1.3, May 27 2014. (getInventoryIndex works! +changed from get element to get index)
+ * @version 1.4, June 5 2014. (Added tempPoints variable and method, JavaDoc)
+ * @version 1.5, June 10 2014. (JavaDoc)
  */
 public abstract class LevelScreen extends Screen
 {
@@ -172,6 +173,8 @@ public abstract class LevelScreen extends Screen
   
   /**
    * Gets the temporary amount of points stored.
+   * 
+   * @return An int that represents the temporary amount of points the user has lost or won.
    */
   public int getTempPoints ()
   {
@@ -184,6 +187,7 @@ public abstract class LevelScreen extends Screen
    * 
    * @param location - Location - The location of the target to get.
    * @param x - int - Increments for the for loop.
+   * @return An int that represents the index of the target at the specified location.
    */
   public int getTargetIndex (Location location)
   {
@@ -200,6 +204,7 @@ public abstract class LevelScreen extends Screen
    * 
    * @param location - Location - The location of the inventory to get.
    * @param x - int - Increments for the for loop.
+   * @return An int that represents the index of the inventory at the specified location.
    */
   public int getInventoryIndex (Location location)
   {
@@ -213,7 +218,9 @@ public abstract class LevelScreen extends Screen
   }
   
   /**
-   * Returns the ArrayList of all targets elements.
+   * Returns the ArrayList of all target elements.
+   * 
+   * @return The ArrayList<GameParticle> object that stores all the target elements.
    */
   public ArrayList<GameParticle> getAllTargets ()
   {
@@ -222,6 +229,8 @@ public abstract class LevelScreen extends Screen
   
   /**
    * Returns the ArrayList of all inventory elements.
+   * 
+   * @return The ArrayList<GameParticle> object that stores all the inventory elements.
    */
   public ArrayList<GameParticle> getAllInventory ()
   {
@@ -250,6 +259,8 @@ public abstract class LevelScreen extends Screen
   
   /**
    * Returns the wallpaper of the LevelScreen.
+   * 
+   * @return The ImageIcon object of wallpaper.
    */
   public ImageIcon getWallpaper()
   {
@@ -258,6 +269,8 @@ public abstract class LevelScreen extends Screen
   
   /**
    * Returns the CurrentPlayer of the LevelScreen.
+   * 
+   * @return The CurrentPlayer object of the LevelScreen.
    */
   public CurrentPlayer getPlayer()
   {

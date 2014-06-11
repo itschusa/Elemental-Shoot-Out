@@ -13,6 +13,7 @@ import java.net.*;
  * @author Chusa Nguyen (Modifications)
  * @version 1.0, January 07 2006. (Original)
  * @version 2.0, May 19 2014. (Removed outer class, removed creation of Applet window.)
+ * @version 2.1, June 10 2014. (More JavaDoc)
  */
 public class Sound
 {
@@ -31,6 +32,9 @@ public class Sound
   
   /**
    * The class constructor. It loads an audio clip by looking in the specified path for the specified file name. 
+   * 
+   * @param c - Class - The Class object.
+   * @param e - IOException - Catches the IOException if song is not found.
    */
   public Sound ()
   {
@@ -40,7 +44,9 @@ public class Sound
       songPath = new URL(c.getResource(songName),songName);
       song = Applet.newAudioClip(songPath);
     }
-    catch (IOException e){}
+    catch (IOException e)
+    {
+    }
   }
   
   /**

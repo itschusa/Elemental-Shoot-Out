@@ -31,7 +31,7 @@ public class EasyGame extends LevelScreen
   /**
    * instructionImage - ImageIcon - Stores the image that explains how to play the game to the user.
    */
-  private ImageIcon instructionImage = new ImageIcon ("../Images/EasyGame.png");;
+  private ImageIcon instructionImage = new ImageIcon ("Images/EasyGame.png");;
   /**
    * end - boolean - Stores whether the user has won the level.
    */

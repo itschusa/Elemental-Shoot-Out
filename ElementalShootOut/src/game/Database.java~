@@ -1,4 +1,4 @@
-package basic;
+package game;
 
 import javax.swing.*;
 
@@ -21,19 +21,19 @@ public class Database
   /**
    * icon - ImageIcon - Stores the icon for a stable particle.
    */
-  public static ImageIcon icon = new ImageIcon ("../Images/Stable3.png");
+  public static ImageIcon icon = new ImageIcon ("Images/Stable3.png");
   /**
    * icon2 - ImageIcon - Stores the icon for a unstable particle.
    */
-  public static ImageIcon icon2 = new ImageIcon ("../Images/Unstable3.png");
+  public static ImageIcon icon2 = new ImageIcon ("Images/Unstable3.png");
   /**
    * icon3 - ImageIcon - Stores the icon for a neutron.
    */
-  public static ImageIcon icon3 = new ImageIcon ("../Images/Neutron4.png");
+  public static ImageIcon icon3 = new ImageIcon ("Images/Neutron4.png");
   /**
    * icon4 - ImageIcon - Stores the icon for the launcher.
    */
-  public static ImageIcon icon4 = new ImageIcon ("../Images/Launcher.png");
+  public static ImageIcon icon4 = new ImageIcon ("Images/Launcher.png");
   /**
    * alkaliMetals - String [] - Stores names of all possible alkali metals.
    */
@@ -41,39 +41,39 @@ public class Database
   /**
    * icon5 - ImageIcon - Stores the icon for lithium.
    */
-  public static ImageIcon icon5 = new ImageIcon ("../Images/Lithium2.png");
+  public static ImageIcon icon5 = new ImageIcon ("Images/Lithium2.png");
   /**
    * icon6 - ImageIcon - Stores the icon for sodium.
    */
-  public static ImageIcon icon6 = new ImageIcon ("../Images/Sodium2.png");
+  public static ImageIcon icon6 = new ImageIcon ("Images/Sodium2.png");
   /**
    * icon7 - ImageIcon - Stores the icon for potassium.
    */
-  public static ImageIcon icon7 = new ImageIcon ("../Images/Potassium2.png");
+  public static ImageIcon icon7 = new ImageIcon ("Images/Potassium2.png");
   /**
    * icon8 - ImageIcon - Stores the icon for rubidium.
    */
-  public static ImageIcon icon8 = new ImageIcon ("../Images/Rubidium2.png");
+  public static ImageIcon icon8 = new ImageIcon ("Images/Rubidium2.png");
   /**
    * icon9 - ImageIcon - Stores the icon for cesium.
    */
-  public static ImageIcon icon9 = new ImageIcon ("../Images/Cesium2.png");
+  public static ImageIcon icon9 = new ImageIcon ("Images/Cesium2.png");
   /**
    * icon10 - ImageIcon - Stores the icon for francium.
    */
-  public static ImageIcon icon10 = new ImageIcon ("../Images/Francium2.png");
+  public static ImageIcon icon10 = new ImageIcon ("Images/Francium2.png");
   /**
    * icon11 - ImageIcon - Stores the icon for hydroxide.
    */
-  public static ImageIcon icon11 = new ImageIcon ("../Images/Hydroxide.png");
+  public static ImageIcon icon11 = new ImageIcon ("Images/Hydroxide.png");
   /**
    * icon12 - ImageIcon - Stores the icon for an acid cloud.
    */
-  public static ImageIcon icon12 = new ImageIcon ("../Images/cloud.png");
+  public static ImageIcon icon12 = new ImageIcon ("Images/cloud.png");
   /**
    * icon13 - ImageIcon - Referenc variable to the icon for the base particles. 
    */
-  public static ImageIcon icon13 = new ImageIcon ("../Images/Base.png");
+  public static ImageIcon icon13 = new ImageIcon ("Images/Base.png");
   /**
    * chargeNegativeOne - String [] - Stores an array of strings, where each string is the name of a particle with a charge of -1.
    */

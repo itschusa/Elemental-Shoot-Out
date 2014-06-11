@@ -31,7 +31,7 @@ public class LevelMap extends JPanel implements Runnable
   /**
    * ring - ImageIcon - Stores the image of the ring that specifies which inventory in element is used next.
    */
-  private ImageIcon ring = new ImageIcon ("../Images/Ring.png");
+  private ImageIcon ring = new ImageIcon ("Images/Ring.png");
   /**
    * index - int - The index number of the fact to be printed. 
    */

@@ -79,7 +79,7 @@ public class GameParticle extends Element
     //difficult
     else
     {
-      String path = "../Images/Difficult/" + newName + ".png";
+      String path = "Images/Difficult/" + newName + ".png";
       setIcon (new ImageIcon (path));
     }
     

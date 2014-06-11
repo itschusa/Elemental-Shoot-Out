@@ -1,4 +1,4 @@
-package game.basic;
+package game;
 
 /**
  * The Location class stores the x coordinates and y coordinates (location) of an element.

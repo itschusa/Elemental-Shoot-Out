@@ -7,6 +7,7 @@ package game;
  * @version 1.0, May 21 2014.
  * @version 1.1, June 3 2014. (Added setXCoord and setYCoord methods)
  * @version 1.2, June 8 2014. (JavaDoc)
+ * @version 1.3, June 10 2014. (more JavaDoc)
  */
 public class Location
 {
@@ -19,7 +20,6 @@ public class Location
    */
   private int yCoord;
   
-  //constructor, sets x and y coords using column and row
   /**
    * Constructs a new location depending on the column, and row specified in the parameters.
    * If exact is true, the exact column and row should be given in pixels, rather than the grid form.
@@ -44,6 +44,8 @@ public class Location
   
   /**
    * Returns the column (not in pixels).
+   * 
+   * @return An int that represents the column of the location.
    */
   public int getColumn ()
   {
@@ -52,6 +54,8 @@ public class Location
   
   /**
    * Returns the row (not in pixels).
+   * 
+   * @return An int that represents the row of the location.
    */
   public int getRow ()
   {
@@ -76,6 +80,8 @@ public class Location
   
   /**
    * Returns the x-coordinate in pixels.
+   * 
+   * @return An int that represents the x-coordinate of the location.
    */
   public int getXCoord ()
   {
@@ -84,6 +90,8 @@ public class Location
   
   /**
    * Returns the y-coordinate in pixels.
+   * 
+   * @return An int that represents the y-coordinate of the location.
    */
   public int getYCoord ()
   {

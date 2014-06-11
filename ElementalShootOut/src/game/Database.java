@@ -3,7 +3,7 @@ package game;
 import javax.swing.*;
 
 /**
- * The Database class stores all the game icons, except for the difficult game.
+ * The Database class stores all the game icons, names and facts, except for the difficult game.
  * 
  * @author Anqi Wu
  * @author Chusa Nguyen
@@ -117,5 +117,5 @@ public class Database
           "Ionic compounds generally have high melting points because of their lattice structure.", "Ionic compounds tend to be highly soluble in water, and their solutions are conductive.", 
           "Acids and bases are special types of ionic compounds."}
   };
-    
+  
 }

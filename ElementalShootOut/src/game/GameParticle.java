@@ -11,6 +11,7 @@ import javax.swing.*;
  * @version 2.2, June 3 2014 (Removed unecessary code, update moves the particle one pixel at a time)
  * @version 2.3, June 5 2014 (setReverseShift method)
  * @version 2.4, June 5 2014. (JavaDoc, removed some methods)
+ * @version 2.5, Jun 10 2014. (JavaDoc)
  */
 public class GameParticle extends Element
 {
@@ -38,6 +39,7 @@ public class GameParticle extends Element
    * @param newLocation - Location - The location of the element.
    * @param charge - int - The charge of the GameParticle.
    * @param level - int - The level of the GameParticle.
+   * @param path - String - Stores the path of the difficult level icon.
    */
   public GameParticle (String newName, Location newLocation, int charge, int level)
   {
@@ -153,6 +155,8 @@ public class GameParticle extends Element
   
   /**
    * Returns the charge of the GameParticle.
+   * 
+   * @return An int that represents the charge of the GameParticle.
    */
   public int getCharge()
   {

@@ -13,11 +13,11 @@ public class KeyboardListener implements KeyListener
   /**
    * pressedKeys - boolean[] - Stores the keys that are being pressed.
    */
-  protected boolean[] pressedKeys = new boolean[256]; 
+  private boolean[] pressedKeys = new boolean[256]; 
   /**
    * releasedKeys - boolean[] - Stores the keys that were released.
    */
-  protected boolean[] releasedKeys = new boolean[256];
+  private boolean[] releasedKeys = new boolean[256];
   
   /**
    * Stores the key that was pressed in the array.
@@ -53,6 +53,7 @@ public class KeyboardListener implements KeyListener
    * Gets whether the key specified in the parameter is pressed.
    * 
    * @param key - int - The key represented by ASCII.
+   * @return A boolean that specifies whether the key is pressed.
    */
   public boolean isKeyPressed (int key)
   {
@@ -63,6 +64,7 @@ public class KeyboardListener implements KeyListener
    * Gets whether the key specified in the parameter is released.
    * 
    * @param key - int - The key represented by ASCII.
+   * @return A boolean that specifies whether the key is released.
    */
   public boolean isKeyReleased(int key)
   {
@@ -70,7 +72,7 @@ public class KeyboardListener implements KeyListener
   }
   
   /**
-   * Refreshed the releasedKey array (sets keys to false)
+   * Refreshes the releasedKey array (sets keys to false).
    */
   public void refreshReleased ()
   {

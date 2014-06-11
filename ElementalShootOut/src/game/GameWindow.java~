@@ -1,5 +1,6 @@
 package game;
 
+import menus.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
@@ -225,14 +226,14 @@ public class GameWindow
     {
       //medium
       if (level == 2)
-        screen.getPlayer().setIcon (new ImageIcon ("../Images/SockBunny.png"));
+        screen.getPlayer().setIcon (new ImageIcon ("Images/SockBunny.png"));
       else
       {
         //difficult
         if (level == 3)
         {
           screen = new DifficultGame (getScreenFactory());
-          screen.getPlayer().setIcon (new ImageIcon ("../Images/HappyLlama.png"));
+          screen.getPlayer().setIcon (new ImageIcon ("Images/HappyLlama.png"));
         }
       }
       //set new screen

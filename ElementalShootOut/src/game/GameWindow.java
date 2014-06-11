@@ -4,6 +4,7 @@ import menus.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
+
 /**
  * The GameWindow creates the window, and creates the level panel.
  * 
@@ -21,6 +22,7 @@ import java.awt.*;
  * @version 1.8, June 5 2014. (JavaDoc)
  * @version 1.9, June 6 2014. (Added username prompt to create score record.)
  * @version 2.0, June 8 2014. (Added getLevel method, modified key listener implementation to prevent program crashes. Added getMap and option to not save scores.)
+ * @version 2.1, June 10 2014. (JavaDoc)
  */
 public class GameWindow
 {
@@ -81,10 +83,15 @@ public class GameWindow
    * The appropriate LevelScreen is added and displayed.
    * A new panel is added to update the game.
    * SidePanel and PausePanel are added as well. 
+   * This also creates two anonymous classes, one that extends WindowAdapter, and the other that extends KeyboardListener.
+   * The first allows a window to pop up to verify if the user wants to close when the user presses the close button
+   * and the second stores the keys pressed and released when the user presses anything on the keyboard.
    * 
    * @param description  String - Describes the current game level.
    * @param level int - Represents the current level difficulty.
    * @param frame MenuFrames - The current instance of MenuFrames is passed through to give this class access to it. 
+   * @param event - KeyEvent - The KeyEvent object.
+   * @param screen - LevelScreen - Stores the level screen to be displayed.
    */
   public GameWindow(String description, int level, MenuFrames frame)
   {
@@ -123,8 +130,7 @@ public class GameWindow
       {
         if (event.getKeyCode() < 256)
         {
-          pressedKeys[event.getKeyCode()] = false;
-          releasedKeys[event.getKeyCode()] = true;
+          super.keyReleased(event);
           act();
         }
       }
@@ -133,7 +139,7 @@ public class GameWindow
       {
         if (event.getKeyCode() < 256)
         {
-          pressedKeys[event.getKeyCode()] = true;
+          super.keyPressed(event);
           act();
         }
       }

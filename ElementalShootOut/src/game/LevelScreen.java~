@@ -1,6 +1,5 @@
 package game;
 
-import game.*;
 import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.*;
@@ -28,7 +27,7 @@ public abstract class LevelScreen extends Screen
   /**
    * wallpaper - ImageIcon - Stores the wallpaper image.
    */
-  private ImageIcon wallpaper = new ImageIcon ("../Images/WallpaperGame.png");
+  private ImageIcon wallpaper = new ImageIcon ("Images/WallpaperGame.png");
   /**
    * player - CurrentPlayer - Stores the launcher.
    */
@@ -40,7 +39,7 @@ public abstract class LevelScreen extends Screen
   /**
    * gameOverImage - ImageIcon - Stores the game over screen.
    */
-  private ImageIcon gameOverImage = new ImageIcon ("../Images/GameOver2.png");
+  private ImageIcon gameOverImage = new ImageIcon ("Images/GameOver2.png");
   
   /**
    * Constructs a new LevelScreen with the specified ScreenFactory.

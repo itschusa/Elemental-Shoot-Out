@@ -54,7 +54,7 @@ public class Obstacle extends GameParticle
   
   public void glow()
   {
-    setIcon (new ImageIcon ("../Images/Difficult/Absorber2.png"));
+    setIcon (new ImageIcon ("Images/Difficult/Absorber2.png"));
     glow = true;
   }
   

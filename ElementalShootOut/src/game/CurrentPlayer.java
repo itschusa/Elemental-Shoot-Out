@@ -1,7 +1,7 @@
 package game;
 
 /**
- * The CurrentPlayer class stores the score of the player.
+ * The CurrentPlayer class represents the launcher of the game. It stores the score of the player.
  * 
  * @author Anqi Wu
  * @author Chusa Nguyen 
@@ -14,6 +14,7 @@ package game;
  * @version 1.6, May 29 2014. (JavaDoc all parts)
  * @version 1.7, June 3 2014. (Player can have negative points, added method to set icon)
  * @version 1.8, June 5 2014. (JavaDoc is current, removed some methods)
+ * @version 1.9, June 10 2014. (JavaDoc)
  */
 public class CurrentPlayer extends Element
 {
@@ -46,6 +47,7 @@ public class CurrentPlayer extends Element
    * It returns true all times except when the launcher is on the two edges of the screen.
    * 
    * @param direction - int - The direction as the ASCII value of the keyboard key.
+   * @return A boolean that specifies whether the launcher can move.
    */
   public boolean canMove (int direction)
   {
@@ -120,6 +122,8 @@ public class CurrentPlayer extends Element
   
   /**
    * Returns the current number of points of the player.
+   * 
+   * @return An int that represents the current number of points.
    */
   public int getCurrentPoints ()
   {

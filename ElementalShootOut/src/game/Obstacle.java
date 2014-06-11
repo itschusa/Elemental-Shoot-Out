@@ -12,6 +12,7 @@ import javax.swing.*;
  * @version 1.1, June 3 2014. (added currentStep (5 step wait), so clouds move slower)
  * @version 1.2, June 5 2014. (JavaDoc is current)
  * @version 2.0, June 8 2014. (Now obstacle instead if acidcloud, added glow for difficult)
+ * @version 2.1, June 10 2014. (JavaDoc)
  */
 public class Obstacle extends GameParticle
 {
@@ -31,6 +32,9 @@ public class Obstacle extends GameParticle
    * currentStep - int - Stores the current number of steps after it was updated.
    */
   private int currentStep = 0;
+  /**
+   * glow - boolean - Stores whether the obstacle should glow.
+   */
   private boolean glow;
   
   /**
@@ -40,24 +44,35 @@ public class Obstacle extends GameParticle
    * @param newName - String - String representation of this object's name.
    * @param newLocation - Location - The location given upon creation. 
    * @param charge - int - The charge of the AcidCloud.
-   * @param forwards boolean - Determines whether the first step will be forwards or backwards.
+   * @param forwards - boolean - Determines whether the first step will be forwards or backwards.
    */
   public Obstacle (String newName, Location newLocation, int charge, boolean forwards, int level)
   {
     super(newName, newLocation,  charge, level);
     this.forwards = forwards;
+    
     if (forwards)
       steps = 0;
     else
       steps = 3;
   }
   
+  /**
+   * Sets the obstacle to glow.
+   * This method is only available for Absorber elements.
+   * The icon is changed.
+   */
   public void glow()
   {
     setIcon (new ImageIcon ("Images/Difficult/Absorber2.png"));
     glow = true;
   }
   
+  /**
+   * Returns whether the obstacle is glowing.
+   * 
+   * @return A boolean that represents whether the obstacle is glowing.
+   */
   public boolean getGlow ()
   {
     return glow;
@@ -148,6 +163,8 @@ public class Obstacle extends GameParticle
   
   /**
    * Returns the current step of the cloud.
+   * 
+   * @return An int that represents the current step of the cloud.
    */
   public int getCurrentStep()
   {

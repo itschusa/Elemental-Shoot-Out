@@ -87,7 +87,6 @@ public class DifficultGame extends LevelScreen
         }
         
         newTargets.add (new GameParticle(name, new Location(col, row, false), charge, 3));
-        System.out.println (name + " "+ charge);
       }
     }
     
@@ -126,7 +125,6 @@ public class DifficultGame extends LevelScreen
       }
       
       newInventory.add (new GameParticle(name, new Location(col, 10, false), charge, 3));
-      System.out.println (name + " "+ charge);
     }
     
     //add obstacles

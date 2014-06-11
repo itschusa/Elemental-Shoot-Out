@@ -26,15 +26,15 @@ public class PausePanel extends JPanel
   /**
    * pauseImage - ImageIcon - Stores the image of the pause screen.
    */
-  private ImageIcon pauseImage = new ImageIcon("../Images/Paused4.png");
+  private ImageIcon pauseImage = new ImageIcon("Images/Paused4.png");
   /**
    * clearImage - ImageIcon - Stores the image when 'paused' is not true.
    */
-  private ImageIcon clearImage = new ImageIcon ("../Images/ClearImage.png");
+  private ImageIcon clearImage = new ImageIcon ("Images/ClearImage.png");
   /**
    * winImage - ImageIcon - Stores the win screen.
    */
-  private ImageIcon winImage1 = new ImageIcon ("../Images/Win1.png");
+  private ImageIcon winImage1 = new ImageIcon ("Images/Win1.png");
   /**
    * winImage - ImageIcon - Stores the win screen.
    */
@@ -42,7 +42,7 @@ public class PausePanel extends JPanel
   /**
    * winImage - ImageIcon - Stores the win screen.
    */
-  private ImageIcon winImage3 = new ImageIcon ("../Images/Win3.png");
+  private ImageIcon winImage3 = new ImageIcon ("Images/Win3.png");
   private int level;
   private JPanel buttonPanel = new JPanel();
   private JButton continueButton = new JButton ("Continue");

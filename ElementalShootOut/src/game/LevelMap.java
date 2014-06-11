@@ -11,11 +11,11 @@ import java.awt.*;
  * @author Chusa Nguyen
  * @author baseball435
  * @version 1.0, May 21 2014. (the game window that stores arraylist of particles)
- * @version 1.1, May 22, 2014. (now implements Runnable, which updates/paints the current screen)
- * @version 1.2, May 27, 2014. (added temporary main menu button - can close the current window and create the main menu, stacktrace errors vs print errors)
- * @version 1.3, May 28, 2014. (prints total user points)
- * @version 1.4, May 31, 2014. (added ring that tells user which inventory element they are using.)
- * @version 1.5, June 5, 2014. (Somewhat displays how many points were added, JavaDoc)
+ * @version 1.1, May 22 2014. (now implements Runnable, which updates/paints the current screen)
+ * @version 1.2, May 27 2014. (added temporary main menu button - can close the current window and create the main menu, stacktrace errors vs print errors)
+ * @version 1.3, May 28 2014. (prints total user points)
+ * @version 1.4, May 31 2014. (added ring that tells user which inventory element they are using.)
+ * @version 1.5, June 5 2014. (Somewhat displays how many points were added, JavaDoc)
  * @version 1.6, June 8 2014. (Displays a random fact whenever points is a multiple of 60, up to a maximum of 10 times.)
  */
 public class LevelMap extends JPanel implements Runnable
@@ -79,18 +79,18 @@ public class LevelMap extends JPanel implements Runnable
       {
         if (game.getScreenFactory().getCurrentScreen() != null)
           game.getScreenFactory().getCurrentScreen().onUpdate();
+        
         Thread.sleep (2);
       }
       catch (Exception e)
       {
-        e.printStackTrace();
       }
     }
   }
   
   /**
    * Paints the game.
-   * The screen, ring, points and status is drawn, respectively.
+   * The screen, ring, points, status and fact is drawn, respectively.
    * 
    * @param g - Graphics - The Graphics object.
    * @param twoDimensional - Graphics2D - The Graphics2D object.
@@ -126,6 +126,7 @@ public class LevelMap extends JPanel implements Runnable
         index = (int)(Math.random()*10);
         factsPrinted [countPrinted] = true;
       }
+      
       twoDimensional.drawString(Database.factList[game.getLevel() - 1][index], 100, 450);
     }
     
@@ -141,9 +142,8 @@ public class LevelMap extends JPanel implements Runnable
   public void incrementCounter()
   {
     countPrinted ++;
+    
     if (countPrinted > 9)
-    {
       countPrinted = 0;
-    }
   }
 }

@@ -9,6 +9,7 @@ import java.awt.*;
  * @author Anqi Wu (JavaDoc)
  * @version 1.0, May 22 2014.
  * @version 1.1, June 8 2014. (JavaDoc)
+ * @version 1.2, June 10 2014. (JavaDoc)
  */
 public abstract class Screen
 {
@@ -49,6 +50,8 @@ public abstract class Screen
   
   /**
    * Returns the ScreenFactory of this screen.
+   * 
+   * @return The ScreenFactory object that is associated with this screen.
    */
   public ScreenFactory getScreenFactory()
   {
