@@ -2,6 +2,7 @@ package game;
 
 import java.util.ArrayList;
 import java.awt.*;
+import javax.swing.*;
 
 /**
  * The DifficultGame class represents the screen for the difficult level.
@@ -17,6 +18,7 @@ import java.awt.*;
  * @version 1.5, June 8 2014. (Added absorbers)
  * @version 2.0, June 8 2014. (Displays facts.)
  * @version 2.1, June 10 2014. (JavaDoc)
+ * @version 2.2, June 11 2014. (Fixed win screen)
  */
 public class DifficultGame extends LevelScreen
 {          
@@ -25,9 +27,9 @@ public class DifficultGame extends LevelScreen
    */
   private ArrayList <Obstacle> obstacles = new ArrayList<Obstacle> ();
   /**
-   * end - boolean - Stores whether the user has won the level.
+   * winImage - ImageIcon - Stores the win screen.
    */
-  private boolean end = false;
+  private ImageIcon winImage = new ImageIcon ("Images/Win3.png");
   
   /**
    * Constructs a difficult level screen. This creates a random list of targets and inventory with charges from -3 to +3.
@@ -266,6 +268,18 @@ public class DifficultGame extends LevelScreen
     
     return -1;
   }
+  
+  /**
+   * Draws the win screen. The game loses focus, so the user cannot move the launcher.
+   * 
+   * @param twoDimensional - Graphics2D - The Graphics2D object.
+   */
+  public void win(Graphics2D twoDimensional)
+  {
+    getScreenFactory().loseFocus();
+    twoDimensional.drawImage (winImage.getImage(), 0, 0, winImage.getImageObserver());
+  }
+  
   /**
    * Displays the difficult level on the Panel.
    * It draws the wallpaper, player (launcher), inventory and targets, respectively.
@@ -285,11 +299,8 @@ public class DifficultGame extends LevelScreen
     //game over or win
     if (getAllInventory().size() == 0)
     {
-      if (!end && getAllTargets().size() == 0)
-      {
-        end = true;
-        getScreenFactory().win (4);
-      }
+      if (getAllTargets().size() == 0)
+        win (twoDimensional);
       else
       {
         if (getAllTargets().size() != 0)

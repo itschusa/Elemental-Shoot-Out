@@ -12,7 +12,8 @@ import java.awt.event.*;
  * @version 1.1, May 31 2014 (moved the instantiation to the top)
  * @version 1.2, June 2 2014 (JavaDoc)
  * @version 1.3, June 4 2014 (Stores the win images, displays win screen, added showWin and resetLevel methods)
- * @version 1.4, June 10 2013 (JavaDoc)
+ * @version 1.4, June 10 2014 (JavaDoc)
+ * @version 1.5, June 11 2014 (Only shows win when continuing to levels 2 and 3)
  */
 public class PausePanel extends JPanel
 {
@@ -40,10 +41,6 @@ public class PausePanel extends JPanel
    * winImage - ImageIcon - Stores the win screen.
    */
   private ImageIcon winImage2 = new ImageIcon ("../Images/Win2.png");
-  /**
-   * winImage - ImageIcon - Stores the win screen.
-   */
-  private ImageIcon winImage3 = new ImageIcon ("Images/Win3.png");
   /**
    * level - int - Stores the level to continue to.
    */
@@ -89,26 +86,27 @@ public class PausePanel extends JPanel
    * This method also creates an anonymous class that implements ActionListener. This class listens for when the user
    * presses the continue button and then changes the screen to the next level.
    * 
-   * @param int level - Integer representation of the level to continue to.
+   * @param int level - Integer representation of the level to continue to. Should be 2 or 3.
    * @param e reference - Reference variable for the specified ActionEvent object. 
    */
   public void showWin (int level)
   {
     this.level = level;
-    buttonPanel.setBackground (new Color (0, 0, 0));
-    buttonPanel.add(continueButton);
-    add (buttonPanel);
-    buttonPanel.setVisible (true);
-    validate();
-    repaint();
-    
-    buttonPanel.requestFocusInWindow();
-    
-    continueButton.addActionListener (new ActionListener ()
-                                        {
-      public void actionPerformed (ActionEvent e)      { 
-        resetLevel ();
-      }});
+
+      buttonPanel.setBackground (new Color (0, 0, 0));
+      buttonPanel.add(continueButton);
+      add (buttonPanel);
+      buttonPanel.setVisible (true);
+      validate();
+      repaint();
+      
+      buttonPanel.requestFocusInWindow();
+      
+      continueButton.addActionListener (new ActionListener ()
+                                          {
+        public void actionPerformed (ActionEvent e)      { 
+          resetLevel ();
+        }});
   }
   
   /**
@@ -138,8 +136,6 @@ public class PausePanel extends JPanel
       g.drawImage (winImage1.getImage(), 0, 0, winImage1.getImageObserver()); 
     else if (level == 3)
       g.drawImage (winImage2.getImage(), 0, 0, winImage2.getImageObserver());
-    else if (level == 4)
-      g.drawImage (winImage3.getImage(), 0, 0, winImage3.getImageObserver());
     else
     {
       if (paused)
