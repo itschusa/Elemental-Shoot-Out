@@ -8,6 +8,7 @@ package game;
  * @version 1.1, June 3 2014. (Added setXCoord and setYCoord methods)
  * @version 1.2, June 8 2014. (JavaDoc)
  * @version 1.3, June 10 2014. (more JavaDoc)
+ * @version 1.4, June 11 2014. (Updated JavaDoc.)
  */
 public class Location
 {
@@ -100,6 +101,8 @@ public class Location
   
   /**
    * Sets the x-coordinate to the coordinate specified in the parameter in pixels.
+   * 
+   * @param coord int - Integer representation of the x-coordinate of this Location.
    */
   public void setXCoord (int coord)
   {
@@ -108,6 +111,8 @@ public class Location
   
   /**
    * Sets the y-coordinate to the coordinate specified in the parameter in pixels.
+   * 
+   * @param coord int - Integer representation of the y-coordniate of this Location.
    */
   public void setYCoord (int coord)
   {

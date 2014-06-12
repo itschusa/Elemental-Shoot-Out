@@ -49,7 +49,7 @@ public class SettingsPanel extends JPanel
   protected JButton menuButton = new JButton ("Return to Menu");
   
   /**
-   * The constructors. It sets the properties of this JPanel and adds components to it. 
+   * The constructor. It sets the properties of this JPanel and adds components to it. 
    */
   public SettingsPanel()
   {
@@ -59,7 +59,9 @@ public class SettingsPanel extends JPanel
   }
   
   /**
-   * Returns whether the music has been initialized.
+   * The "getMusicInitialized" method, which gives public access to the musicInitalized variable. 
+   * 
+   * @return Returns whether the music has been initialized.
    */
   public static boolean getMusicInitialized ()
   {
@@ -68,6 +70,9 @@ public class SettingsPanel extends JPanel
   
   /**
    * The "setInitialStates" method. It adds the buttons to the panel and sets their initial clickable states. 
+   * 
+   * @param titleImage reference - Reference variable for the speicfied JLabel object.
+   * @param soundLabel reference - Reference variable for the specified JLabel object. 
    */
   private void setInitialStates()
   {

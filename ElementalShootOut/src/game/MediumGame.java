@@ -46,8 +46,8 @@ public class MediumGame extends LevelScreen
    * @param count - int - Stores the number of hydroxide ions.
    * @param count2 - int - Stores the number of alkali ions.
    * @param which - double - Stores whether to add an alkali ion or a hydroxide ion.
-   * @param row - int - Stores the current row of the location to set for the elements.
-   * @param col - int - Stores the current column of the location to set for the elements.
+   * @param row - int - For loop counter which stores the current row of the location to set for the elements.
+   * @param col - int - For loop counter which stores the current column of the location to set for the elements.
    * @param element - int - Stores the temporary index of the current element.
    */
   public MediumGame (ScreenFactory screenFactory)
@@ -230,7 +230,7 @@ public class MediumGame extends LevelScreen
    * 
    * @param location - Location - The location of the obstacle to find.
    * @param x - int - Increments through for loop.
-   * @return An int that represents the index of the obstacle.
+   * @return An int that represents the index of the obstacle, or -1 if it cannot be found.
    */
   public int getObstacleIndex (Location location)
   {

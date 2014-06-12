@@ -35,6 +35,7 @@ public class Sound
    * 
    * @param c - Class - The Class object.
    * @param e - IOException - Catches the IOException if song is not found.
+   * @exception IOException If an error occurs while trying to read from the specified file. 
    */
   public Sound ()
   {

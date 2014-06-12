@@ -88,7 +88,7 @@ public class MenusPanel extends JPanel
   }
   
   /**
-   * The "setButtons" method. It adds the buttons to the panel after setting their specifications (border, location, etc.).
+   * The "setButtons" method, which adds the buttons to the panel after setting their specifications (border, location, etc.).
    */
   private void setButtons()
   {      

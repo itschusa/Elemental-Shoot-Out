@@ -65,11 +65,12 @@ public class LevelMap extends JPanel implements Runnable
     stop = true;
   }
   
-  //baseball345
   /**
    * Updates the screen every 2 milliseconds.
    * 
-   * @param e - Exception - Catches exceptions.
+   * @author baseball345
+   * @param e - Exception - Represents the caught exception.
+   * @return Exception If any exceptions are thrown. 
    */
   public void run()
   {

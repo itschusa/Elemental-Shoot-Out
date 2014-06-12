@@ -42,7 +42,7 @@ public class KeyboardListener implements KeyListener
   }
   
   /**
-   * Empty override.
+   * Overridden method (does nothing).
    */
   public void keyTyped (KeyEvent event)
   {

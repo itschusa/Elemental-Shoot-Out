@@ -40,6 +40,7 @@ public class SplashScreen extends JWindow
    * @param closerRunner - final Runnable - Closes the window and creates the game screen window.
    * @param waitRunner - final Runnable - Pauses the splash screen and runs closerRunner.
    * @param e - Exception - Catches errors regarding thread sleep, etc.
+   * @param e - MouseEvent - Represents a mouse event.
    * @param splashThread - Thread - The Thread that stores the Runnable object that is started.
    */
   public SplashScreen(String filename, final int waitTime, boolean firstRun)

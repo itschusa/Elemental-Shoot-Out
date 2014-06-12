@@ -26,6 +26,10 @@ public abstract class LevelScreen extends Screen
    */
   private ArrayList <GameParticle> inventory = new ArrayList <GameParticle>();
   /**
+   * obstacles - ArrayList<Obstacle> - Stores the acid cloud objects.
+   */
+  private ArrayList <Obstacle> obstacles = new ArrayList<Obstacle> ();
+  /**
    * wallpaper - ImageIcon - Stores the wallpaper image.
    */
   private ImageIcon wallpaper = new ImageIcon ("Images/WallpaperGame.png");
@@ -70,7 +74,25 @@ public abstract class LevelScreen extends Screen
    * 
    * @param twoDimensional - Graphics2D - The Graphics2D object.
    */
-  public abstract void onDraw (Graphics2D twoDimensional);
+  public void onDraw (Graphics2D twoDimensional)
+  {
+    //draw background
+    twoDimensional.drawImage (getWallpaper().getImage(), 0, 0, getWallpaper().getImageObserver()); 
+    
+    //draw player
+    getPlayer().draw(twoDimensional);
+    
+    //draw inventory
+    for (int x = 0; x < 12 && x < getAllInventory().size(); x++)
+      getAllInventory().get(x).draw(twoDimensional);
+    
+    //draw targets
+    for (int x = 0; x < getAllTargets().size(); x++)
+      getAllTargets().get(x).draw(twoDimensional);
+    
+    for (int x = 0; x < obstacles.size(); x++)
+      obstacles.get(x).draw(twoDimensional);
+  }
   
   /**
    * Updates the targets and inventory.

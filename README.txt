@@ -8,6 +8,14 @@ About
 
 This is an educational chemistry game designed to teach students basic high school chemistry concepts.
 
+Files Included
+
+  - Java documentation of all classes.
+  - Executable jar file for program.
+  - Dr Java project file.
+  - Individual class and image files + music (mid) file. 
+  - Help (chm) file for program. 
+
 System Requirements and Installation
 
   - Operating System: Windows XP or later
@@ -19,7 +27,7 @@ System Requirements and Installation
 
 Known Bugs
 
-  - First time running sound results in temporary lag.
+  - First time running sound results in temporary lag while loading AudioClip object.
   - Warning message appears in interactions pane on some computers when attempting to play sound, if the following message appears, see <http://stackoverflow.com/questions/16428098/groovy-shell-warning-could-not-open-create-prefs-root-node>
 for solution.... 
     java.util.prefs.WindowsPreferences <init>

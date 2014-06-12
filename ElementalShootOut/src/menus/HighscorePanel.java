@@ -214,7 +214,8 @@ public class HighscorePanel extends JPanel
    * 
    * @param empty boolean - Represents whether the file will contain scores, or just the file header. 
    * @param output reference - Reference variable to the corresponding PrintWriter object.
-   * @param temp int - Represents the maximum value for the for loop's stop condition. 
+   * @param temp int - Integer representation of the text at a specified JLabel index. 
+   * @param last int - Represents the maximum value for the for loop's stop condition. 
    * @param x int - For loop counter.
    * @param e reference - Reference variable to the corresponding IOException object.
    * @param ex reference - Reference variable to the corresponding NumberFormatException object. 

@@ -55,6 +55,8 @@ public class ScreenFactory
   
   /**
    * Calls win in the GameWindow.
+   * 
+   * @param level int - Integer representation of the level difficulty which was won. 
    */
   public void win (int level)
   {

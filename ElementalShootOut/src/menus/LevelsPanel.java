@@ -60,6 +60,9 @@ public class LevelsPanel extends JPanel
   
   /**
    * The class constructor. It set's the panel's layout, background colour, title, and calls the method to set the buttons. 
+   * 
+   * @param levelsImage reference - Reference variable for the specified ImageIcon object.
+   * @param title reference - Reference variable for the specified JLabel object. 
    */
   public LevelsPanel()
   {

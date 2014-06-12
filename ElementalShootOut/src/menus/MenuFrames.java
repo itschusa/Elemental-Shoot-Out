@@ -110,7 +110,7 @@ public class MenuFrames extends JFrame
   }
   
   /**
-   * The "addBackground" method. It sets the window's background by retrieving an image from the specified path.
+   * The "addBackground" method, which sets the window's background by retrieving an image from the specified path.
    * 
    * @param imageName - String - The name of the image to be retrieved.
    */
@@ -187,6 +187,8 @@ public class MenuFrames extends JFrame
    * the menu bar. 
    * 
    * @param e reference - Reference variable for the specified ActionEvent object. 
+   * @param ex reference - Reference variable for the specified IOException object.
+   * @exception IOException If an error is thrown while trying to read from the specified file. 
    */
   private void menuBarActionListeners()
   {

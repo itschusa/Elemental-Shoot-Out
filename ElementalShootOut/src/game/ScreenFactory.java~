@@ -1,4 +1,4 @@
-package game.basic;
+package game;
 
 /**
  * The ScreenFactory is a class that can create, and set a Screen to show.

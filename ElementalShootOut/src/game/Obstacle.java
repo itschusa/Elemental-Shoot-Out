@@ -45,6 +45,7 @@ public class Obstacle extends GameParticle
    * @param newLocation - Location - The location given upon creation. 
    * @param charge - int - The charge of the AcidCloud.
    * @param forwards - boolean - Determines whether the first step will be forwards or backwards.
+   * @param level - int - Integer representation of the level difficulty this Obstacle object is being constructed for.
    */
   public Obstacle (String newName, Location newLocation, int charge, boolean forwards, int level)
   {
@@ -99,7 +100,8 @@ public class Obstacle extends GameParticle
   }
   
   /**
-   * The "move" method. It changes the location of this object to follow a predefined path. 
+   * The "move" method. It changes the location of this object to follow a predefined path, as determined by the 
+   * if structure. 
    * The AcidCloud moves every 5 updates.
    */
   public void move ()

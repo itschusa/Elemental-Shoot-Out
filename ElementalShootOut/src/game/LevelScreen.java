@@ -73,6 +73,7 @@ public abstract class LevelScreen extends Screen
    * Override to draw something.
    * 
    * @param twoDimensional - Graphics2D - The Graphics2D object.
+   * @param x - int - For loop counter.
    */
   public void onDraw (Graphics2D twoDimensional)
   {
@@ -97,7 +98,7 @@ public abstract class LevelScreen extends Screen
   /**
    * Updates the targets and inventory.
    * 
-   * @param x - int - Increments for the for loop.
+   * @param x - int - Increments the for loop.
    */
   public void updateElements ()
   {
@@ -196,7 +197,7 @@ public abstract class LevelScreen extends Screen
   /**
    * Gets the temporary amount of points stored.
    * 
-   * @return An int that represents the temporary amount of points the user has lost or won.
+   * @return Returns an int that represents the temporary amount of points the user has lost or won.
    */
   public int getTempPoints ()
   {
@@ -208,7 +209,7 @@ public abstract class LevelScreen extends Screen
    * If no target has that location, -1 is returned.
    * 
    * @param location - Location - The location of the target to get.
-   * @param x - int - Increments for the for loop.
+   * @param x - int - Increments the for loop.
    * @return An int that represents the index of the target at the specified location.
    */
   public int getTargetIndex (Location location)

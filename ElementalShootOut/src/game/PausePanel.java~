@@ -5,13 +5,14 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- * The PausePanel shows the pause screen when user wants to pause.
+ * The PausePanel shows the pause screen when user wants to pause, and also the win screen when the user wins.
  * 
  * @author Anqi Wu
- * @version 1.0, May 28, 2014 (two image icons are drawn - clear vs pause)
- * @version 1.1, May 31, 2014 (moved the instantiation to the top)
- * @version 1.2, June 2, 2014 (JavaDoc)
- * @version 1.3, June 4, 2014 (Stores the win images, displays win screen, added showWin and resetLevel methods)
+ * @version 1.0, May 28 2014 (two image icons are drawn - clear vs pause)
+ * @version 1.1, May 31 2014 (moved the instantiation to the top)
+ * @version 1.2, June 2 2014 (JavaDoc)
+ * @version 1.3, June 4 2014 (Stores the win images, displays win screen, added showWin and resetLevel methods)
+ * @version 1.4, June 10 2013 (JavaDoc)
  */
 public class PausePanel extends JPanel
 {
@@ -43,8 +44,17 @@ public class PausePanel extends JPanel
    * winImage - ImageIcon - Stores the win screen.
    */
   private ImageIcon winImage3 = new ImageIcon ("Images/Win3.png");
+  /**
+   * level - int - Stores the level to continue to.
+   */
   private int level;
+  /**
+   * buttonPanel - JPanel - Stores the panel that the button is contained in.
+   */
   private JPanel buttonPanel = new JPanel();
+  /**
+   * continueButton - JButton - Stores the continue button.
+   */
   private JButton continueButton = new JButton ("Continue");
   
   /**
@@ -56,8 +66,8 @@ public class PausePanel extends JPanel
   {
     myGame = game;
     
-    setPreferredSize(new Dimension(700,600));
-    setBackground(new Color(0,0,0,0));
+    setPreferredSize(new Dimension(700, 600));
+    setBackground(new Color(0, 0, 0, 0));
     setVisible(true);
   }
   
@@ -74,37 +84,47 @@ public class PausePanel extends JPanel
       paused = true;
   }
   
+  /**
+   * Shows the win screen and creates a button that allows the game to continue.
+   * This method also creates an anonymous class that implements ActionListener. This class listens for when the user
+   * presses the continue button and then changes the screen to the next level.
+   * 
+   * @param int level - The level to continue to.
+   */
   public void showWin (int level)
   {
     this.level = level;
-    System.out.println (this.level);
-    buttonPanel.setBackground (new Color (0,0,0));
+    buttonPanel.setBackground (new Color (0, 0, 0));
     buttonPanel.add(continueButton);
     add (buttonPanel);
     buttonPanel.setVisible (true);
     validate();
     repaint();
+    
     buttonPanel.requestFocusInWindow();
+    
     continueButton.addActionListener (new ActionListener ()
                                         {
       public void actionPerformed (ActionEvent e)      { 
-        System.out.println (e);
         resetLevel ();
       }});
   }
   
+  /**
+   * Resets the level and continues the game to the next level.
+   */
   public void resetLevel ()
   {
     remove(buttonPanel);
-    System.out.println (level);
     myGame.changeScreen (level);
     level = 0;
     repaint();
   }
   
   /**
-   * Paints the graphics of the pause screen.
-   * When paused is true, paints the pause screen.
+   * Paints the graphics of the pause screen or the win screen.
+   * When the level is greater than 0, the win screen is painted.
+   * Otherwise, when paused is true, paints the pause screen.
    * When paused is false, paints the clear screen.
    * 
    * @param g - Graphics - The Graphics object.
@@ -128,6 +148,5 @@ public class PausePanel extends JPanel
     }
     
     repaint();
-  }
-  
+  } 
 }

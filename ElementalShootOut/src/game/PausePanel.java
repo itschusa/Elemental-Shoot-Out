@@ -89,7 +89,8 @@ public class PausePanel extends JPanel
    * This method also creates an anonymous class that implements ActionListener. This class listens for when the user
    * presses the continue button and then changes the screen to the next level.
    * 
-   * @param int level - The level to continue to.
+   * @param int level - Integer representation of the level to continue to.
+   * @param e reference - Reference variable for the specified ActionEvent object. 
    */
   public void showWin (int level)
   {

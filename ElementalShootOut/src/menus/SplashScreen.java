@@ -42,6 +42,7 @@ public class SplashScreen extends JWindow
    * @param e - Exception - Catches errors regarding thread sleep, etc.
    * @param e - MouseEvent - Represents a mouse event.
    * @param splashThread - Thread - The Thread that stores the Runnable object that is started.
+   * @exception Exception If any exception type is thrown. 
    */
   public SplashScreen(String filename, final int waitTime, boolean firstRun)
   {

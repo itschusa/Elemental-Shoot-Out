@@ -2,6 +2,7 @@ package menus;
 
 import java.awt.*;
 import javax.swing.*;
+
 /**
  * The "SettingsPanel" class which extends JPanel. It allows the user to navigate and 'play with' specific game settings.
  * 
@@ -10,6 +11,7 @@ import javax.swing.*;
  * @version 1.1, May 26 2014. (Split toggle method into two to fix glitches - song would not start/stop properly and overlapped.)
  * @version 1.2, May 30 2014. (Created a method to initialize clip in a separate method, added musicInitialized and getPanel method.)
  * @version 1.3, June 8 2014. (Added menu button.) 
+ * @version 1.4, June 10, 2014. (getMusicInitialized method and javadoc)
  */
 public class SettingsPanel extends JPanel
 {
@@ -56,6 +58,9 @@ public class SettingsPanel extends JPanel
     setInitialStates();
   }
   
+  /**
+   * Returns whether the music has been initialized.
+   */
   public static boolean getMusicInitialized ()
   {
     return musicInitialized;
